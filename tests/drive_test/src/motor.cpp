@@ -13,7 +13,7 @@ void Motor::stop() {
 }
 
 void Motor::setSpeed(double speed) {
-  if (speed > 0) {
+  if (speed >= 0) {
     digitalWrite(pin1, HIGH);
     digitalWrite(pin2, LOW);
   } else if (speed < 0) {

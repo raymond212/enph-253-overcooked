@@ -8,11 +8,12 @@ class TapeSensor {
     TapeSensor(int pin);
 
     /**
-     * Get the color detected by the tape sensor
+     * Checks if tape is detected
      * 
-     * @return BLACK or WHITE
+     * @return true if black is detected and false
      */
-    TAPE_COLOR getColor();
+    bool isTape();
+    int getValue();
   private:
     int pin;
 };

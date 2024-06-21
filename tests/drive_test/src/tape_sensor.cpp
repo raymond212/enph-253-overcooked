@@ -4,10 +4,10 @@ TapeSensor::TapeSensor(int pin) : pin(pin) {
   pinMode(pin, INPUT);
 }
 
-TAPE_COLOR TapeSensor::getColor() {
-  if (analogRead(pin) >= TAPE_THRESHOLD) {
-    return BLACK;
-  } else {
-    return WHITE;
-  }
+bool TapeSensor::isTape() {
+  return analogRead(pin) >= TAPE_THRESHOLD;
+}
+
+int TapeSensor::getValue() {
+  return analogRead(pin);
 }

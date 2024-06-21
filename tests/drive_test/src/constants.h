@@ -1,26 +1,27 @@
 #pragma once
 
 // motor pins
-const int FRONT_LEFT_F = 22;
-const int FRONT_LEFT_B = 1;
-const int FRONT_LEFT_E = 23;
+const int FRONT_LEFT_F = 19;
+const int FRONT_LEFT_B = 8;
+const int FRONT_LEFT_E = 7;
 
-const int FRONT_RIGHT_F = 3;
-const int FRONT_RIGHT_B = 21;
-const int FRONT_RIGHT_E = 19;
+const int FRONT_RIGHT_F = 21;
+const int FRONT_RIGHT_B = 22;
+const int FRONT_RIGHT_E = 20;
 
-const int BACK_LEFT_F = 27;
-const int BACK_LEFT_B = 26;
-const int BACK_LEFT_E = 25;
+const int BACK_LEFT_F = 33;
+const int BACK_LEFT_B = 27;
+const int BACK_LEFT_E = 14;
 
-const int BACK_RIGHT_F = 12;
-const int BACK_RIGHT_B = 14;
-const int BACK_RIGHT_E = 13;
+const int BACK_RIGHT_F = 26;
+const int BACK_RIGHT_B = 32;
+const int BACK_RIGHT_E = 25;
 
 // tape following constants
-const int TAPE_THRESHOLD = 400; // between 0 and 1023
+const int TAPE_THRESHOLD = 20; // between 0 and 1023
 
-enum TAPE_COLOR {
-  BLACK,
-  WHITE
-};
+// tape sensor pins
+const int FRONT_LEFT_T = 13;
+const int FRONT_RIGHT_T = 12;
+const int BACK_LEFT_T = 34;
+const int BACK_RIGHT_T = 35;
