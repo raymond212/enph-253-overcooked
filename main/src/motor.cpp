@@ -4,12 +4,14 @@ Motor::Motor(int pin1, int pin2, int enablePin) : pin1(pin1), pin2(pin2), enable
   pinMode(pin1, OUTPUT);
   pinMode(pin2, OUTPUT);
   pinMode(enablePin, OUTPUT);
+  // analogWriteFrequency(200);
 }
 
 void Motor::stop() {
-  analogWrite(pin1, 0);
-  analogWrite(pin2, 0);
-  analogWrite(enablePin, 0);
+  setSpeed(0);
+  // analogWrite(pin1, 0);
+  // analogWrite(pin2, 0);
+  // analogWrite(enablePin, 0);
 }
 
 void Motor::setSpeed(double speed) {
@@ -19,9 +21,6 @@ void Motor::setSpeed(double speed) {
   } else if (speed < 0) {
     digitalWrite(pin1, LOW);
     digitalWrite(pin2, HIGH);
-  } else {
-    stop();
-    return;
   }
   analogWrite(enablePin, int(abs(mapd(speed, -1, 1, -255, 255))));
 }
