@@ -1,4 +1,4 @@
-#include <Motor.h>
+#include <motor.h>
 
 Motor::Motor(int pin1, int pin2) : pin1(pin1), pin2(pin2) {
   pinMode(pin1, OUTPUT);
