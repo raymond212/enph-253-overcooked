@@ -5,7 +5,10 @@
 
 class Motor {
   public:
-    Motor(int pin1, int pin2, int enablePin);
+    /**
+     * Initialize a motor with pin1 as the forward pin and pin2 as the backward pin
+     */
+    Motor(int pin1, int pin2);
 
     /**
      * Stop the motor
@@ -15,13 +18,14 @@ class Motor {
     /**
      * Set motor to a certain speed
      * 
-     * @param speed int between -255 to 255 inclusive
+     * @param speed double between -1.0 and 1.0
      */
-    void setSpeed(double speed);
-    double mapd(double x, double in_min, double in_max, double out_min, double out_max);
-    
+    void setSpeed(double speed);    
   private:
+    /**
+     * Utility function to map a double from one range to another
+     */
+    double mapd(double x, double in_min, double in_max, double out_min, double out_max);
     int pin1;
     int pin2;
-    int enablePin;
 };
