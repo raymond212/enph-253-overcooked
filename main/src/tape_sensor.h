@@ -5,15 +5,15 @@
 
 class TapeSensor {
   public:
-    TapeSensor(int pin);
+    TapeSensor(int leftPin, int rightPin);
 
     /**
      * Checks if tape is detected
-     * 
-     * @return true if black is detected and false
      */
-    bool isTape();
-    int getValue();
+    TapeReading getReading();
+
+    String getValues();
   private:
-    int pin;
+    int leftPin;
+    int rightPin;
 };

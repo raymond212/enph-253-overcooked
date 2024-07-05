@@ -1,13 +1,25 @@
 #include <tape_sensor.h>
 
-TapeSensor::TapeSensor(int pin) : pin(pin) {
-  pinMode(pin, INPUT);
+TapeSensor::TapeSensor(int leftPin, int rightPin) : leftPin(leftPin), rightPin(rightPin) {
+  pinMode(leftPin, INPUT);
+  pinMode(rightPin, INPUT);
 }
 
-bool TapeSensor::isTape() {
-  return analogRead(pin) >= TAPE_THRESHOLD;
+TapeReading TapeSensor::getReading() {
+  bool left = analogRead(leftPin) >= TAPE_THRESHOLD;
+  bool right = analogRead(rightPin) >= TAPE_THRESHOLD;
+
+  if (left && right) {
+    return TapeReading::BOTH;
+  } else if (left) {
+    return TapeReading::LEFT;
+  } else if (right) {
+    return TapeReading::RIGHT;
+  } else {
+    return TapeReading::NONE;
+  }
 }
 
-int TapeSensor::getValue() {
-  return analogRead(pin);
+String TapeSensor::getValues() {
+  return String(analogRead(leftPin)) + " " + String(analogRead(rightPin));
 }
