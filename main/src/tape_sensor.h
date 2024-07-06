@@ -10,7 +10,11 @@ class TapeSensor {
     /**
      * Checks if tape is detected
      */
-    TapeReading getReading();
+    TapeReading reading();
+
+    bool leftIsTape();
+
+    bool rightIsTape();
 
     String getValues();
   private:

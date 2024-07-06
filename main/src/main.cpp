@@ -19,29 +19,45 @@ Direction tapeFollowDir = Direction::FRONT;
 Motor* relLeftM = &leftM;
 Motor* relRightM = &rightM;
 TapeSensor* relFrontTS = &frontTS;
+TapeSensor* relBackTS = &backTS;
+TapeSensor* relLeftTS = &leftTS;
+TapeSensor* relRightTS = &rightTS;
+
 int motorDirectionFactor = 1; // 1 for normal, -1 for reverse
 
 void drive(double leftSpeed, double rightSpeed);
-void tapeFollowStraight();
+bool tapeFollow(StoppingCondition condition, int sideTSNum=0);
 void updateRelMandTS(Direction newDir);
+bool checkStoppingCondition(StoppingCondition condition, int sideTSNum=0);
+void resetTapeFollow();
+
 void stopAll();
 
 void setup() {
   Serial.begin(9600);
-  // updateRelMandTS(Direction::FRONT);
+  updateRelMandTS(Direction::FRONT);
+  analogWriteFrequency(300);
 }
 
 void loop() {
-  leftM.setSpeed(0.8);
-  rightM.setSpeed(0.8);
-  // frontM.setSpeed(-0.5);
-  // backM.setSpeed(-0.5);
-  // drive(1, 1);
-  // drive(0.7, 0.7); 5 Volts
-  delay(1000);
+  resetTapeFollow();
+  while (!tapeFollow(StoppingCondition::LEFT_TAPE, 1)) {
+    // Serial.println(frontTS.getValues() + " | " + backTS.getValues() + " | " + leftTS.getValues() + " | " + rightTS.getValues());
+    delay(1);
+  }
+  drive(-0.8, -0.8);
+  delay(100);
+  stopAll();
+  delay(5000);
 
-  // tapeFollowStraight();
-  // delay(10);
+  // updateRelMandTS(Direction::BACK);
+  // resetTapeFollow();
+  // while (!tapeFollow(StoppingCondition::RIGHT_TAPE, 1)) {
+  //   delay(10);
+  // }
+  // stopAll();
+  // delay(2000);
+  
 }
 
 void updateRelMandTS(Direction newDir) {
@@ -49,57 +65,110 @@ void updateRelMandTS(Direction newDir) {
     case Direction::FRONT:
       relLeftM = &leftM;
       relRightM = &rightM;
+
       relFrontTS = &frontTS;
+      relBackTS = &backTS;
+      relLeftTS = &leftTS;
+      relRightTS = &rightTS;
+
       motorDirectionFactor = 1;
       break;
     case Direction::BACK:
       relLeftM = &rightM;
       relRightM = &leftM;
+
       relFrontTS = &backTS;
+      relBackTS = &frontTS;
+      relLeftTS = &rightTS;
+      relRightTS = &leftTS;
+
       motorDirectionFactor = -1;
       break;
     case Direction::LEFT:
       relLeftM = &backM;
       relRightM = &frontM;
+
       relFrontTS = &leftTS;
+      relBackTS = &rightTS;
+      relLeftTS = &backTS;
+      relRightTS = &frontTS;
+
       motorDirectionFactor = 1;
       break;
     case Direction::RIGHT:
       relLeftM = &frontM;
       relRightM = &backM;
+
       relFrontTS = &rightTS;
+      relBackTS = &leftTS;
+      relLeftTS = &frontTS;
+      relRightTS = &backTS;
+
       motorDirectionFactor = -1;
       break;
   }
 }
 
-void tapeFollowStraight() {  
-  switch ((*relFrontTS).getReading()) {
+bool sideTSPrev = true;
+int sideTSCount = 0;
+
+void resetTapeFollow() {
+  sideTSPrev = true;
+  sideTSCount = 0;
+}
+
+bool checkStoppingCondition(StoppingCondition condition, int sideTSNum) {
+  // stop based on side tape
+  if (condition == StoppingCondition::LEFT_TAPE || condition == StoppingCondition::RIGHT_TAPE) {
+    bool curReading = (condition == StoppingCondition::LEFT_TAPE) ? (*relLeftTS).rightIsTape() : (*relRightTS).leftIsTape();
+    if (!sideTSPrev && curReading) {
+      sideTSCount++;
+    }
+    bool res = (sideTSCount == sideTSNum);
+    // bool res = (sideTSCount == sideTSNum) && !curReading;
+    sideTSPrev = curReading;
+    // Serial.println(String(sideTSCount) + " " + String(curReading) + " " + String(res));
+    return res;
+  }
+  // stop based on wall
+  return false;
+}
+
+bool tapeFollow(StoppingCondition condition, int sideTSNum) {
+  switch ((*relFrontTS).reading()) {
     case TapeReading::NONE:
       // no tape, go straight
       Serial.println("straight");
-      drive(0.5, 0.5);
+      drive(MOTOR_FAST_SPEED, MOTOR_FAST_SPEED);
       break;
     case TapeReading::LEFT:
       // front left tape, turn left
       Serial.println("left");
-      drive(0.3, 0.5);
+      drive(MOTOR_SLOW_SPEED, MOTOR_FAST_SPEED);
       break;
     case TapeReading::RIGHT:
       // front right tape, turn right
       Serial.println("right");
-      drive(0.5, 0.3);
+      drive(MOTOR_FAST_SPEED, MOTOR_SLOW_SPEED);
       break;
     case TapeReading::BOTH:
       // both tapes, stop
       Serial.println("stop");
-      drive(0, 0);
+      stopAll();
+      // drive(0, 0);
       break;
   }
-  // Serial.println(relFrontTS.getValues());
+  return checkStoppingCondition(condition, sideTSNum);
 }
 
 void drive(double leftSpeed, double rightSpeed) {
   (*relLeftM).setSpeed(leftSpeed * motorDirectionFactor);
   (*relRightM).setSpeed(rightSpeed * motorDirectionFactor);
+}
+
+void stopAll() {
+  frontM.stop();
+  backM.stop();
+  leftM.stop();
+  rightM.stop();
 }

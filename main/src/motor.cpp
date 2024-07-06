@@ -10,11 +10,14 @@ void Motor::stop() {
 }
 
 void Motor::setSpeed(double speed) {
-  if (speed >= 0) {
+  if (abs(speed) < EPSILON) {
+    analogWrite(pin1, 0);
+    analogWrite(pin2, 0);
+  } else if (speed > 0) {
     analogWrite(pin1, mapd(speed, 0, 1, 0, 255));
-    digitalWrite(pin2, LOW);
+    analogWrite(pin2, 0);
   } else if (speed < 0) {
-    digitalWrite(pin1, LOW);
+    analogWrite(pin1, 0);
     analogWrite(pin2, mapd(-speed, 0, 1, 0, 255));
   }
 }

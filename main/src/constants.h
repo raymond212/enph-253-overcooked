@@ -1,17 +1,22 @@
 #pragma once
 
+const double EPSILON = 0.001;
+
+const double MOTOR_FAST_SPEED = 0.3;
+const double MOTOR_SLOW_SPEED = 0.15;
+
 // motor pins
-const int FRONT_M_F = 20;
-const int FRONT_M_B = 21;
+const int FRONT_M_F = 33;
+const int FRONT_M_B = 32;
 
-const int BACK_M_F = 22;
-const int BACK_M_B = 19;
+const int BACK_M_F = 21;
+const int BACK_M_B = 20;
 
-const int LEFT_M_F = 32;
-const int LEFT_M_B = 33;
+const int LEFT_M_F = 19;
+const int LEFT_M_B = 22;
 
-const int RIGHT_M_F = 26;
-const int RIGHT_M_B = 25;
+const int RIGHT_M_F = 25;
+const int RIGHT_M_B = 26;
 
 // tape following
 const int TAPE_THRESHOLD = 2800; // between 0 and 4095
@@ -36,14 +41,14 @@ enum class Direction {
 };
 
 // tape sensor pins
-const int FRONT_TS_L = 38;
-const int FRONT_TS_R = 37;
-const int BACK_TS_L = 35;
-const int BACK_TS_R = 34;
-const int LEFT_TS_L = 0;
-const int LEFT_TS_R = 0;
-const int RIGHT_TS_L = 0;
-const int RIGHT_TS_R = 0;
+const int FRONT_TS_L = 35;
+const int FRONT_TS_R = 34;
+const int BACK_TS_L = 36;
+const int BACK_TS_R = 39;
+const int LEFT_TS_L = 38;
+const int LEFT_TS_R = 37;
+const int RIGHT_TS_L = 13;
+const int RIGHT_TS_R = 15;
 
 // destacker pins
 const int DESTACKER_STEPPER_STEP = 2;
