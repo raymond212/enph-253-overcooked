@@ -4,19 +4,20 @@
 
 const double EPSILON = 0.001;
 
-const double MOTOR_FAST_SPEED = 0.8;
-const double MOTOR_SLOW_SPEED = 0.5;
+const double MOTOR_FAST_SPEED = 0.5;
+const double MOTOR_SLOW_SPEED = 0.3;
 
 // motor pins
-const int LEFT_M_F = 22;
-const int LEFT_M_B = 19;
-const int LEFT_M_E_A = 34;
-const int LEFT_M_E_B = 35;
+const int LEFT_M_F = 20;
+const int LEFT_M_B = 21;
+const int LEFT_M_E_A = 38;
+const int LEFT_M_E_B = 37;
 
-const int RIGHT_M_F = 20;
-const int RIGHT_M_B = 21;
-const int RIGHT_M_E_A = 38;
-const int RIGHT_M_E_B = 37;
+const int RIGHT_M_F = 22;
+const int RIGHT_M_B = 19;
+const int RIGHT_M_E_A = 34;
+const int RIGHT_M_E_B = 35;
+
 
 // wheel and encoder
 const double WHEEL_DIAMETER_IN = 3;

@@ -22,16 +22,17 @@ void setup() {
 }
 
 void loop() {
-  // tapeFollow();
-  // delay(10);
+  tapeFollow();
+  delay(10);
 
-  leftM.setSpeed(0.5);
-  rightM.setSpeed(0.5);
+  // leftM.setSpeed(1);
+  // rightM.setSpeed(0.5);
   // Serial.println(tapeSensor.getValuesStr());
-  Serial.println(String(leftM.getCount()) + " " + String(rightM.getCount()));
-  leftM.resetEncoder();
-  rightM.resetEncoder();
-  delay(1000);
+  // Serial.println(String(leftM.getCount()) + " " + String(rightM.getCount()));
+  // leftM.resetEncoder();
+  // rightM.resetEncoder();
+  // delay(1000);
+
   // rightM.setSpeed(1);
   // leftM.setSpeed(1);
   // Serial.println(String(leftM.getDistance()) + " " + String(rightM.getDistance()));
@@ -41,7 +42,7 @@ void loop() {
 
 void tapeFollow() {
   switch (tapeSensor.reading()) {
-    case TapeReading::NONE:
+    case TapeReading::BOTH:
       // no tape, go straight
       Serial.println("straight");
       drive(MOTOR_FAST_SPEED, MOTOR_FAST_SPEED);
@@ -56,7 +57,7 @@ void tapeFollow() {
       Serial.println("right");
       drive(MOTOR_FAST_SPEED, MOTOR_SLOW_SPEED);
       break;
-    case TapeReading::BOTH:
+    case TapeReading::NONE:
       // both tapes, stop
       Serial.println("stop");
       stopAll();
