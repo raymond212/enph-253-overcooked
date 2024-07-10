@@ -6,9 +6,9 @@
 class Motor {
   public:
     /**
-     * Initialize a motor with pin1 as the forward pin and pin2 as the backward pin
+     * Initialize a motor with 
      */
-    Motor(int pin1, int pin2);
+    Motor(int forwardPin, int backwardPin, int encoderPinA, int encoderPinB);
 
     /**
      * Stop the motor
@@ -20,12 +20,26 @@ class Motor {
      * 
      * @param speed double between -1.0 and 1.0
      */
-    void setSpeed(double speed);    
+    void setSpeed(double speed);
+
+    int getCount();
+
+    double getDistance();
+
+    bool driveDistance(double targetDistance, double maxSpeed);
+
+    void resetEncoder();
+
+    void updateEncoder();
   private:
     /**
      * Utility function to map a double from one range to another
      */
     double mapd(double x, double in_min, double in_max, double out_min, double out_max);
-    int pin1;
-    int pin2;
+
+    int forwardPin;
+    int backwardPin;
+    int encoderPinA;
+    int encoderPinB;
+    volatile int count = 0;
 };

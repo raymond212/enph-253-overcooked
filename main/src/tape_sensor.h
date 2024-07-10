@@ -16,7 +16,7 @@ class TapeSensor {
 
     bool rightIsTape();
 
-    String getValues();
+    String getValuesStr();
   private:
     int leftPin;
     int rightPin;

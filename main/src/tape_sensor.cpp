@@ -28,6 +28,6 @@ bool TapeSensor::rightIsTape() {
   return analogRead(rightPin) >= TAPE_THRESHOLD;
 }
 
-String TapeSensor::getValues() {
+String TapeSensor::getValuesStr() {
   return String(analogRead(leftPin)) + " " + String(analogRead(rightPin));
 }

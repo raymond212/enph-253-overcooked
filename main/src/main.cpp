@@ -4,138 +4,43 @@
 #include <motor.h>
 #include <tape_sensor.h>
 
-Motor frontM = Motor(FRONT_M_F, FRONT_M_B);
-Motor backM = Motor(BACK_M_F, BACK_M_B);
-Motor leftM = Motor(LEFT_M_F, LEFT_M_B);
-Motor rightM = Motor(RIGHT_M_F, RIGHT_M_B);
-
-TapeSensor frontTS = TapeSensor(FRONT_TS_L, FRONT_TS_R);
-TapeSensor backTS = TapeSensor(BACK_TS_L, BACK_TS_R);
-TapeSensor leftTS = TapeSensor(LEFT_TS_L, LEFT_TS_R);
-TapeSensor rightTS = TapeSensor(RIGHT_TS_L, RIGHT_TS_R);
-
-// relative motors/tape sensors for tape following
-Direction tapeFollowDir = Direction::FRONT;
-Motor* relLeftM = &leftM;
-Motor* relRightM = &rightM;
-TapeSensor* relFrontTS = &frontTS;
-TapeSensor* relBackTS = &backTS;
-TapeSensor* relLeftTS = &leftTS;
-TapeSensor* relRightTS = &rightTS;
-
-int motorDirectionFactor = 1; // 1 for normal, -1 for reverse
+Motor leftM = Motor(LEFT_M_F, LEFT_M_B, LEFT_M_E_A, LEFT_M_E_B);
+Motor rightM = Motor(RIGHT_M_F, RIGHT_M_B, RIGHT_M_E_A, RIGHT_M_E_B);
+TapeSensor tapeSensor = TapeSensor(TAPE_SENSOR_L, TAPE_SENSOR_R);
 
 void drive(double leftSpeed, double rightSpeed);
-bool tapeFollow(StoppingCondition condition, int sideTSNum=0);
-void updateRelMandTS(Direction newDir);
-bool checkStoppingCondition(StoppingCondition condition, int sideTSNum=0);
-void resetTapeFollow();
-
+void tapeFollow();
 void stopAll();
 
 void setup() {
   Serial.begin(9600);
-  updateRelMandTS(Direction::FRONT);
-  analogWriteFrequency(300);
+  analogWriteFrequency(250);
+  attachInterrupt(RIGHT_M_E_A, []{rightM.updateEncoder();}, RISING);
+  attachInterrupt(LEFT_M_E_A, []{leftM.updateEncoder();}, RISING);
+  rightM.resetEncoder();
+  leftM.resetEncoder();
 }
 
 void loop() {
-  resetTapeFollow();
-  while (!tapeFollow(StoppingCondition::LEFT_TAPE, 1)) {
-    // Serial.println(frontTS.getValues() + " | " + backTS.getValues() + " | " + leftTS.getValues() + " | " + rightTS.getValues());
-    delay(1);
-  }
-  drive(-0.8, -0.8);
-  delay(100);
-  stopAll();
-  delay(5000);
+  // tapeFollow();
+  // delay(10);
 
-  // updateRelMandTS(Direction::BACK);
-  // resetTapeFollow();
-  // while (!tapeFollow(StoppingCondition::RIGHT_TAPE, 1)) {
-  //   delay(10);
-  // }
-  // stopAll();
-  // delay(2000);
-  
+  leftM.setSpeed(0.5);
+  rightM.setSpeed(0.5);
+  // Serial.println(tapeSensor.getValuesStr());
+  Serial.println(String(leftM.getCount()) + " " + String(rightM.getCount()));
+  leftM.resetEncoder();
+  rightM.resetEncoder();
+  delay(1000);
+  // rightM.setSpeed(1);
+  // leftM.setSpeed(1);
+  // Serial.println(String(leftM.getDistance()) + " " + String(rightM.getDistance()));
+  // // rightM.resetEncoder();
+  // delay(1000);
 }
 
-void updateRelMandTS(Direction newDir) {
-  switch (newDir) {
-    case Direction::FRONT:
-      relLeftM = &leftM;
-      relRightM = &rightM;
-
-      relFrontTS = &frontTS;
-      relBackTS = &backTS;
-      relLeftTS = &leftTS;
-      relRightTS = &rightTS;
-
-      motorDirectionFactor = 1;
-      break;
-    case Direction::BACK:
-      relLeftM = &rightM;
-      relRightM = &leftM;
-
-      relFrontTS = &backTS;
-      relBackTS = &frontTS;
-      relLeftTS = &rightTS;
-      relRightTS = &leftTS;
-
-      motorDirectionFactor = -1;
-      break;
-    case Direction::LEFT:
-      relLeftM = &backM;
-      relRightM = &frontM;
-
-      relFrontTS = &leftTS;
-      relBackTS = &rightTS;
-      relLeftTS = &backTS;
-      relRightTS = &frontTS;
-
-      motorDirectionFactor = 1;
-      break;
-    case Direction::RIGHT:
-      relLeftM = &frontM;
-      relRightM = &backM;
-
-      relFrontTS = &rightTS;
-      relBackTS = &leftTS;
-      relLeftTS = &frontTS;
-      relRightTS = &backTS;
-
-      motorDirectionFactor = -1;
-      break;
-  }
-}
-
-bool sideTSPrev = true;
-int sideTSCount = 0;
-
-void resetTapeFollow() {
-  sideTSPrev = true;
-  sideTSCount = 0;
-}
-
-bool checkStoppingCondition(StoppingCondition condition, int sideTSNum) {
-  // stop based on side tape
-  if (condition == StoppingCondition::LEFT_TAPE || condition == StoppingCondition::RIGHT_TAPE) {
-    bool curReading = (condition == StoppingCondition::LEFT_TAPE) ? (*relLeftTS).rightIsTape() : (*relRightTS).leftIsTape();
-    if (!sideTSPrev && curReading) {
-      sideTSCount++;
-    }
-    bool res = (sideTSCount == sideTSNum);
-    // bool res = (sideTSCount == sideTSNum) && !curReading;
-    sideTSPrev = curReading;
-    // Serial.println(String(sideTSCount) + " " + String(curReading) + " " + String(res));
-    return res;
-  }
-  // stop based on wall
-  return false;
-}
-
-bool tapeFollow(StoppingCondition condition, int sideTSNum) {
-  switch ((*relFrontTS).reading()) {
+void tapeFollow() {
+  switch (tapeSensor.reading()) {
     case TapeReading::NONE:
       // no tape, go straight
       Serial.println("straight");
@@ -158,17 +63,14 @@ bool tapeFollow(StoppingCondition condition, int sideTSNum) {
       // drive(0, 0);
       break;
   }
-  return checkStoppingCondition(condition, sideTSNum);
 }
 
 void drive(double leftSpeed, double rightSpeed) {
-  (*relLeftM).setSpeed(leftSpeed * motorDirectionFactor);
-  (*relRightM).setSpeed(rightSpeed * motorDirectionFactor);
+  leftM.setSpeed(leftSpeed);
+  rightM.setSpeed(rightSpeed);
 }
 
 void stopAll() {
-  frontM.stop();
-  backM.stop();
   leftM.stop();
   rightM.stop();
 }
