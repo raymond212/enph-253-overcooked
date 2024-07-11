@@ -82,7 +82,7 @@ void drive_with_pid(double leftSpeed, double rightSpeed) {
   //take the target in terms of the set left wheel speed in spaces of 5 ms
   leftM.setSpeed(leftSpeed);
   rightM.setSpeed(rightSpeed);
-  int target_encoders = leftSpeed / WHEEL_CIRCUMFERENCE_IN * 5 * 0.75;
+  int target_encoders = leftSpeed / WHEEL_CIRCUMFERENCE_IN * 5 * 0.75 * 1141;
   double KP = 0.02;
   double KD = 0.01;
   double KI = 0.005;
