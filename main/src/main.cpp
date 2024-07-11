@@ -12,12 +12,8 @@ void drive(double leftSpeed, double rightSpeed);
 void tapeFollow();
 void stopAll();
 void drive_with_pid(double leftSpeed, double rightSpeed);
-double e1_previous_error = 0.0;
-double e2_previous_error = 0.0;
-double left_speed = MOTOR_FAST_SPEED;
-double right_speed = MOTOR_FAST_SPEED;
-double e1_sum_error = 0.0;
-double e2_sum_error = 0.0;
+
+
 
 void setup() {
   Serial.begin(9600);
@@ -52,7 +48,7 @@ void tapeFollow() {
     case TapeReading::BOTH:
       // no tape, go straight
       Serial.println("straight");
-      drive_with_pid(left_speed, right_speed);
+      drive_with_pid(MOTOR_FAST_SPEED, MOTOR_FAST_SPEED);
       break;
     case TapeReading::LEFT:
       // front left tape, turn left
@@ -76,29 +72,12 @@ void tapeFollow() {
 void drive(double leftSpeed, double rightSpeed) {
   leftM.setSpeed(leftSpeed);
   rightM.setSpeed(rightSpeed);
-}
 
-void drive_with_pid(double leftSpeed, double rightSpeed) {
-  //take the target in terms of the set left wheel speed in spaces of 5 ms
-  leftM.setSpeed(leftSpeed);
-  rightM.setSpeed(rightSpeed);
-  int target_encoders = leftSpeed / WHEEL_CIRCUMFERENCE_IN * 5 * 0.75 * 1141;
-  double KP = 0.02;
-  double KD = 0.01;
-  double KI = 0.005;
-  leftM.resetEncoder();
-  rightM.resetEncoder();
-  delay (5);
-  double e1_error = target_encoders - leftM.getCount();
-  double e2_error = target_encoders - rightM.getCount();
-  left_speed += e1_error * KP + e1_previous_error*KD + e1_sum_error * KI;
-  right_speed += e2_error * KP + e2_previous_error*KD + e2_sum_error * KI;
-  left_speed = max(min(float(1), float(left_speed)), float(0));
-  right_speed = max(min(float(1), float(right_speed)), float(0));
-  e1_previous_error = e1_error;
-  e2_previous_error = e2_error;
-  e1_sum_error += e1_error;
-  e2_sum_error += e2_error;
+  if (leftSpeed == rightSpeed) {
+    double curr_speed = leftM.get_real_speed();
+    leftM.setSpeed_PID(curr_speed);
+    rightM.setSpeed_PID(curr_speed);
+  }
 }
 
 void stopAll() {
