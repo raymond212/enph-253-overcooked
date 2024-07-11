@@ -6,8 +6,8 @@ TapeSensor::TapeSensor(int leftPin, int rightPin) : leftPin(leftPin), rightPin(r
 }
 
 TapeReading TapeSensor::reading() {
-  bool left = analogRead(leftPin) >= TAPE_THRESHOLD;
-  bool right = analogRead(rightPin) >= TAPE_THRESHOLD;
+  bool left = leftIsTape();
+  bool right = rightIsTape();
 
   if (left && right) {
     return TapeReading::BOTH;
@@ -21,11 +21,11 @@ TapeReading TapeSensor::reading() {
 }
 
 bool TapeSensor::leftIsTape() {
-  return analogRead(leftPin) >= TAPE_THRESHOLD;
+  return analogRead(leftPin) >= LEFT_TAPE_THRESHOLD;
 }
 
 bool TapeSensor::rightIsTape() {
-  return analogRead(rightPin) >= TAPE_THRESHOLD;
+  return analogRead(rightPin) >= RIGHT_TAPE_THRESHOLD;
 }
 
 String TapeSensor::getValuesStr() {

@@ -29,7 +29,9 @@ const double ACCEL_PER_INCH = 0.1;
 const double STALL_SPEED = 0.2;
 
 // tape following
-const int TAPE_THRESHOLD = 2800; // between 0 and 4095
+const int LEFT_TAPE_THRESHOLD = 3200; // between 0 and 4095
+const int RIGHT_TAPE_THRESHOLD = 3400; // between 0 and 4095
+
 enum class TapeReading {
   NONE,
   LEFT,

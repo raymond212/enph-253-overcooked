@@ -25,7 +25,7 @@ void loop() {
   tapeFollow();
   delay(10);
 
-  // leftM.setSpeed(1);
+  // leftM.setSpeed(0.5);
   // rightM.setSpeed(0.5);
   // Serial.println(tapeSensor.getValuesStr());
   // Serial.println(String(leftM.getCount()) + " " + String(rightM.getCount()));
