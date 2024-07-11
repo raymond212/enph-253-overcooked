@@ -15,6 +15,8 @@ class Motor {
      */
     void stop();
 
+    void resetEncoderPeriodically();
+
     /**
      * Set motor to a certain speed
      * 
@@ -31,6 +33,10 @@ class Motor {
     void resetEncoder();
 
     void updateEncoder();
+
+    void setSpeed_PID(double speed);
+
+    double get_real_speed();
   private:
     /**
      * Utility function to map a double from one range to another
@@ -42,4 +48,8 @@ class Motor {
     int encoderPinA;
     int encoderPinB;
     volatile int count = 0;
+    volatile unsigned long lastResetTime = 0;
+    volatile int polled_count = 0;
+    double e_previous_error = 0.0;
+    double e_sum_error = 0.0;    
 };
