@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <constants.h>
+#include <utils.h>
 
 class Motor {
   public:
@@ -32,11 +33,6 @@ class Motor {
 
     void updateEncoder();
   private:
-    /**
-     * Utility function to map a double from one range to another
-     */
-    double mapd(double x, double in_min, double in_max, double out_min, double out_max);
-
     int forwardPin;
     int backwardPin;
     int encoderPinA;

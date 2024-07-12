@@ -2,8 +2,12 @@
 
 #include <Arduino.h>
 
-const double EPSILON = 0.001;
+// wifi settings
+const String ssid = "Raymond";
+const String password = "lithiumRanger";
+const int WIFI_PORT = 23;
 
+// motor settings
 const double MOTOR_FAST_SPEED = 0.5;
 const double MOTOR_SLOW_SPEED = 0.3;
 
@@ -22,7 +26,7 @@ const int RIGHT_M_E_B = 35;
 // wheel and encoder
 const double WHEEL_DIAMETER_IN = 3;
 const double WHEEL_CIRCUMFERENCE_IN = WHEEL_DIAMETER_IN * PI;
-const int CLICKS_PER_REV = 11 * 131;
+const int CLICKS_PER_REV = 11 * 131 * 2;
 const double CLICKS_PER_IN = CLICKS_PER_REV / WHEEL_CIRCUMFERENCE_IN;
 
 const double ACCEL_PER_INCH = 0.1;
