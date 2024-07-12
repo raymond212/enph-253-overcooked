@@ -9,6 +9,9 @@ long lastOTATime = millis();
 WiFiServer server(23);
 WiFiClient remoteClient;
 
+void wifiPrintln(String msg);
+bool wifiInput();
+
 void setup() {
   Serial.begin(115200);
 
@@ -54,6 +57,20 @@ void setup() {
 }
 
 void loop() {
+  while (!wifiInput()) {
+    Serial.println("Waiting");
+    delay(100);
+  }
+  Serial.println("Resetting");
+  delay(100);
+  // OTA check
+  // if (millis() - lastOTATime > 1000) {
+  //   ArduinoOTA.handle();
+  //   lastOTATime = millis();
+  // }
+}
+
+void wifiPrintln(String msg) {
   if (server.hasClient()) {
     if (remoteClient.connected()) {
       Serial.println("Connection rejected: already connected");
@@ -63,15 +80,28 @@ void loop() {
       remoteClient = server.available();
     }
   }
-
   if (remoteClient.connected()) {
-    remoteClient.println("Hello World! This is ESP32");
-    delay(1000);
+    remoteClient.println(msg);
   }
+}
 
-  // OTA check
-  if (millis() - lastOTATime > 1000) {
-    ArduinoOTA.handle();
-    lastOTATime = millis();
+bool wifiInput() {
+  if (server.hasClient()) {
+    if (remoteClient.connected()) {
+      Serial.println("Connection rejected: already connected");
+      server.available().stop();
+    } else {
+      Serial.println("Connection accepted");
+      remoteClient = server.available();
+    }
   }
+  if (remoteClient.connected() && remoteClient.available()) {
+    String message = remoteClient.readStringUntil('\n');
+    if (message.length() > 0) {
+      Serial.println("Received: " + message);
+      wifiPrintln("Echo:" + message);
+      return true;
+    }
+  }
+  return false;
 }
