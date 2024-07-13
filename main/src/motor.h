@@ -2,40 +2,46 @@
 
 #include <Arduino.h>
 #include <constants.h>
+
 #include <utils.h>
 
 class Motor {
   public:
     /**
-     * Initialize a motor with 
+     * Initialize an encoded motor
      */
-    Motor(int forwardPin, int backwardPin, int encoderPinA, int encoderPinB);
-
-    /**
-     * Stop the motor
-     */
-    void stop();
+    Motor(uint8_t motorPinA, uint8_t motorPinB, uint8_t encoderPinA, uint8_t encoderPinB);
 
     /**
      * Set motor to a certain speed
      * 
-     * @param speed double between -1.0 and 1.0
+     * @param power double between -1.0 and 1.0
      */
-    void setSpeed(double speed);
+    void setPower(double power);
 
+    /**
+     * @return the number of encoder clicks
+     */
     int getCount();
 
+    /**
+     * @return the distance traveled in inches
+     */
     double getDistance();
 
-    bool driveDistance(double targetDistance, double maxSpeed);
-
+    /**
+     * Reset the encoder count
+     */
     void resetEncoder();
 
-    void updateEncoder();
+    /**
+     * An ISR to update the encoder count
+     */
+    void encoderISR();
   private:
-    int forwardPin;
-    int backwardPin;
-    int encoderPinA;
-    int encoderPinB;
+    uint8_t motorPinA;
+    uint8_t motorPinB;
+    uint8_t encoderPinA;
+    uint8_t encoderPinB;
     volatile int count = 0;
 };

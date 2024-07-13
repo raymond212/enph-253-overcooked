@@ -1,14 +1,12 @@
 #include <motor.h>
 
-Motor::Motor(int forwardPin, int backwardPin, int encoderPinA, int encoderPinB) : forwardPin(forwardPin), backwardPin(backwardPin), encoderPinA(encoderPinA), encoderPinB(encoderPinB) {
-  pinMode(forwardPin, OUTPUT);
-  pinMode(backwardPin, OUTPUT);
-  pinMode(encoderPinA, INPUT_PULLUP);
-  pinMode(encoderPinB, INPUT_PULLUP);
-}
-
-void Motor::stop() {
-  setSpeed(0);
+Motor::Motor(uint8_t motorPinA, uint8_t motorPinB, uint8_t encoderPinA, uint8_t encoderPinB) : motorPinA(motorPinA), motorPinB(motorPinB), encoderPinA(encoderPinA), encoderPinB(encoderPinB) {
+  pinMode(motorPinA, OUTPUT);
+  pinMode(motorPinA, OUTPUT);
+  pinMode(encoderPinA, INPUT);
+  pinMode(encoderPinB, INPUT);
+  analogWriteFrequency(motorPinA, MOTOR_PWM_FREQ_HZ);
+  analogWriteFrequency(motorPinB, MOTOR_PWM_FREQ_HZ);
 }
 
 int Motor::getCount() {
@@ -19,31 +17,21 @@ double Motor::getDistance() {
   return count / CLICKS_PER_IN;
 }
 
-void Motor::updateEncoder() {
+void Motor::encoderISR() {
   if (digitalRead(encoderPinB) == digitalRead(encoderPinA)) {
     count--;
   } else {
     count++;
-    // count--;
   }
 }
 
-bool Motor::driveDistance(double targetDistance, double maxSpeed) {
-  if (getDistance() >= targetDistance) {
-    setSpeed(0);
-    return true;
-  }
-  double travelledDistance = getDistance();
-  return false;
-}
-
-void Motor::setSpeed(double speed) {
-  if (speed >= 0) {
-    analogWrite(forwardPin, Utils::mapd(speed, 0, 1, 0, 255));
-    analogWrite(backwardPin, 0);
-  } else if (speed < 0) {
-    analogWrite(forwardPin, 0);
-    analogWrite(backwardPin, Utils::mapd(-speed, 0, 1, 0, 255));
+void Motor::setPower(double power) {
+  if (power >= 0) {
+    analogWrite(motorPinA, Utils::mapd(power, 0, 1, 0, 255));
+    analogWrite(motorPinB, 0);
+  } else {
+    analogWrite(motorPinA, 0);
+    analogWrite(motorPinB, Utils::mapd(-power, 0, 1, 0, 255));
   }
 }
 
