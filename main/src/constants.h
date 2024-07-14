@@ -2,11 +2,13 @@
 
 #include <Arduino.h>
 
+const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
+
 // measurements
-const double WHEEL_DIAMETER_IN = 3.05;
-const double WHEEL_CIRCUMFERENCE_IN = WHEEL_DIAMETER_IN * PI;
-const double TAPE_SENSOR_TO_WHEEL_DIST_IN = 4.0;
-const double WHEEL_TO_WHEEL_DIST_IN = 4.0;
+const double WHEEL_DIAMETER = 3.05;
+const double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * PI;
+const double TAPE_SENSOR_TO_WHEEL_DIST = 4.0;
+const double WHEEL_TO_WHEEL_DIST = 4.0;
 
 // wifi settings
 const String ssid = "Raymond";
@@ -38,7 +40,7 @@ const int MOTOR_PWM_FREQ_HZ = 250;
 const int MOTOR_PWM_RESOLUTION = 8; // 2^8 = 256
 
 const int CLICKS_PER_REV = 2730; // 11 * 131 * 2 = 2882;
-const double CLICKS_PER_IN = CLICKS_PER_REV / WHEEL_CIRCUMFERENCE_IN;
+const double CLICKS_PER_IN = CLICKS_PER_REV / WHEEL_CIRCUMFERENCE;
 const double IN_PER_CLICK = 1 / CLICKS_PER_IN;
 
 // tape sensors
@@ -67,6 +69,46 @@ enum class TurnDirection {
   LEFT,
   RIGHT
 };
+
+// stations
+enum class Table {
+  TOP,
+  MIDDLE,
+  BOTTOM
+};
+
+struct Station {
+  double position;
+  Table table;
+
+  Station(double position, Table table) : position(position), table(table) {}
+};
+
+enum class FacingDirection {
+  TOP,
+  RIGHT,
+  BOTTOM,
+  LEFT
+};
+
+enum class YPosition {
+  TOP,
+  TAPE,
+  BOTTOM
+};
+
+static Station PATTIES(15, Table::TOP);
+static Station BUNS(48, Table::TOP);
+static Station POTATOES(81, Table::TOP);
+
+static Station TOMATOES(6, Table::MIDDLE);
+static Station CUTTING(24, Table::MIDDLE);
+static Station COOKING(75, Table::MIDDLE);
+static Station PLATES(90, Table::MIDDLE);
+
+static Station CHEESE(6, Table::BOTTOM);
+static Station SERVING(48, Table::BOTTOM);
+static Station LETTUCE(90, Table::BOTTOM);
 
 // stepper motor
 const int STEPS_PER_REVOLUTION = 200;

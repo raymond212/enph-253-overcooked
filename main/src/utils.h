@@ -8,4 +8,8 @@ namespace Utils {
   static double bind(double x, double min, double max) {
     return x < min ? min : x > max ? max : x;
   }
+
+  static bool isEqual(double a, double b, double epsilon = 0.0001) {
+    return abs(a - b) < epsilon;
+  }
 };

@@ -61,12 +61,12 @@ namespace Drivetrain {
     Network::wifiPrintln(String(leftM.getCount()) + " " + String(rightM.getCount()));
   }
 
-  void turnUntilTape(TurnDirection dir, int minDelayMs) {
+  void turnUntilTape(TurnDirection dir) {
     leftM.resetEncoder();
     rightM.resetEncoder();
 
     long startTime = millis();
-    while (!(TapeSensors::readTape() == TapeReading::BOTH && millis() - startTime > minDelayMs)) {
+    while (!(TapeSensors::readTape() == TapeReading::BOTH && millis() - startTime > 500)) {
       if (dir == TurnDirection::LEFT) {
         Network::wifiPrintln("Turning left");
         drive(-0.1 * 1.5, 0.1);
@@ -86,6 +86,14 @@ namespace Drivetrain {
     delay(15);
     drive(0, 0);
     Network::wifiPrintln(String(leftM.getDistance()) + " " + String(rightM.getDistance()));
+  }
+
+  void driveUpToTable() {
+
+  }
+
+  void backUpToTape() {
+    
   }
 
   void drive(double leftPower, double rightPower) {

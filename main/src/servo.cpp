@@ -7,5 +7,5 @@ Servo::Servo(uint8_t pin, uint8_t channel) : pin(pin), channel(channel) {
 
 void Servo::setAngle(double angle) {
   double pulseWidthUS = Utils::mapd(angle, 0, 180, SERVO_PWM_MIN_US, SERVO_PWM_MAX_US);
-  ledcWrite(channel, (int) (1.0 * pulseWidthUS / (SERVO_PWM_PERIOD_US) * SERVO_PWM_TOTAL_TICKS));
+  ledcWrite(channel, (int)((double)SERVO_PWM_TOTAL_TICKS * (double)pulseWidthUS / (double)SERVO_PWM_PERIOD_US));
 }

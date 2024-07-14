@@ -20,10 +20,10 @@ void loop() {
 
   if (Network::message == "R") {
     Network::wifiPrintln("Turning right until tape");
-    Drivetrain::turnUntilTape(TurnDirection::RIGHT, 500);
+    Drivetrain::turnUntilTape(TurnDirection::RIGHT);
   } else if (Network::message == "L") {
     Network::wifiPrintln("Turning left until tape");
-    Drivetrain::turnUntilTape(TurnDirection::LEFT, 500);
+    Drivetrain::turnUntilTape(TurnDirection::LEFT);
   } else {
     Network::wifiPrintln("Starting tape following");
     Drivetrain::tapeFollow(Network::message.toDouble());

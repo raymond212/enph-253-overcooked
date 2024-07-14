@@ -23,7 +23,11 @@ namespace Drivetrain {
   /**
    * Turn the robot until tape is detected
    */
-  void turnUntilTape(TurnDirection dir, int minDelayMs);
+  void turnUntilTape(TurnDirection dir);
+
+  void driveUpToTable();
+
+  void backUpToTape();
 
   /**
    * Drive the robot with the specified left and right power
