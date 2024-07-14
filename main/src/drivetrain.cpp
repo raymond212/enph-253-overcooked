@@ -1,13 +1,13 @@
 #include <drivetrain.h>
 
 namespace Drivetrain {
-  Motor leftM = Motor(L_MOTOR_A, L_MOTOR_B, L_ENCODER_A, L_ENCODER_B);
-  Motor rightM = Motor(R_MOTOR_A, R_MOTOR_B, R_ENCODER_A, R_ENCODER_B);
+  Motor leftM = Motor(L_MOTOR_PIN_A, L_MOTOR_PIN_B, L_ENCODER_PIN_A, L_ENCODER_PIN_B, L_MOTOR_CHANNEL_A, L_MOTOR_CHANNEL_B);
+  Motor rightM = Motor(R_MOTOR_PIN_A, R_MOTOR_PIN_B, R_ENCODER_PIN_A, R_ENCODER_PIN_B, R_MOTOR_CHANNEL_A, R_MOTOR_CHANNEL_B);
 
   void setupDrivetrain() {
     // Motor setup is done in the Motor constructor
-    attachInterrupt(R_ENCODER_A, []{rightM.encoderISR();}, CHANGE);
-    attachInterrupt(L_ENCODER_A, []{leftM.encoderISR();}, CHANGE);
+    attachInterrupt(L_ENCODER_PIN_A, []{leftM.encoderISR();}, CHANGE);
+    attachInterrupt(R_ENCODER_PIN_A, []{rightM.encoderISR();}, CHANGE);
   }
 
   void driveTest() {

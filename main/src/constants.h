@@ -2,6 +2,12 @@
 
 #include <Arduino.h>
 
+// measurements
+const double WHEEL_DIAMETER_IN = 3.05;
+const double WHEEL_CIRCUMFERENCE_IN = WHEEL_DIAMETER_IN * PI;
+const double TAPE_SENSOR_TO_WHEEL_DIST_IN = 4.0;
+const double WHEEL_TO_WHEEL_DIST_IN = 4.0;
+
 // wifi settings
 const String ssid = "Raymond";
 const String password = "lithiumRanger";
@@ -12,21 +18,25 @@ const double TAPE_FOLLOW_HIGH_POWER = 0.5;
 const double TAPE_FOLLOW_LOW_POWER = 0.3;
 const double TURN_POWER = 0.15;
 
-// motors and encoder pins
-const uint8_t L_MOTOR_A = 20;
-const uint8_t L_MOTOR_B = 21;
-const uint8_t L_ENCODER_A = 38;
-const uint8_t L_ENCODER_B = 37;
+// motors and encoders
+const uint8_t L_MOTOR_PIN_A = 20;
+const uint8_t L_MOTOR_PIN_B = 21;
+const uint8_t L_ENCODER_PIN_A = 38;
+const uint8_t L_ENCODER_PIN_B = 37;
 
-const uint8_t R_MOTOR_A = 22;
-const uint8_t R_MOTOR_B = 19;
-const uint8_t R_ENCODER_A = 34;
-const uint8_t R_ENCODER_B = 35;
+const uint8_t R_MOTOR_PIN_A = 22;
+const uint8_t R_MOTOR_PIN_B = 19;
+const uint8_t R_ENCODER_PIN_A = 34;
+const uint8_t R_ENCODER_PIN_B = 35;
+
+const uint8_t L_MOTOR_CHANNEL_A = 0;
+const uint8_t L_MOTOR_CHANNEL_B = 1;
+const uint8_t R_MOTOR_CHANNEL_A = 2;
+const uint8_t R_MOTOR_CHANNEL_B = 3;
 
 const int MOTOR_PWM_FREQ_HZ = 250;
+const int MOTOR_PWM_RESOLUTION = 8; // 2^8 = 256
 
-const double WHEEL_DIAMETER_IN = 3.05;
-const double WHEEL_CIRCUMFERENCE_IN = WHEEL_DIAMETER_IN * PI;
 const int CLICKS_PER_REV = 2730; // 11 * 131 * 2 = 2882;
 const double CLICKS_PER_IN = CLICKS_PER_REV / WHEEL_CIRCUMFERENCE_IN;
 const double IN_PER_CLICK = 1 / CLICKS_PER_IN;
@@ -38,6 +48,14 @@ const uint8_t TAPE_SENSOR_R = 39;
 const int LEFT_TAPE_THRESHOLD = 3200; // between 0 and 4095
 const int RIGHT_TAPE_THRESHOLD = 3400; // between 0 and 4095
 
+// servo motors
+const int SERVO_PWM_FREQ_HZ = 50;
+const int SERVO_PWM_RESOLUTION = 16;
+const int SERVO_PWM_TOTAL_TICKS = 1 << SERVO_PWM_RESOLUTION;
+const int SERVO_PWM_PERIOD_US = 1000000 / SERVO_PWM_FREQ_HZ;
+const int SERVO_PWM_MIN_US = 500;
+const int SERVO_PWM_MAX_US = 2500;
+
 enum class TapeReading {
   NONE,
   LEFT,
@@ -48,7 +66,7 @@ enum class TapeReading {
 enum class TurnDirection {
   LEFT,
   RIGHT
-}
+};
 
 // stepper motor
 const int STEPS_PER_REVOLUTION = 200;

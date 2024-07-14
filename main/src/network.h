@@ -6,7 +6,7 @@
 #include <WiFi.h>
 
 namespace Network {
-  String message;
+  extern String message;
 
   void setupWifi();
 

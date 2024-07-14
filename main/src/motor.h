@@ -10,7 +10,7 @@ class Motor {
     /**
      * Initialize an encoded motor
      */
-    Motor(uint8_t motorPinA, uint8_t motorPinB, uint8_t encoderPinA, uint8_t encoderPinB);
+    Motor(uint8_t motorPinA, uint8_t motorPinB, uint8_t encoderPinA, uint8_t encoderPinB, uint8_t motorChannelA, uint8_t motorChannelB);
 
     /**
      * Set motor to a certain speed
@@ -43,5 +43,9 @@ class Motor {
     uint8_t motorPinB;
     uint8_t encoderPinA;
     uint8_t encoderPinB;
+
+    uint8_t motorChannelA;
+    uint8_t motorChannelB;
+
     volatile int count = 0;
 };
