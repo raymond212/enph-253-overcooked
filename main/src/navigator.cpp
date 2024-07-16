@@ -6,7 +6,7 @@ namespace Navigator {
   FacingDirection facingDirection;
 
   void setupNavigator() {
-    position = 0;
+    position = 2.25;
     yPosition = YPosition::TAPE;
     facingDirection = FacingDirection::RIGHT;
   }
@@ -25,21 +25,25 @@ namespace Navigator {
     if (yPosition != YPosition::TAPE) {
       Drivetrain::backUpToTape();
     }
+    // delay(500);
 
     // Step 2: face the right direction
     FacingDirection desiredFacingDirection = (station.position > position) ? FacingDirection::RIGHT : FacingDirection::LEFT;
     turnToFace(desiredFacingDirection);
+    // delay(500);
 
     // Step 3: drive to the station X position
     if (!Utils::isEqual(station.position, position)) {
       Drivetrain::tapeFollow(abs(station.position - position));
     }
     position = station.position;
+    // delay(500);
 
     // Step 4: face the station
     YPosition stationYPosition = (station.table == Table::TOP || (station.table == Table::MIDDLE && ROBOT_ID == 1)) ? YPosition::TOP : YPosition::BOTTOM;
     desiredFacingDirection = (stationYPosition == YPosition::TOP) ? FacingDirection::TOP : FacingDirection::BOTTOM;
     turnToFace(desiredFacingDirection);    
+    // delay(500);
 
     // Step 5: drive to the station
     Drivetrain::driveUpToTable();
@@ -78,5 +82,6 @@ namespace Navigator {
       case FacingDirection::LEFT:
         return 3;
     }
+    return 0;
   }
 }

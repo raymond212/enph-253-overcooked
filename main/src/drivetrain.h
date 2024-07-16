@@ -6,6 +6,7 @@
 #include <motor.h>
 #include <tape_sensors.h>
 #include <network.h>
+#include <utils.h>
 
 namespace Drivetrain {
   /**
@@ -33,4 +34,6 @@ namespace Drivetrain {
    * Drive the robot with the specified left and right power
    */
   void drive(double leftPower, double rightPower);
+
+  void run(int speed);
 }

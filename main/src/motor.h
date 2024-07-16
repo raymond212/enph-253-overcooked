@@ -19,6 +19,8 @@ class Motor {
      */
     void setPower(double power);
 
+    void setDutyCycle(int dutyCycle);
+
     /**
      * @return the number of encoder clicks
      */
@@ -38,6 +40,10 @@ class Motor {
      * An ISR to update the encoder count
      */
     void encoderISR();
+
+    double getSpeed();
+
+    void setSpeedPID(double targetClicksPerSecond);
   private:
     uint8_t motorPinA;
     uint8_t motorPinB;
@@ -48,4 +54,7 @@ class Motor {
     uint8_t motorChannelB;
 
     volatile int count = 0;
+
+    volatile int lastCount = 0;
+    volatile long lastTime = 0;
 };

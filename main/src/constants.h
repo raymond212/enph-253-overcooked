@@ -39,7 +39,7 @@ const uint8_t R_MOTOR_CHANNEL_B = 3;
 const int MOTOR_PWM_FREQ_HZ = 250;
 const int MOTOR_PWM_RESOLUTION = 8; // 2^8 = 256
 
-const int CLICKS_PER_REV = 2730; // 11 * 131 * 2 = 2882;
+const int CLICKS_PER_REV = 2720; // 11 * 131 * 2 = 2882;
 const double CLICKS_PER_IN = CLICKS_PER_REV / WHEEL_CIRCUMFERENCE;
 const double IN_PER_CLICK = 1 / CLICKS_PER_IN;
 
@@ -47,8 +47,8 @@ const double IN_PER_CLICK = 1 / CLICKS_PER_IN;
 const uint8_t TAPE_SENSOR_L = 36;
 const uint8_t TAPE_SENSOR_R = 39;
 
-const int LEFT_TAPE_THRESHOLD = 3200; // between 0 and 4095
-const int RIGHT_TAPE_THRESHOLD = 3400; // between 0 and 4095
+const int LEFT_TAPE_THRESHOLD = 3000; // between 0 and 4095
+const int RIGHT_TAPE_THRESHOLD = 3200; // between 0 and 4095
 
 // servo motors
 const int SERVO_PWM_FREQ_HZ = 50;
@@ -97,13 +97,13 @@ enum class YPosition {
   BOTTOM
 };
 
-static Station PATTIES(15, Table::TOP);
+static Station PATTIES(12, Table::TOP);
 static Station BUNS(48, Table::TOP);
-static Station POTATOES(81, Table::TOP);
+static Station POTATOES(84, Table::TOP);
 
 static Station TOMATOES(6, Table::MIDDLE);
-static Station CUTTING(24, Table::MIDDLE);
-static Station COOKING(75, Table::MIDDLE);
+static Station CUTTING(30, Table::MIDDLE);
+static Station COOKING(72.5, Table::MIDDLE);
 static Station PLATES(90, Table::MIDDLE);
 
 static Station CHEESE(6, Table::BOTTOM);
