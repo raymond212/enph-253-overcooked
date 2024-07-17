@@ -8,7 +8,7 @@ const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot
 const double WHEEL_DIAMETER = 3.05;
 const double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * PI;
 const double TAPE_SENSOR_TO_WHEEL_DIST = 4.0;
-const double WHEEL_TO_WHEEL_DIST = 4.0;
+const double WHEEL_TO_WHEEL_DIST = 7.25;
 
 // wifi settings
 const String ssid = "Raymond";

@@ -71,26 +71,29 @@ namespace Drivetrain {
   void turnUntilTape(TurnDirection dir) {
     leftM.resetEncoder();
     rightM.resetEncoder();
+    // double turningThresholdDistance = (WHEEL_TO_WHEEL_DIST * PI / 4) - 1;
+    // double distance = 0;
 
     long startTime = millis();
     while (!(TapeSensors::readTape() == TapeReading::BOTH && millis() - startTime > 500)) {
       if (dir == TurnDirection::LEFT) {
-        Network::wifiPrintln("Turning left");
-        drive(-0.19, 0.1);
+        // Network::wifiPrintln("Turning left");
+        drive(-0.27, 0.22);
       } else {
-        Network::wifiPrintln("Turning right");
-        drive(0.19, -0.1);
+        // Network::wifiPrintln("Turning right");
+        drive(0.27, -0.22);
       }
-      delay(1);
+      // distance = ((abs(leftM.getDistance()) + abs(rightM.getDistance())) / 2);
+      // delay(1);
     }
-    Network::wifiPrintln(String(leftM.getDistance()) + " " + String(rightM.getDistance()));
+    // Network::wifiPrintln(String(leftM.getDistance()) + " " + String(rightM.getDistance()));
     // active breaking
     if (dir == TurnDirection::LEFT) {
-      drive(0.55, -0.55);
-      delay(30);
+      drive(0.6, -0.6);
+      delay(60);
     } else {
-      drive(-0.55, 0.55);
-      delay(30);
+      drive(-0.6, 0.6);
+      delay(60);
     }
     drive(0, 0);
     Network::wifiPrintln(String(leftM.getDistance()) + " " + String(rightM.getDistance()));

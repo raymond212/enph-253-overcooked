@@ -14,7 +14,10 @@ bool wifiInput();
 
 void setup() {
   Serial.begin(9600);
+<<<<<<< Updated upstream
   Serial.println("Hello");
+=======
+>>>>>>> Stashed changes
 
   // Wifi setup
   WiFi.mode(WIFI_STA);

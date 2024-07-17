@@ -3,7 +3,12 @@
 
 Servo myservo;
 int servoPin = 13;
- 
+int curPosition = 0;
+
+void outputTrapdoor();
+void inputScraper();
+void moveServo(int delayMs, int target);
+
 void setup() {
   Serial.begin(9600);
 	myservo.setPeriodHertz(50);
@@ -11,36 +16,48 @@ void setup() {
   Serial.println("Enter servo position: ");
   // analogWriteFrequency(50);
 }
- 
-int curPosition = 140;
 
 void loop() {
+  outputTrapdoor();
+}
+
+void moveServo(int delayMs, int target) {
+  while (curPosition != target) {
+    if (curPosition < target) {
+      curPosition++;
+    } else {
+      curPosition--;
+    }
+    myservo.write(curPosition);
+    delay(delayMs);
+  }
+}
+
+void outputTrapdoor() {
+  if (Serial.available() > 0) {
+    String input = Serial.readStringUntil('\n');
+    input.trim();
+    if (input == "o") {
+      myservo.write(55);
+      // moveServo(65, 25);
+    } else if (input == "c") {
+      myservo.write(176);
+      delay(1000);
+      myservo.write(55);
+      // moveServo(174, 25);
+    } else {
+      myservo.write(input.toInt());
+    }
+  }
+} 
+
+void inputScraper() {
   // input scraper: 140 to 20 
 
   if (Serial.available() > 0) {
     String input = Serial.readStringUntil('\n');
-    // input.trim();
-    // int targetPosition = (input == "O") ? 140 : 20;
-    // // int targetPosition = input.toInt();
-    // Serial.println("Moving to position: " + String(targetPosition));
     myservo.write(20);
     delay(800);
     myservo.write(140);
-    // delay();
-    // if (targetPosition >= 0 && targetPosition <= 180) {
-    //   myservo.write(targetPosition);
-    //   curPosition = targetPosition;
-    //   // while (curPosition != targetPosition) {
-    //   //   if (curPosition < targetPosition) {
-    //   //     curPosition++;
-    //   //   } else {
-    //   //     curPosition--;
-    //   //   }
-    //   //   myservo.write(curPosition);
-    //   //   delay(15);
-    //   // }
-    // } else {
-    //   Serial.println("Invalid position.");
-    // }
   }
 }
