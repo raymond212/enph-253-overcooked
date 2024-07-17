@@ -63,6 +63,11 @@ void loop() {
     Drivetrain::turnUntilTape(TurnDirection::LEFT);
   } else if (reading == "Tape") {
     Network::wifiPrintln(TapeSensors::getValuesStr());
+  } else if (reading == "F") {
+    while (!Network::wifiInput()) {
+      // wait
+    }
+    Drivetrain::tapeFollow(Network::message.toDouble());
   }
 
 }

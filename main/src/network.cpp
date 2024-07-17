@@ -11,7 +11,7 @@ namespace Network {
     WiFi.begin(ssid, password);
     while (WiFi.waitForConnectResult() != WL_CONNECTED) {
       delay(1000);
-      ESP.restart();
+      // ESP.restart();
     }
 
     server.begin();

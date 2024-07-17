@@ -12,7 +12,7 @@ const double WHEEL_TO_WHEEL_DIST = 4.0;
 
 // wifi settings
 const String ssid = "Raymond";
-const String password = "lithiumRanger";
+const String password = "enphteamtwo";
 const uint16_t WIFI_PORT = 23;
 
 // navigation motor parameters
