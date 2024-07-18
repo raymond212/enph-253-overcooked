@@ -42,8 +42,8 @@ void outputTrapdoor() {
       // moveServo(65, 25);
     } else if (input == "c") {
       myservo.write(176);
-      delay(1000);
-      myservo.write(55);
+      // delay(1000);
+      // myservo.write(55);
       // moveServo(174, 25);
     } else {
       myservo.write(input.toInt());

@@ -58,6 +58,15 @@ const int SERVO_PWM_PERIOD_US = 1000000 / SERVO_PWM_FREQ_HZ;
 const int SERVO_PWM_MIN_US = 500;
 const int SERVO_PWM_MAX_US = 2500;
 
+// bottom robot modules
+const int INPUT_SCRAPER_PIN = 8;
+const int OUTPUT_SCRAPER_PIN = 7;
+const int TRAPDOOR_PIN = 6;
+
+const int INPUT_SCRAPER_CHANNEL = 4;
+const int OUTPUT_SCRAPER_CHANNEL = 5;
+const int TRAPDOOR_CHANNEL = 6;
+
 enum class TapeReading {
   NONE,
   LEFT,
@@ -112,5 +121,5 @@ static Station LETTUCE(90, Table::BOTTOM);
 
 // stepper motor
 const int STEPS_PER_REVOLUTION = 200;
-const int STEPPER_PULSE_US = 500;
-const int STEPPER_DELAY_US = 500;
+const int STEPPER_PULSE_US = 1500;
+const int STEPPER_DELAY_US = 1500;
