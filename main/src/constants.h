@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
+const int ROBOT_ID = 1; // 0 for top robot, 1 for bottom robot 
 
 // measurements
 const double WHEEL_DIAMETER = 3.05;
@@ -121,5 +121,5 @@ static Station LETTUCE(90, Table::BOTTOM);
 
 // stepper motor
 const int STEPS_PER_REVOLUTION = 200;
-const int STEPPER_PULSE_US = 1500;
-const int STEPPER_DELAY_US = 1500;
+const int STEPPER_PULSE_US = 5000;
+const int STEPPER_DELAY_US = 5000;

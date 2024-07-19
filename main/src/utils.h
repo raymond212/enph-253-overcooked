@@ -1,6 +1,7 @@
 #pragma once
 
 #include <math.h>
+#include <constants.h>
 
 namespace Utils {
   static double mapd(double x, double in_min, double in_max, double out_min, double out_max) {
