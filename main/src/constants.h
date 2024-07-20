@@ -2,7 +2,7 @@
 
 #include <Arduino.h>
 
-const int ROBOT_ID = 1; // 0 for top robot, 1 for bottom robot 
+const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
 
 // measurements
 const double WHEEL_DIAMETER = 3.05;
@@ -21,13 +21,13 @@ const double TAPE_FOLLOW_LOW_POWER = 0.3;
 const double TURN_POWER = 0.15;
 
 // motors and encoders
-const uint8_t L_MOTOR_PIN_A = 20;
-const uint8_t L_MOTOR_PIN_B = 21;
+const uint8_t L_MOTOR_PIN_A = 19;
+const uint8_t L_MOTOR_PIN_B = 22;
 const uint8_t L_ENCODER_PIN_A = 38;
 const uint8_t L_ENCODER_PIN_B = 37;
 
-const uint8_t R_MOTOR_PIN_A = 22;
-const uint8_t R_MOTOR_PIN_B = 19;
+const uint8_t R_MOTOR_PIN_A = 21;
+const uint8_t R_MOTOR_PIN_B = 20;
 const uint8_t R_ENCODER_PIN_A = 34;
 const uint8_t R_ENCODER_PIN_B = 35;
 
@@ -48,7 +48,7 @@ const uint8_t TAPE_SENSOR_L = 36;
 const uint8_t TAPE_SENSOR_R = 39;
 
 const int LEFT_TAPE_THRESHOLD = 3000; // between 0 and 4095
-const int RIGHT_TAPE_THRESHOLD = 3200; // between 0 and 4095
+const int RIGHT_TAPE_THRESHOLD = 3000; // between 0 and 4095
 
 // servo motors
 const int SERVO_PWM_FREQ_HZ = 50;
@@ -61,7 +61,7 @@ const int SERVO_PWM_MAX_US = 2500;
 // bottom robot modules
 const int INPUT_SCRAPER_PIN = 8;
 const int OUTPUT_SCRAPER_PIN = 7;
-const int TRAPDOOR_PIN = 6;
+const int TRAPDOOR_PIN = 5;
 
 const int INPUT_SCRAPER_CHANNEL = 4;
 const int OUTPUT_SCRAPER_CHANNEL = 5;
@@ -121,5 +121,3 @@ static Station LETTUCE(90, Table::BOTTOM);
 
 // stepper motor
 const int STEPS_PER_REVOLUTION = 200;
-const int STEPPER_PULSE_US = 5000;
-const int STEPPER_DELAY_US = 5000;

@@ -14,7 +14,7 @@ void setup() {
   Network::setupWifi();
   TapeSensors::setupTapeSensors();
   Navigator::setupNavigator();
-  // BottomRobotModules::setupBottomRobotModules();
+  BottomRobotModules::setupBottomRobotModules();
 }
 
 void loop() {
@@ -75,11 +75,23 @@ void loop() {
       // wait
     }
     Drivetrain::tapeFollow(Network::message.toDouble());
-  } 
-  // else if (reading == "Switch robot") {
-  //   ROBOT_ID = (ROBOT_ID + 1) % 2;
-  //   Network::wifiPrintln("Switched to robot " + String(ROBOT_ID));
-  //   Navigator::setupNavigator();
-  // }
-
+  } else if (reading == "Table") {
+    Drivetrain::driveUpToTable();
+  } else if (reading == "Back") {
+    Drivetrain::backUpToTape();
+  } else if (reading == "ic") {
+    BottomRobotModules::closeInputScraper();
+  } else if (reading == "io") {
+    BottomRobotModules::openInputScraper();
+  } else if (reading == "tc") {
+    BottomRobotModules::closeTrapdoor();
+  } else if (reading == "to") {
+    BottomRobotModules::openTrapdoor();
+  } else if (reading == "cr") {
+    BottomRobotModules::rotateCarouselRight();
+  } else if (reading == "cb") {
+    BottomRobotModules::rotateCarouselLeft();
+  } else if (reading == "straight") {
+    Drivetrain::run();
+  }
 }

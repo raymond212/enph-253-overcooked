@@ -5,7 +5,7 @@
 
 class Stepper {
   public:
-    Stepper(int stepPin, int dirPin);
+    Stepper(int stepPin, int dirPin, double rps);
 
     void stepRevs(double numRevolutions);
 
@@ -13,4 +13,7 @@ class Stepper {
   private:
     int stepPin;
     int dirPin;
+    double rps;
+    int stepperPulseUS;
+    int stepperDelayUS;
 };

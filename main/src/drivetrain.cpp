@@ -29,18 +29,18 @@ namespace Drivetrain {
         case TapeReading::BOTH:
           // both tape, go straight
           // Network::wifiPrintln("straight");
-          drive(0.5, 0.5);
+          drive(0.5, 0.6);
           break;
         case TapeReading::LEFT:
           // front left tape, turn left
           // Network::wifiPrintln("turn left");
-          drive(0.25, 0.5);
+          drive(0.3, 0.6);
           lastTurnAttempt = TurnDirection::LEFT;
           break;
         case TapeReading::RIGHT:
           // front right tape, turn right
           // Network::wifiPrintln("turn right");
-          drive(0.5, 0.25);
+          drive(0.5, 0.3);
           lastTurnAttempt = TurnDirection::RIGHT;
           break;
         case TapeReading::NONE:
@@ -56,9 +56,9 @@ namespace Drivetrain {
       delay(1);
       distance = ((leftM.getDistance() + rightM.getDistance()) / 2);
     }
-    // Network::wifiPrintln(String(leftM.getDistance()) + " " + String(rightM.getDistance()));
-    // Network::wifiPrintln(String(leftM.getCount()) + " " + String(rightM.getCount()));
-    // Network::wifiPrintln("Distance (in): " + String(distance));
+    Network::wifiPrintln(String(leftM.getDistance()) + " " + String(rightM.getDistance()));
+    Network::wifiPrintln(String(leftM.getCount()) + " " + String(rightM.getCount()));
+    Network::wifiPrintln("Distance (in): " + String(distance));
     
     // active breaking
     drive(-0.6, -0.6);
@@ -71,11 +71,14 @@ namespace Drivetrain {
   void turnUntilTape(TurnDirection dir) {
     leftM.resetEncoder();
     rightM.resetEncoder();
-    // double turningThresholdDistance = (WHEEL_TO_WHEEL_DIST * PI / 4) - 1;
-    // double distance = 0;
+    TapeReading tapeReading = TapeSensors::readTape();
+    bool hasSeenWhite = false;
 
-    long startTime = millis();
-    while (!(TapeSensors::readTape() == TapeReading::BOTH && millis() - startTime > 500)) {
+    while (!(tapeReading == TapeReading::BOTH && hasSeenWhite)) {
+      tapeReading = TapeSensors::readTape();
+      if (tapeReading == TapeReading::NONE) {
+        hasSeenWhite = true;
+      }
       if (dir == TurnDirection::LEFT) {
         // Network::wifiPrintln("Turning left");
         drive(-0.27, 0.22);
@@ -172,26 +175,31 @@ namespace Drivetrain {
     rightM.setPower(rightPower);
   }
 
-  void run(int speed) {
+  void run() {
+    drive(1, 1);
+    delay(10000);
+    drive(-1, -1);
+    delay(100);
+    drive(0, 0);
     // while (true) {
     //   rightM.setDutyCycle(21);
     //   delay(1000);
     //   Serial.println(rightM.getSpeed());
     // }
 
-    int leftDuty = Utils::leftMotorSpeedToDutyCycle(speed);
-    int rightDuty = Utils::rightMotorSpeedToDutyCycle(speed);
-    leftM.setDutyCycle(leftDuty);
-    rightM.setDutyCycle(rightDuty);
-    delay(2000);
+    // int leftDuty = Utils::leftMotorSpeedToDutyCycle(speed);
+    // int rightDuty = Utils::rightMotorSpeedToDutyCycle(speed);
+    // leftM.setDutyCycle(leftDuty);
+    // rightM.setDutyCycle(rightDuty);
+    // delay(2000);
 
-    while (true) {
-      Serial.println(String(leftDuty) + " " + String(rightDuty));
-      leftM.setDutyCycle(leftDuty);
-      rightM.setDutyCycle(rightDuty);
-      delay(1000);
-      Serial.println(String(leftM.getSpeed()) + " " + String(rightM.getSpeed()));
-    }
+    // while (true) {
+    //   Serial.println(String(leftDuty) + " " + String(rightDuty));
+    //   leftM.setDutyCycle(leftDuty);
+    //   rightM.setDutyCycle(rightDuty);
+    //   delay(1000);
+    //   Serial.println(String(leftM.getSpeed()) + " " + String(rightM.getSpeed()));
+    // }
 
     // for (int dutyCycle = 0; dutyCycle <= 255; dutyCycle++) {
     //   rightM.setDutyCycle(dutyCycle);

@@ -1,8 +1,10 @@
 #include <stepper.h>
 
-Stepper::Stepper(int stepPin, int dirPin) : stepPin(stepPin), dirPin(dirPin) {
+Stepper::Stepper(int stepPin, int dirPin, double rps) : stepPin(stepPin), dirPin(dirPin), rps(rps) {
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
+  stepperPulseUS = (1 / (rps * STEPS_PER_REVOLUTION)) * 1000000 / 2;
+  stepperDelayUS = stepperPulseUS;
 }
 
 void Stepper::stepRevs(double numRevolutions) {
@@ -18,8 +20,8 @@ void Stepper::step(int numSteps) {
   numSteps = abs(numSteps);
   for (int i = 0; i < numSteps; i++) {
     digitalWrite(stepPin, HIGH);
-    delayMicroseconds(STEPPER_PULSE_US);
+    delayMicroseconds(stepperPulseUS);
     digitalWrite(stepPin, LOW);
-    delayMicroseconds(STEPPER_DELAY_US);
+    delayMicroseconds(stepperDelayUS);
   }
 }

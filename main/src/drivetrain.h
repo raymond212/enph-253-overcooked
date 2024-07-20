@@ -35,5 +35,5 @@ namespace Drivetrain {
    */
   void drive(double leftPower, double rightPower);
 
-  void run(int speed);
+  void run();
 }

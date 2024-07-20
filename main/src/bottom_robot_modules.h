@@ -4,6 +4,7 @@
 #include <constants.h>
 #include <servo.h>
 #include <stepper.h>
+#include <drivetrain.h>
 
 namespace BottomRobotModules {
   void setupBottomRobotModules();
@@ -12,4 +13,6 @@ namespace BottomRobotModules {
   void openInputScraper();
   void closeTrapdoor();
   void openTrapdoor();
+  void rotateCarouselRight();
+  void rotateCarouselLeft();
 }
