@@ -10,30 +10,15 @@
 
 namespace Drivetrain {
   /**
-   * Initialize the drivetrain, which consists of two encoded motors
+   * Initialize the drivetrain, which consists of four motors
    */
   void setupDrivetrain();
 
-  void driveTest();
+  void driveMotors(double FLPower, double FRPower, double BLPower, double BRPower);
 
-  /**
-   * Tape follow the target distance in inches
-   */
-  void tapeFollow(double targetDistance);
+  void driveMecanum(double x, double y, double rotation);
 
-  /**
-   * Turn the robot until tape is detected
-   */
-  void turnUntilTape(TurnDirection dir);
-
-  void driveUpToTable();
-
-  void backUpToTape();
-
-  /**
-   * Drive the robot with the specified left and right power
-   */
-  void drive(double leftPower, double rightPower);
-
+  void stopAll();
+  
   void run();
 }

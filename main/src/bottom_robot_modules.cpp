@@ -1,11 +1,11 @@
 #include <bottom_robot_modules.h>
 
 namespace BottomRobotModules {
-  Servo inputScraper = Servo(INPUT_SCRAPER_PIN, INPUT_SCRAPER_CHANNEL);
-  Stepper carousel = Stepper(25, 26, 1.0);
-  // Stepper leadScrew = Stepper(32, 33, 0.5);
-  // Servo outputScraper = Servo(OUTPUT_SCRAPER_PIN, OUTPUT_SCRAPER_CHANNEL);
-  Servo trapdoor = Servo(TRAPDOOR_PIN, TRAPDOOR_CHANNEL);
+  // Servo inputScraper = Servo(INPUT_SCRAPER_PIN, INPUT_SCRAPER_CHANNEL);
+  // Stepper carousel = Stepper(25, 26, 1.0);
+  // // Stepper leadScrew = Stepper(32, 33, 0.5);
+  // // Servo outputScraper = Servo(OUTPUT_SCRAPER_PIN, OUTPUT_SCRAPER_CHANNEL);
+  // Servo trapdoor = Servo(TRAPDOOR_PIN, TRAPDOOR_CHANNEL);
 
   bool inputScraperIsClosed = false;
 
@@ -44,28 +44,28 @@ namespace BottomRobotModules {
   }
 
   void closeInputScraper() {
-    inputScraper.setAngle(17);
+    // inputScraper.setAngle(17);
   }
 
   void openInputScraper() {
-    inputScraper.setAngle(137);
+    // inputScraper.setAngle(137);
   }
 
   void closeTrapdoor() {
-    trapdoor.setAngle(178);
+    // trapdoor.setAngle(178);
   }
 
   void openTrapdoor() {
-    trapdoor.setAngle(55);
-    delay(2000);
+    // trapdoor.setAngle(55);
+    // delay(2000);
   }
 
   void rotateCarouselRight() {
-    carousel.step(-200);
+    // carousel.step(-200);
   }
 
   void rotateCarouselLeft() {
-    carousel.step(200);
+    // carousel.step(200);
   }
 
 

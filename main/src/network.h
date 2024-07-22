@@ -12,5 +12,5 @@ namespace Network {
 
   void wifiPrintln(String msg);
   
-  bool wifiInput();
+  bool wifiInput();  
 }

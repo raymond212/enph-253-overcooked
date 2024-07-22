@@ -8,7 +8,7 @@ Stepper::Stepper(int stepPin, int dirPin, double rps) : stepPin(stepPin), dirPin
 }
 
 void Stepper::stepRevs(double numRevolutions) {
-  step(int(numRevolutions * STEPS_PER_REVOLUTION));
+  step((int)(numRevolutions * STEPS_PER_REVOLUTION));
 }
 
 void Stepper::step(int numSteps) {

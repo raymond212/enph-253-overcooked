@@ -4,12 +4,6 @@
 
 const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
 
-// measurements
-const double WHEEL_DIAMETER = 3.05;
-const double WHEEL_CIRCUMFERENCE = WHEEL_DIAMETER * PI;
-const double TAPE_SENSOR_TO_WHEEL_DIST = 4.0;
-const double WHEEL_TO_WHEEL_DIST = 7.25;
-
 // wifi settings
 const String ssid = "Raymond";
 const String password = "enphteamtwo";
@@ -20,35 +14,37 @@ const double TAPE_FOLLOW_HIGH_POWER = 0.5;
 const double TAPE_FOLLOW_LOW_POWER = 0.3;
 const double TURN_POWER = 0.15;
 
-// motors and encoders
-const uint8_t L_MOTOR_PIN_A = 19;
-const uint8_t L_MOTOR_PIN_B = 22;
-const uint8_t L_ENCODER_PIN_A = 38;
-const uint8_t L_ENCODER_PIN_B = 37;
+// motors
+const uint8_t FL_MOTOR_PIN_A = 33;
+const uint8_t FL_MOTOR_PIN_B = 32;
 
-const uint8_t R_MOTOR_PIN_A = 21;
-const uint8_t R_MOTOR_PIN_B = 20;
-const uint8_t R_ENCODER_PIN_A = 34;
-const uint8_t R_ENCODER_PIN_B = 35;
+const uint8_t FR_MOTOR_PIN_A = 20;
+const uint8_t FR_MOTOR_PIN_B = 21;
 
-const uint8_t L_MOTOR_CHANNEL_A = 0;
-const uint8_t L_MOTOR_CHANNEL_B = 1;
-const uint8_t R_MOTOR_CHANNEL_A = 2;
-const uint8_t R_MOTOR_CHANNEL_B = 3;
+const uint8_t BL_MOTOR_PIN_A = 22;
+const uint8_t BL_MOTOR_PIN_B = 19;
+
+const uint8_t BR_MOTOR_PIN_A = 26;
+const uint8_t BR_MOTOR_PIN_B = 25;
+
+const uint8_t FL_MOTOR_CHANNEL_A = 0;
+const uint8_t FL_MOTOR_CHANNEL_B = 1;
+const uint8_t FR_MOTOR_CHANNEL_A = 2;
+const uint8_t FR_MOTOR_CHANNEL_B = 3;
+const uint8_t BL_MOTOR_CHANNEL_A = 4;
+const uint8_t BL_MOTOR_CHANNEL_B = 5;
+const uint8_t BR_MOTOR_CHANNEL_A = 6;
+const uint8_t BR_MOTOR_CHANNEL_B = 7;
 
 const int MOTOR_PWM_FREQ_HZ = 250;
 const int MOTOR_PWM_RESOLUTION = 8; // 2^8 = 256
 
-const int CLICKS_PER_REV = 2720; // 11 * 131 * 2 = 2882;
-const double CLICKS_PER_IN = CLICKS_PER_REV / WHEEL_CIRCUMFERENCE;
-const double IN_PER_CLICK = 1 / CLICKS_PER_IN;
-
 // tape sensors
-const uint8_t TAPE_SENSOR_L = 36;
-const uint8_t TAPE_SENSOR_R = 39;
+const uint8_t TAPE_SENSOR_F = 36;
+const uint8_t TAPE_SENSOR_B = 39;
 
-const int LEFT_TAPE_THRESHOLD = 3000; // between 0 and 4095
-const int RIGHT_TAPE_THRESHOLD = 3000; // between 0 and 4095
+const int FRONT_TAPE_THRESHOLD = 3000; // between 0 and 4095
+const int BACK_TAPE_THRESHOLD = 3000; // between 0 and 4095
 
 // servo motors
 const int SERVO_PWM_FREQ_HZ = 50;
@@ -63,14 +59,14 @@ const int INPUT_SCRAPER_PIN = 8;
 const int OUTPUT_SCRAPER_PIN = 7;
 const int TRAPDOOR_PIN = 5;
 
-const int INPUT_SCRAPER_CHANNEL = 4;
-const int OUTPUT_SCRAPER_CHANNEL = 5;
-const int TRAPDOOR_CHANNEL = 6;
+const int INPUT_SCRAPER_CHANNEL = 8;
+const int OUTPUT_SCRAPER_CHANNEL = 9;
+const int TRAPDOOR_CHANNEL = 10;
 
 enum class TapeReading {
   NONE,
-  LEFT,
-  RIGHT,
+  FRONT,
+  BACK,
   BOTH
 };
 
