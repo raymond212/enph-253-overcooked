@@ -21,4 +21,8 @@ namespace Drivetrain {
   void stopAll();
   
   void run();
+
+  void driveFUntilTape(int skip = 0);
+
+  void driveBUntilTape(int skip = 0);
 }

@@ -8,6 +8,7 @@ namespace Drivetrain {
 
   void setupDrivetrain() {
     // Motor setup is done in the Motor constructor
+    TapeSensors::setupTapeSensors();
   }
 
   void driveMotors(double FLPower, double FRPower, double BLPower, double BRPower) {
@@ -45,6 +46,49 @@ namespace Drivetrain {
 
   void run() {
     // run
+  }
+
+  void driveFUntilTape(int skip = 0) {
+
+    int count = 0;
+    unsigned long time = millis();
+
+    driveMotors(0.5,0.5,0.5,0.5);
+    //edit values above^
+
+    while (true) {
+      if (TapeSensors::frontIsTape()) {
+        if (count == skip){
+          stopAll();
+          break;
+        } else {
+          count ++;
+          delay(100);
+        }
+      }
+      }
+    }
+
+  void driveBUntilTape(int skip = 0) {
+
+    int count = 0;
+    unsigned long time = millis();
+
+    driveMotors(-0.5,-0.5,-0.5,-0.5);
+    //edit values above^
+
+    while (true) {
+      if (TapeSensors::backIsTape()) {
+        if (count == skip){
+          stopAll();
+          break;
+        } else {
+          count ++;
+          delay(100);
+        }
+      }
+      }
+
   }
 
 
