@@ -65,10 +65,45 @@ void loop() {
     Drivetrain::stopAll();
   } else if (s == "R") {
     Drivetrain::driveMecanum(-90, 0, power);
+    delay(duration);
+    Drivetrain::stopAll();
   } else if (s == "time") {
     duration = wifiWaitAndRead().toInt();
   } else if (s == "power") {
     power = wifiWaitAndRead().toDouble();
+  } else if (s == "FL") {
+    Drivetrain::driveMotors(power, 0, 0, 0);
+    delay(duration);
+    Drivetrain::stopAll();
+  } else if (s == "FR") {
+    Drivetrain::driveMotors(0, power, 0, 0);
+    delay(duration);
+    Drivetrain::stopAll();
+  } else if (s == "BL") {
+    Drivetrain::driveMotors(0, 0, power, 0);
+    delay(duration);
+    Drivetrain::stopAll();
+  } else if (s == "BR") {
+    Drivetrain::driveMotors(0, 0, 0, power);
+    delay(duration);
+    Drivetrain::stopAll();
+  } else if (s == "Print") {
+    Network::wifiPrintln("Duration " + String(duration) + " Power " + String(power));
+  } else if (s == "Tape") {
+    Network::wifiPrintln(TapeSensors::getValuesStr());
+  } else if (s == "FT") {
+    int num = wifiWaitAndRead().toInt();
+    Drivetrain::driveFUntilTape(num);
+  } else if (s == "mec") {
+    double angle = wifiWaitAndRead().toDouble();
+    Drivetrain::driveMecanum(angle, 0, power);
+    delay(duration);
+    Drivetrain::stopAll();
+  } else if (s == "spin") {
+    double spinPower = wifiWaitAndRead().toDouble();
+    Drivetrain::driveMecanum(0, spinPower, 0);
+    delay(duration);
+    Drivetrain::stopAll();
   }
 
   // top robot modules testing

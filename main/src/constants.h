@@ -15,17 +15,17 @@ const double TAPE_FOLLOW_LOW_POWER = 0.3;
 const double TURN_POWER = 0.15;
 
 // motors
-const uint8_t FL_MOTOR_PIN_A = 33;
-const uint8_t FL_MOTOR_PIN_B = 32;
+const uint8_t FL_MOTOR_PIN_A = 22;
+const uint8_t FL_MOTOR_PIN_B = 19;
 
 const uint8_t FR_MOTOR_PIN_A = 20;
 const uint8_t FR_MOTOR_PIN_B = 21;
 
-const uint8_t BL_MOTOR_PIN_A = 22;
-const uint8_t BL_MOTOR_PIN_B = 19;
+const uint8_t BL_MOTOR_PIN_A = 32;
+const uint8_t BL_MOTOR_PIN_B = 33;
 
-const uint8_t BR_MOTOR_PIN_A = 26;
-const uint8_t BR_MOTOR_PIN_B = 25;
+const uint8_t BR_MOTOR_PIN_A = 25;
+const uint8_t BR_MOTOR_PIN_B = 26;
 
 const uint8_t FL_MOTOR_CHANNEL_A = 0;
 const uint8_t FL_MOTOR_CHANNEL_B = 1;

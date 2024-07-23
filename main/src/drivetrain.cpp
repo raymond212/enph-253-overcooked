@@ -20,7 +20,7 @@ namespace Drivetrain {
 
   void driveMecanum(double theta, double rotation, double power) {
     double sinTerm = sin((theta + 45) * PI / 180);
-    double cosTerm = sin((theta + 45) * PI / 180);
+    double cosTerm = cos((theta + 45) * PI / 180);
     double maxTerm = max(abs(sinTerm), abs(cosTerm));
 
     double FLPower = power * (cosTerm / maxTerm) + rotation;
@@ -36,7 +36,7 @@ namespace Drivetrain {
       BLPower /= maxPower;
       BRPower /= maxPower;
     }
-
+    Serial.println(String(FLPower) + " " + String(FRPower) + " " + String(BLPower) + " " + String(BRPower));
     driveMotors(FLPower, FRPower, BLPower, BRPower);
   }
 
@@ -48,48 +48,49 @@ namespace Drivetrain {
     // run
   }
 
-  void driveFUntilTape(int skip = 0) {
-
+  void driveFUntilTape(int num) {
     int count = 0;
-    unsigned long time = millis();
+    bool prevFrontTape = TapeSensors::frontIsTape();
+    int iter = 0;
+    long start = millis();
+    driveMecanum(-10, 0, 0.5);
 
-    driveMotors(0.5,0.5,0.5,0.5);
-    //edit values above^
-
-    while (true) {
-      if (TapeSensors::frontIsTape()) {
-        if (count == skip){
-          stopAll();
-          break;
-        } else {
-          count ++;
-          delay(100);
-        }
+    while (count < num) {
+      if (!prevFrontTape && TapeSensors::frontIsTape()) {
+        count++;
       }
-      }
+      prevFrontTape = TapeSensors::frontIsTape();
+      iter++;
     }
 
-  void driveBUntilTape(int skip = 0) {
+    Network::wifiPrintln("Time: " + String(millis() - start) + " Iter: " + String(iter));
 
-    int count = 0;
-    unsigned long time = millis();
-
-    driveMotors(-0.5,-0.5,-0.5,-0.5);
-    //edit values above^
-
-    while (true) {
-      if (TapeSensors::backIsTape()) {
-        if (count == skip){
-          stopAll();
-          break;
-        } else {
-          count ++;
-          delay(100);
-        }
-      }
-      }
-
+    driveMecanum(180, 0, 1);
+    delay(50);
+    stopAll();
   }
+
+  // void driveBUntilTape(int skip = 0) {
+
+  //   int count = 0;
+  //   unsigned long time = millis();
+
+  //   driveMotors(-0.5,-0.5,-0.5,-0.5);
+  //   //edit values above^
+
+  //   while (true) {
+  //     if (TapeSensors::backIsTape()) {
+  //       if (count == skip){
+  //         stopAll();
+  //         break;
+  //       } else {
+  //         count ++;
+  //         delay(100);
+  //       }
+  //     }
+  //     }
+
+  // }
 
 
 }

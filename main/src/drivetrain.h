@@ -16,13 +16,13 @@ namespace Drivetrain {
 
   void driveMotors(double FLPower, double FRPower, double BLPower, double BRPower);
 
-  void driveMecanum(double x, double y, double rotation);
+  void driveMecanum(double theta, double rotation, double power);
 
   void stopAll();
-  
+
   void run();
 
-  void driveFUntilTape(int skip = 0);
+  void driveFUntilTape(int num);
 
-  void driveBUntilTape(int skip = 0);
+  // void driveBUntilTape(int skip);
 }

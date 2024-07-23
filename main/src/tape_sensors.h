@@ -15,12 +15,12 @@ namespace TapeSensors {
   TapeReading readTape();
 
   /**
-   * @return true if the left sensor detects tape and false otherwise
+   * @return true if the front sensor detects tape and false otherwise
    */
   bool frontIsTape();
 
   /**
-   * @return true if the right sensor detects tape and false otherwise
+   * @return true if the back sensor detects tape and false otherwise
    */
   bool backIsTape();
 
