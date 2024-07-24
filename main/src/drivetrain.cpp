@@ -48,49 +48,67 @@ namespace Drivetrain {
     // run
   }
 
-  void driveFUntilTape(int num) {
+  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int num) {
     int count = 0;
-    bool prevFrontTape = TapeSensors::frontIsTape();
     int iter = 0;
-    long start = millis();
-    driveMecanum(-10, 0, 0.5);
+    int lastTapeTime = millis();
+    int start = millis();
+    bool seeTape = false;
+    if (driveDirection == DriveDirection::FORWARD) {
+      if (wallLocation == WallLocation::RIGHT) {
+        driveMecanum(-WALL_FOLLOW_ANGLE_DEG, 0, TAPE_FOLLOW_LOW_POWER);
+      } else {
+        driveMecanum(WALL_FOLLOW_ANGLE_DEG, 0, TAPE_FOLLOW_LOW_POWER);
+      }
+    } else if (driveDirection == DriveDirection::BACKWARD) {
+      if (wallLocation == WallLocation::RIGHT) {
+        driveMecanum(-180 + WALL_FOLLOW_ANGLE_DEG, 0, TAPE_FOLLOW_LOW_POWER);
+      } else {
+        driveMecanum(180 - WALL_FOLLOW_ANGLE_DEG, 0, TAPE_FOLLOW_LOW_POWER);
+      }
+    }
 
     while (count < num) {
-      if (!prevFrontTape && TapeSensors::frontIsTape()) {
+      seeTape = driveDirection == DriveDirection::FORWARD ? TapeSensors::backIsTape() : TapeSensors::frontIsTape();
+      if (seeTape && millis() - lastTapeTime > TAPE_DEBOUNCE_DELAY && millis() - start > WALL_FOLLOW_DELAY) {
+        lastTapeTime = millis();
         count++;
       }
-      prevFrontTape = TapeSensors::frontIsTape();
       iter++;
     }
 
     Network::wifiPrintln("Time: " + String(millis() - start) + " Iter: " + String(iter));
 
-    driveMecanum(180, 0, 1);
-    delay(50);
+    // active breaking
+    int breakAngle = driveDirection == DriveDirection::FORWARD ? 180 : 0;
+    driveMecanum(breakAngle, 0, 0.4);
+    delay(5);
+    stopAll();
+
+    // drive back into wall
+    // int wallAngle = wallLocation == WallLocation::RIGHT ? -90 : 90;
+    // driveMecanum(wallAngle, 0, 0.7);
+    // delay(100);
+    // stopAll();
+  }
+
+  void wallToWall(DriveDirection driveDirection) {
+    int wallAngle = driveDirection == DriveDirection::RIGHT ? -90 : 90;
+    driveMecanum(wallAngle, 0, 0.5);
+    delay(440);
+    driveMecanum(wallAngle, 0, 0.25);
+    delay(135);
     stopAll();
   }
 
-  // void driveBUntilTape(int skip = 0) {
-
-  //   int count = 0;
-  //   unsigned long time = millis();
-
-  //   driveMotors(-0.5,-0.5,-0.5,-0.5);
-  //   //edit values above^
-
-  //   while (true) {
-  //     if (TapeSensors::backIsTape()) {
-  //       if (count == skip){
-  //         stopAll();
-  //         break;
-  //       } else {
-  //         count ++;
-  //         delay(100);
-  //       }
-  //     }
-  //     }
-
-  // }
-
-
+  void wallToWallSpin(DriveDirection driveDirection, int driveTimeMS, int spinTimeMS) {
+    int wallAngle = driveDirection == DriveDirection::RIGHT ? -90 : 90;
+    driveMecanum(wallAngle, 0, 0.25);
+    delay(driveTimeMS);
+    driveMecanum(0, 0.3, 0);
+    delay(spinTimeMS);
+    driveMecanum(wallAngle + 180, 0, 0.25);
+    delay(driveTimeMS);
+    stopAll();
+  }
 }

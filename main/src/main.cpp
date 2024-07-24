@@ -23,6 +23,8 @@ void setup() {
 
 int duration = 1000;
 double power = 0.5; 
+int driveTime = 550;
+int spinTime = 1050;
 
 // Stepper outputStepper = Stepper(27, 14, 1);
 // Servo inputServo = Servo(32, 8);
@@ -50,61 +52,81 @@ String wifiWaitAndRead() {
 
 void loop() {
   // mecanum drive testing
-  String s = wifiWaitAndRead();
-  if (s == "F") {
-    Drivetrain::driveMecanum(0, 0, power);
-    delay(duration);
-    Drivetrain::stopAll();
-  } else if (s == "B") {
-    Drivetrain::driveMecanum(180, 0, power);
-    delay(duration);
-    Drivetrain::stopAll();
-  } else if (s == "L") {
-    Drivetrain::driveMecanum(90, 0, power);
-    delay(duration);
-    Drivetrain::stopAll();
-  } else if (s == "R") {
-    Drivetrain::driveMecanum(-90, 0, power);
-    delay(duration);
-    Drivetrain::stopAll();
-  } else if (s == "time") {
-    duration = wifiWaitAndRead().toInt();
-  } else if (s == "power") {
-    power = wifiWaitAndRead().toDouble();
-  } else if (s == "FL") {
-    Drivetrain::driveMotors(power, 0, 0, 0);
-    delay(duration);
-    Drivetrain::stopAll();
-  } else if (s == "FR") {
-    Drivetrain::driveMotors(0, power, 0, 0);
-    delay(duration);
-    Drivetrain::stopAll();
-  } else if (s == "BL") {
-    Drivetrain::driveMotors(0, 0, power, 0);
-    delay(duration);
-    Drivetrain::stopAll();
-  } else if (s == "BR") {
-    Drivetrain::driveMotors(0, 0, 0, power);
-    delay(duration);
-    Drivetrain::stopAll();
-  } else if (s == "Print") {
-    Network::wifiPrintln("Duration " + String(duration) + " Power " + String(power));
-  } else if (s == "Tape") {
-    Network::wifiPrintln(TapeSensors::getValuesStr());
-  } else if (s == "FT") {
-    int num = wifiWaitAndRead().toInt();
-    Drivetrain::driveFUntilTape(num);
-  } else if (s == "mec") {
-    double angle = wifiWaitAndRead().toDouble();
-    Drivetrain::driveMecanum(angle, 0, power);
-    delay(duration);
-    Drivetrain::stopAll();
-  } else if (s == "spin") {
-    double spinPower = wifiWaitAndRead().toDouble();
-    Drivetrain::driveMecanum(0, spinPower, 0);
-    delay(duration);
-    Drivetrain::stopAll();
+  if (Network::wifiInput()) {
+    String s = Network::message;
+    if (s == "F") {
+      Drivetrain::driveMecanum(0, 0, power);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "B") {
+      Drivetrain::driveMecanum(180, 0, power);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "L") {
+      Drivetrain::driveMecanum(90, 0, power);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "R") {
+      Drivetrain::driveMecanum(-90, 0, power);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "time") {
+      duration = wifiWaitAndRead().toInt();
+    } else if (s == "power") {
+      power = wifiWaitAndRead().toDouble();
+    } else if (s == "FL") {
+      Drivetrain::driveMotors(power, 0, 0, 0);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "FR") {
+      Drivetrain::driveMotors(0, power, 0, 0);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "BL") {
+      Drivetrain::driveMotors(0, 0, power, 0);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "BR") {
+      Drivetrain::driveMotors(0, 0, 0, power);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "print") {
+      Network::wifiPrintln("Duration " + String(duration) + " Power " + String(power));
+    } else if (s == "tape") {
+      Network::wifiPrintln(TapeSensors::getValuesStr());
+    } else if (s == "W") {
+      String s = wifiWaitAndRead();
+      int num = s.substring(0, 1).toInt();
+      DriveDirection driveDirection = s.substring(1, 2) == "F" ? DriveDirection::FORWARD : DriveDirection::BACKWARD;
+      WallLocation wallLocation = s.substring(2, 3) == "R" ? WallLocation::RIGHT : WallLocation::LEFT;
+      Drivetrain::wallFollow(driveDirection, wallLocation, num);
+    } else if (s == "mec") {
+      double angle = wifiWaitAndRead().toDouble();
+      Drivetrain::driveMecanum(angle, 0, power);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "spin") {
+      double spinPower = wifiWaitAndRead().toDouble();
+      Drivetrain::driveMecanum(0, spinPower, 0);
+      delay(duration);
+      Drivetrain::stopAll();
+    } else if (s == "test") {
+      Network::wifiPrintln("Hello World!");
+    } else if (s == "WW") {
+      DriveDirection driveDirection = wifiWaitAndRead() == "R" ? DriveDirection::RIGHT : DriveDirection::LEFT;
+      Drivetrain::wallToWall(driveDirection);
+    } else if (s == "driveT") {
+      driveTime = wifiWaitAndRead().toInt();
+    } else if (s == "spinT") {
+      spinTime = wifiWaitAndRead().toInt();
+    } else if (s == "WWS") {
+      DriveDirection driveDirection = wifiWaitAndRead() == "R" ? DriveDirection::RIGHT : DriveDirection::LEFT;
+      Drivetrain::wallToWallSpin(driveDirection, driveTime, spinTime);
+    }
   }
+
+  Network::handleOTA();
+  delay(10);
 
   // top robot modules testing
   /*

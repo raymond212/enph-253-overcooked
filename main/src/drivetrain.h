@@ -22,7 +22,9 @@ namespace Drivetrain {
 
   void run();
 
-  void driveFUntilTape(int num);
+  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int num);
 
-  // void driveBUntilTape(int skip);
+  void wallToWall(DriveDirection driveDirection);
+
+  void wallToWallSpin(DriveDirection driveDirection, int driveTimeMS, int spinTimeMS);
 }

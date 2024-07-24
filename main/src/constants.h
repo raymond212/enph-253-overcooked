@@ -9,10 +9,18 @@ const String ssid = "Raymond";
 const String password = "enphteamtwo";
 const uint16_t WIFI_PORT = 23;
 
+const double EPSILON = 0.001;
+
 // navigation motor parameters
 const double TAPE_FOLLOW_HIGH_POWER = 0.5;
 const double TAPE_FOLLOW_LOW_POWER = 0.3;
 const double TURN_POWER = 0.15;
+
+const double WALL_FOLLOW_ANGLE_DEG = 20;
+const double WALL_FOLLOW_SLOW_POWER = 0.3;
+const double WALL_FOLLOW_FAST_POWER = 0.5;
+const int TAPE_DEBOUNCE_DELAY = 300;
+const int WALL_FOLLOW_DELAY = 400;
 
 // motors
 const uint8_t FL_MOTOR_PIN_A = 22;
@@ -21,11 +29,11 @@ const uint8_t FL_MOTOR_PIN_B = 19;
 const uint8_t FR_MOTOR_PIN_A = 20;
 const uint8_t FR_MOTOR_PIN_B = 21;
 
-const uint8_t BL_MOTOR_PIN_A = 32;
-const uint8_t BL_MOTOR_PIN_B = 33;
+const uint8_t BL_MOTOR_PIN_A = 26;
+const uint8_t BL_MOTOR_PIN_B = 25;
 
-const uint8_t BR_MOTOR_PIN_A = 25;
-const uint8_t BR_MOTOR_PIN_B = 26;
+const uint8_t BR_MOTOR_PIN_A = 33;
+const uint8_t BR_MOTOR_PIN_B = 32;
 
 const uint8_t FL_MOTOR_CHANNEL_A = 0;
 const uint8_t FL_MOTOR_CHANNEL_B = 1;
@@ -89,17 +97,16 @@ struct Station {
   Station(double position, Table table) : position(position), table(table) {}
 };
 
-enum class FacingDirection {
-  TOP,
+enum class DriveDirection {
+  FORWARD,
+  BACKWARD,
   RIGHT,
-  BOTTOM,
   LEFT
 };
 
-enum class YPosition {
-  TOP,
-  TAPE,
-  BOTTOM
+enum class WallLocation {
+  RIGHT,
+  LEFT
 };
 
 static Station PATTIES(12, Table::TOP);
