@@ -1,10 +1,11 @@
 #include <stepper.h>
 
-Stepper::Stepper(int stepPin, int dirPin, double rps) : stepPin(stepPin), dirPin(dirPin), rps(rps) {
+Stepper::Stepper() {}
+
+Stepper::Stepper(uint8_t stepPin, uint8_t dirPin, double rps) : stepPin(stepPin), dirPin(dirPin), rps(rps) {
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
-  stepperPulseUS = (1 / (rps * STEPS_PER_REVOLUTION)) * 1000000 / 2;
-  stepperDelayUS = stepperPulseUS;
+  stepperPulseUS = (int)((1 / (rps * STEPS_PER_REVOLUTION)) * 1000000 / 2);
 }
 
 void Stepper::stepRevs(double numRevolutions) {
@@ -12,6 +13,8 @@ void Stepper::stepRevs(double numRevolutions) {
 }
 
 void Stepper::step(int numSteps) {
+  Serial.println("Stepping " + String(numSteps) + " steps");
+  Serial.println("Stepper pulse time: " + String(stepperPulseUS));
   if (numSteps > 0) {
     digitalWrite(dirPin, HIGH);
   } else {
@@ -22,6 +25,11 @@ void Stepper::step(int numSteps) {
     digitalWrite(stepPin, HIGH);
     delayMicroseconds(stepperPulseUS);
     digitalWrite(stepPin, LOW);
-    delayMicroseconds(stepperDelayUS);
+    delayMicroseconds(stepperPulseUS);
   }
+}
+
+void Stepper::setSpeed(double rps) {
+  this->rps = rps;
+  stepperPulseUS = (int)((1 / (rps * STEPS_PER_REVOLUTION)) * 1000000 / 2);
 }

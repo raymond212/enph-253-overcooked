@@ -18,7 +18,7 @@ namespace Network {
 
     server.begin();
     Serial.println("Server started");
-    Serial.println("IP Address: " + WiFi.localIP());
+    Serial.println("IP Address: " + WiFi.localIP().toString());
 
     // OTA setup
     ArduinoOTA

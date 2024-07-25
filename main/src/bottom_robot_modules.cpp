@@ -1,71 +1,61 @@
 #include <bottom_robot_modules.h>
 
 namespace BottomRobotModules {
-  // Servo inputScraper = Servo(INPUT_SCRAPER_PIN, INPUT_SCRAPER_CHANNEL);
-  // Stepper carousel = Stepper(25, 26, 1.0);
-  // // Stepper leadScrew = Stepper(32, 33, 0.5);
-  // // Servo outputScraper = Servo(OUTPUT_SCRAPER_PIN, OUTPUT_SCRAPER_CHANNEL);
-  // Servo trapdoor = Servo(TRAPDOOR_PIN, TRAPDOOR_CHANNEL);
-
-  bool inputScraperIsClosed = false;
+  Servo inputScraper, outputScraper, trapdoor, platePincher;
+  Stepper carousel, elevator;
 
   void setupBottomRobotModules() {
+    inputScraper = Servo(INPUT_SCRAPER_PIN, INPUT_SCRAPER_CHANNEL);
+    outputScraper = Servo(OUTPUT_SCRAPER_PIN, OUTPUT_SCRAPER_CHANNEL);
+    trapdoor = Servo(TRAPDOOR_PIN, TRAPDOOR_CHANNEL);
+    platePincher = Servo(PLATE_PIN, PLATE_CHANNEL);
 
-  }
-
-  void run(String s) {
-    // } else if (s == "s") {
-    //   Serial.println("Enter angle");
-    //   while (Serial.available() == 0) {
-    //     // wait
-    //   }
-    //   s = Serial.readStringUntil('\n');
-    //   s.trim();
-    //   inputScraper.setAngle(s.toInt());
-    // } else if (s == "c") {
-    //   Serial.println("Enter carousel steps");
-    //   while (Serial.available() == 0) {
-    //     // wait
-    //   }
-    //   s = Serial.readStringUntil('\n');
-    //   s.trim();
-    //   carousel.step(s.toInt());
-    // } else if (s == "input") {
-    //   closeInputScraper();
-    //   delay(800);
-    //   openInputScraper();
-    //   carousel.step(-200);
-    // } else {
-    //   Serial.println("Moving lead screw");
-    //   double mm = s.toDouble();
-    //   leadScrew.step((int)(mm * 200));
-    //   // leadScrew.step((int)(mm / 8 * 200));
-    // }
+    carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 0.5);
+    elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 4);
   }
 
   void closeInputScraper() {
-    // inputScraper.setAngle(17);
+    inputScraper.setAngle(17);
   }
 
   void openInputScraper() {
-    // inputScraper.setAngle(137);
+    inputScraper.setAngle(137);
   }
 
   void closeTrapdoor() {
-    // trapdoor.setAngle(178);
+    trapdoor.setAngle(176);
   }
 
   void openTrapdoor() {
-    // trapdoor.setAngle(55);
-    // delay(2000);
+    trapdoor.setAngle(55);
   }
 
   void rotateCarouselRight() {
-    // carousel.step(-200);
+    carousel.step(-200);
   }
 
   void rotateCarouselLeft() {
-    // carousel.step(200);
+    carousel.step(200);
+  }
+
+  void openOutputScraper() {
+    outputScraper.setAngle(0);
+  }
+
+  void closeOutputScraper() {
+    outputScraper.setAngle(180);
+  }
+
+  void openPlatePincher() {
+    platePincher.setAngle(0);
+  }
+
+  void closePlatePincher() {
+    platePincher.setAngle(180);
+  }
+
+  void moveElevator(double distanceMM) {
+    elevator.step((int)(distanceMM / 8 * 200));
   }
 
 

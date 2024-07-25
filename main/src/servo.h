@@ -8,14 +8,19 @@
 class Servo {
   public:
     /**
+     * Declare a null servo motor
+     */
+    Servo();
+
+    /**
      * Initialize a servo motor
      */
     Servo(uint8_t pin, uint8_t channel);
 
     /**
-     * Set servo to a certain angle
+     * Set the servo to a certain angle
      * 
-     * @param angle double between 0 and 180
+     * @param angle between 0 and 180
      */
     void setAngle(double angle);
 

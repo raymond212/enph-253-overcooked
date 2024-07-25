@@ -5,15 +5,21 @@
 
 class Stepper {
   public:
-    Stepper(int stepPin, int dirPin, double rps);
+    Stepper();
+
+    Stepper(uint8_t stepPin, uint8_t dirPin, double rps);
 
     void stepRevs(double numRevolutions);
 
-    void step(int numSteps);    
+    void step(int numSteps);
+
+    void setSpeed(double rps);
+
+    void setTargetSteps(int numSteps);
+
   private:
-    int stepPin;
-    int dirPin;
+    uint8_t stepPin;
+    uint8_t dirPin;
     double rps;
     int stepperPulseUS;
-    int stepperDelayUS;
 };

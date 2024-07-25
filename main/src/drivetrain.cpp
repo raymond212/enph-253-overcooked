@@ -7,8 +7,6 @@ namespace Drivetrain {
   Motor BRMotor = Motor(BR_MOTOR_PIN_A, BR_MOTOR_PIN_B, BR_MOTOR_CHANNEL_A, BR_MOTOR_CHANNEL_B);
 
   void setupDrivetrain() {
-    // Motor setup is done in the Motor constructor
-    TapeSensors::setupTapeSensors();
   }
 
   void driveMotors(double FLPower, double FRPower, double BLPower, double BRPower) {
@@ -23,10 +21,10 @@ namespace Drivetrain {
     double cosTerm = cos((theta + 45) * PI / 180);
     double maxTerm = max(abs(sinTerm), abs(cosTerm));
 
-    double FLPower = power * (cosTerm / maxTerm) + rotation;
-    double FRPower = power * (sinTerm / maxTerm) - rotation;
-    double BLPower = power * (sinTerm / maxTerm) + rotation;
-    double BRPower = power * (cosTerm / maxTerm) - rotation;
+    double FLPower = power * (cosTerm / maxTerm) - rotation;
+    double FRPower = power * (sinTerm / maxTerm) + rotation;
+    double BLPower = power * (sinTerm / maxTerm) - rotation;
+    double BRPower = power * (cosTerm / maxTerm) + rotation;
 
     double maxPower = max(max(abs(FLPower), abs(FRPower)), max(abs(BLPower), abs(BRPower)));
 
@@ -44,11 +42,7 @@ namespace Drivetrain {
     driveMotors(0, 0, 0, 0);
   }
 
-  void run() {
-    // run
-  }
-
-  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int num) {
+  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip) {
     int count = 0;
     int iter = 0;
     int lastTapeTime = millis();
@@ -56,20 +50,20 @@ namespace Drivetrain {
     bool seeTape = false;
     if (driveDirection == DriveDirection::FORWARD) {
       if (wallLocation == WallLocation::RIGHT) {
-        driveMecanum(-WALL_FOLLOW_ANGLE_DEG, 0, TAPE_FOLLOW_LOW_POWER);
+        driveMecanum(-WALL_FOLLOW_ANGLE_DEG, 0, WALL_FOLLOW_SLOW_POWER);
       } else {
-        driveMecanum(WALL_FOLLOW_ANGLE_DEG, 0, TAPE_FOLLOW_LOW_POWER);
+        driveMecanum(WALL_FOLLOW_ANGLE_DEG, 0, WALL_FOLLOW_SLOW_POWER);
       }
     } else if (driveDirection == DriveDirection::BACKWARD) {
       if (wallLocation == WallLocation::RIGHT) {
-        driveMecanum(-180 + WALL_FOLLOW_ANGLE_DEG, 0, TAPE_FOLLOW_LOW_POWER);
+        driveMecanum(-180 + WALL_FOLLOW_ANGLE_DEG, 0, WALL_FOLLOW_SLOW_POWER);
       } else {
-        driveMecanum(180 - WALL_FOLLOW_ANGLE_DEG, 0, TAPE_FOLLOW_LOW_POWER);
+        driveMecanum(180 - WALL_FOLLOW_ANGLE_DEG, 0, WALL_FOLLOW_SLOW_POWER);
       }
     }
 
-    while (count < num) {
-      seeTape = driveDirection == DriveDirection::FORWARD ? TapeSensors::backIsTape() : TapeSensors::frontIsTape();
+    while (count < skip + 1) {
+      seeTape = (driveDirection == DriveDirection::FORWARD) ? TapeSensors::backIsTape() : TapeSensors::frontIsTape();
       if (seeTape && millis() - lastTapeTime > TAPE_DEBOUNCE_DELAY && millis() - start > WALL_FOLLOW_DELAY) {
         lastTapeTime = millis();
         count++;
@@ -81,33 +75,33 @@ namespace Drivetrain {
 
     // active breaking
     int breakAngle = driveDirection == DriveDirection::FORWARD ? 180 : 0;
-    driveMecanum(breakAngle, 0, 0.4);
-    delay(5);
+    driveMecanum(breakAngle, 0, 0.6);
+    delay(10);
     stopAll();
 
     // drive back into wall
     // int wallAngle = wallLocation == WallLocation::RIGHT ? -90 : 90;
     // driveMecanum(wallAngle, 0, 0.7);
-    // delay(100);
+    // delay(300);
     // stopAll();
   }
 
-  void wallToWall(DriveDirection driveDirection) {
-    int wallAngle = driveDirection == DriveDirection::RIGHT ? -90 : 90;
-    driveMecanum(wallAngle, 0, 0.5);
-    delay(440);
-    driveMecanum(wallAngle, 0, 0.25);
-    delay(135);
+  void wallToWall(DriveDirection driveDirection, int slowTimeMS, int fastTimeMS, double slowPower, double fastPower) {
+    int wallAngle = Utils::directionToAngle(driveDirection);
+    driveMecanum(wallAngle, 0, fastPower);
+    delay(fastTimeMS);
+    driveMecanum(wallAngle, 0, slowPower);
+    delay(slowTimeMS);
     stopAll();
   }
 
-  void wallToWallSpin(DriveDirection driveDirection, int driveTimeMS, int spinTimeMS) {
-    int wallAngle = driveDirection == DriveDirection::RIGHT ? -90 : 90;
-    driveMecanum(wallAngle, 0, 0.25);
+  void wallToWallSpin(DriveDirection driveDirection, int driveTimeMS, int spinTimeMS, double drivePower, double spinPower) {
+    int wallAngle = Utils::directionToAngle(driveDirection);
+    driveMecanum(wallAngle, 0, drivePower);
     delay(driveTimeMS);
-    driveMecanum(0, 0.3, 0);
+    driveMecanum(0, spinPower, 0);
     delay(spinTimeMS);
-    driveMecanum(wallAngle + 180, 0, 0.25);
+    driveMecanum(Utils::invertAngle(wallAngle), 0, drivePower);
     delay(driveTimeMS);
     stopAll();
   }

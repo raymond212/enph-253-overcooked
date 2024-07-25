@@ -16,19 +16,22 @@ namespace Utils {
     return abs(a - b) < epsilon;
   }
 
-  static int leftMotorSpeedToDutyCycle(double speed) {
-    if (speed < 2700) {
-      return (int)(log(1 - speed / 3294.03)*(-21.2979) + 29);
-    } else {
-      return (int)(log(1 - speed / 5250.31)*(-70.2133) + 14.6885);
+  static double directionToAngle(DriveDirection driveDirection) {
+    switch (driveDirection) {
+      case DriveDirection::FORWARD:
+        return 0;
+      case DriveDirection::BACKWARD:
+        return 180;
+      case DriveDirection::LEFT:
+        return 90;
+      case DriveDirection::RIGHT:
+        return -90;
+      default:
+        return 0;
     }
   }
 
-  static int rightMotorSpeedToDutyCycle(double speed) {
-    if (speed < 2600) {
-      return (int)(log(1 - speed / 5317.86)*(-39.1512) + 12);
-    } else {
-      return (int)(log(1 - speed / 4988.83)*(-94.6005) - 33.3284);
-    }
+  static double invertAngle(double angle) {
+    return angle > 0 ? angle - 180 : angle + 180;
   }
 };

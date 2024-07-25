@@ -8,11 +8,15 @@
 
 namespace BottomRobotModules {
   void setupBottomRobotModules();
-  void run(String s);
   void closeInputScraper();
   void openInputScraper();
   void closeTrapdoor();
   void openTrapdoor();
+  void closeOutputScraper();
+  void openOutputScraper();
+  void closePlatePincher();
+  void openPlatePincher();
   void rotateCarouselRight();
   void rotateCarouselLeft();
+  void moveElevator(double distanceMM);
 }

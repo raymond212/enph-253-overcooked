@@ -1,10 +1,9 @@
 #include <Arduino.h>
 #include <constants.h>
 
-// #include <drivetrain.h>
+#include <drivetrain.h>
 #include <network.h>
 #include <tape_sensors.h>
-// #include <navigator.h>
 #include <bottom_robot_modules.h>
 #include <motor.h>
 #include <stepper.h>
@@ -16,20 +15,20 @@ void setup() {
 
   Drivetrain::setupDrivetrain();
   Network::setupWifi();
-  // TapeSensors::setupTapeSensors();
+  TapeSensors::setupTapeSensors();
+  BottomRobotModules::setupBottomRobotModules();
   // Navigator::setupNavigator();
-  // BottomRobotModules::setupBottomRobotModules();
 }
 
 int duration = 1000;
 double power = 0.5; 
 int driveTime = 550;
 int spinTime = 1050;
-
-// Stepper outputStepper = Stepper(27, 14, 1);
-// Servo inputServo = Servo(32, 8);
-// Servo outputServo = Servo(33, 9);
-// Stepper carouselStepper = Stepper(25, 26, 1);
+int slowTime = 135;
+int fastTime = 440;
+double slowPower = 0.25;
+double fastPower = 0.5;
+double spinPower = 0.3;
 
 String waitAndRead();
 String wifiWaitAndRead();
@@ -91,7 +90,11 @@ void loop() {
       delay(duration);
       Drivetrain::stopAll();
     } else if (s == "print") {
-      Network::wifiPrintln("Duration " + String(duration) + " Power " + String(power));
+      Network::wifiPrintln("Duration: " + String(duration) + " Power: " + String(power));
+      Network::wifiPrintln("Drive time: " + String(driveTime) + " Spin time: " + String(spinTime));
+      Network::wifiPrintln("Drive power: " + String(power) + " Spin power: " + String(spinPower));
+      Network::wifiPrintln("Slow time: " + String(slowTime) + " Fast time: " + String(fastTime));
+      Network::wifiPrintln("Slow power: " + String(slowPower) + " Fast power: " + String(fastPower));
     } else if (s == "tape") {
       Network::wifiPrintln(TapeSensors::getValuesStr());
     } else if (s == "W") {
@@ -114,14 +117,47 @@ void loop() {
       Network::wifiPrintln("Hello World!");
     } else if (s == "WW") {
       DriveDirection driveDirection = wifiWaitAndRead() == "R" ? DriveDirection::RIGHT : DriveDirection::LEFT;
-      Drivetrain::wallToWall(driveDirection);
+      Drivetrain::wallToWall(driveDirection, slowTime, fastTime, slowPower, fastPower);
     } else if (s == "driveT") {
       driveTime = wifiWaitAndRead().toInt();
     } else if (s == "spinT") {
       spinTime = wifiWaitAndRead().toInt();
+    } else if (s == "slowT") {
+      slowTime = wifiWaitAndRead().toInt();
+    } else if (s == "fastT") {
+      fastTime = wifiWaitAndRead().toInt();
+    } else if (s == "slowP") {
+      slowPower = wifiWaitAndRead().toDouble();
+    } else if (s == "fastP") {
+      fastPower = wifiWaitAndRead().toDouble();
+    } else if (s == "spinP") {
+      spinPower = wifiWaitAndRead().toDouble();
     } else if (s == "WWS") {
       DriveDirection driveDirection = wifiWaitAndRead() == "R" ? DriveDirection::RIGHT : DriveDirection::LEFT;
-      Drivetrain::wallToWallSpin(driveDirection, driveTime, spinTime);
+      Drivetrain::wallToWallSpin(driveDirection, driveTime, spinTime, power, spinPower);
+    } else if (s == "ic") {
+      BottomRobotModules::closeInputScraper();
+    } else if (s == "io") {
+      BottomRobotModules::openInputScraper();
+    } else if (s == "tc") {
+      BottomRobotModules::closeTrapdoor();
+    } else if (s == "to") {
+      BottomRobotModules::openTrapdoor();
+    } else if (s == "oc") {
+      BottomRobotModules::closeOutputScraper();
+    } else if (s == "oo") {
+      BottomRobotModules::openOutputScraper();
+    } else if (s == "po") {
+      BottomRobotModules::openPlatePincher();
+    } else if (s == "pc") {
+      BottomRobotModules::closePlatePincher();
+    } else if (s == "cl") {
+      BottomRobotModules::rotateCarouselLeft();
+    } else if (s == "cr") {
+      BottomRobotModules::rotateCarouselRight();
+    } else if (s == "elevator") {
+      double distanceMM = wifiWaitAndRead().toDouble();
+      BottomRobotModules::moveElevator(distanceMM);
     }
   }
 
@@ -160,79 +196,4 @@ void loop() {
   } else if (s == "co") {
     carouselStepper.stepRevs(-0.33);
   } */
-
-
-  // while (Serial.available() == 0) {
-  // }
-  // String s = Serial.readStringUntil('\n');
-  // s.trim();
-  // BottomRobotModules::run(s);
-
-  // if (Network::message == "R") {
-  //   Network::wifiPrintln("Turning right until tape");
-  //   Drivetrain::turnUntilTape(TurnDirection::RIGHT);
-  // } else if (Network::message == "L") {
-  //   Network::wifiPrintln("Turning left until tape");
-  //   Drivetrain::turnUntilTape(TurnDirection::LEFT);
-  // } else if (Network::message == "F"){
-  //   while (!Network::wifiInput()) {
-  //     // wait
-  //   }
-  //   Network::wifiPrintln("Starting tape following");
-  //   Drivetrain::tapeFollow(Network::message.toDouble());
-  // } else if (Network::message == "B") {
-  //   Drivetrain::backUpToTape();
-  // }
-
-  // String reading = Network::message;
-  // if (reading == "pa") {
-  //   Navigator::navigateToStation(PATTIES);
-  // } else if (reading == "bu") {
-  //   Navigator::navigateToStation(BUNS);
-  // } else if (reading == "po") {
-  //   Navigator::navigateToStation(POTATOES);
-  // } else if (reading == "to") {
-  //   Navigator::navigateToStation(TOMATOES);
-  // } else if (reading == "cu") {
-  //   Navigator::navigateToStation(CUTTING);
-  // } else if (reading == "co") {
-  //   Navigator::navigateToStation(COOKING);
-  // } else if (reading == "pl") {
-  //   Navigator::navigateToStation(PLATES);
-  // } else if (reading == "ch") {
-  //   Navigator::navigateToStation(CHEESE);
-  // } else if (reading == "se") {
-  //   Navigator::navigateToStation(SERVING);
-  // } else if (reading == "le") {
-  //   Navigator::navigateToStation(LETTUCE);
-  // } else if (reading == "R") {
-  //   Drivetrain::turnUntilTape(TurnDirection::RIGHT);
-  // } else if (reading == "L") {
-  //   Drivetrain::turnUntilTape(TurnDirection::LEFT);
-  // } else if (reading == "Tape") {
-  //   Network::wifiPrintln(TapeSensors::getValuesStr());
-  // } else if (reading == "F") {
-  //   while (!Network::wifiInput()) {
-  //     // wait
-  //   }
-  //   Drivetrain::tapeFollow(Network::message.toDouble());
-  // } else if (reading == "Table") {
-  //   Drivetrain::driveUpToTable();
-  // } else if (reading == "Back") {
-  //   Drivetrain::backUpToTape();
-  // } else if (reading == "ic") {
-  //   BottomRobotModules::closeInputScraper();
-  // } else if (reading == "io") {
-  //   BottomRobotModules::openInputScraper();
-  // } else if (reading == "tc") {
-  //   BottomRobotModules::closeTrapdoor();
-  // } else if (reading == "to") {
-  //   BottomRobotModules::openTrapdoor();
-  // } else if (reading == "cr") {
-  //   BottomRobotModules::rotateCarouselRight();
-  // } else if (reading == "cb") {
-  //   BottomRobotModules::rotateCarouselLeft();
-  // } else if (reading == "straight") {
-  //   Drivetrain::run();
-  // }
 }
