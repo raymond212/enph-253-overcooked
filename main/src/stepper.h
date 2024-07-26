@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 #include <constants.h>
+#include <network.h>
 
 class Stepper {
   public:
@@ -15,11 +16,16 @@ class Stepper {
 
     void setSpeed(double rps);
 
-    void setTargetSteps(int numSteps);
+    // void setTargetSteps(int targetSteps);
+
+    // bool nonBlockingStep();
 
   private:
     uint8_t stepPin;
     uint8_t dirPin;
     double rps;
     int stepperPulseUS;
+    int targetSteps;
+    long lastPulseTime;
+    int state;
 };

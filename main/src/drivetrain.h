@@ -33,6 +33,8 @@ namespace Drivetrain {
    */
   void driveMecanum(double theta, double rotation, double power);
 
+  void driveMecanumTime(double theta, double rotation, double power, int timeMS);
+
   /**
    * Stop all motors
    */
@@ -45,7 +47,7 @@ namespace Drivetrain {
    * @param wallLocation the location of the wall relative to the robot, either LEFT or RIGHT
    * @param skip the number of tapes to skip before stopping
    */
-  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip);
+  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime);
 
   /**
    * Move from wall to wall

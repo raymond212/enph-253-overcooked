@@ -33,3 +33,33 @@ void Stepper::setSpeed(double rps) {
   this->rps = rps;
   stepperPulseUS = (int)((1 / (rps * STEPS_PER_REVOLUTION)) * 1000000 / 2);
 }
+
+// void Stepper::setTargetSteps(int targetSteps) {
+//   if (targetSteps > 0) {
+//     digitalWrite(dirPin, HIGH);
+//   } else {
+//     digitalWrite(dirPin, LOW);
+//   }
+//   this->targetSteps = abs(targetSteps);
+//   lastPulseTime = micros();
+//   state = LOW;
+// }
+
+// bool Stepper::nonBlockingStep() {
+//   if (targetSteps == 0) {
+//     return true;
+//   }
+//   if (micros() - lastPulseTime > stepperPulseUS) {
+//     Network::wifiPrintln(String(micros()) + " " + String(lastPulseTime) + " " + String(stepperPulseUS) + " " + String(state) + " " + String(targetSteps));
+//     lastPulseTime = micros();
+//     if (state == LOW) {
+//       digitalWrite(stepPin, HIGH);
+//       state = HIGH;
+//       targetSteps--;
+//     } else {
+//       digitalWrite(stepPin, LOW);
+//       state = LOW;
+//     }
+//   }
+//   return false;
+// }

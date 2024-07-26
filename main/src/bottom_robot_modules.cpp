@@ -10,16 +10,20 @@ namespace BottomRobotModules {
     trapdoor = Servo(TRAPDOOR_PIN, TRAPDOOR_CHANNEL);
     platePincher = Servo(PLATE_PIN, PLATE_CHANNEL);
 
-    carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 0.5);
-    elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 4);
+    carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 1);
+    elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 3);
+
+    moveElevator(20);
   }
 
   void closeInputScraper() {
-    inputScraper.setAngle(17);
+    // inputScraper.setAngle(17);
+    inputScraper.setAngleSpeed(10, 110);
   }
 
   void openInputScraper() {
-    inputScraper.setAngle(137);
+    // inputScraper.setAngle(137);
+    inputScraper.setAngleSpeed(137, 110);
   }
 
   void closeTrapdoor() {
@@ -30,33 +34,42 @@ namespace BottomRobotModules {
     trapdoor.setAngle(55);
   }
 
-  void rotateCarouselRight() {
-    carousel.step(-200);
-  }
-
-  void rotateCarouselLeft() {
-    carousel.step(200);
-  }
-
   void openOutputScraper() {
-    outputScraper.setAngle(0);
+    outputScraper.setAngle(25);
   }
 
   void closeOutputScraper() {
-    outputScraper.setAngle(180);
+    outputScraper.setAngle(170);
   }
 
   void openPlatePincher() {
-    platePincher.setAngle(0);
+    platePincher.setAngle(125);
   }
 
   void closePlatePincher() {
-    platePincher.setAngle(180);
+    platePincher.setAngle(137);
   }
 
   void moveElevator(double distanceMM) {
     elevator.step((int)(distanceMM / 8 * 200));
   }
 
+  void rotateCarouselRight() {
+    carousel.step(200);
+    elevator.step(50);
+  }
 
+  void rotateCarouselLeft() {
+    carousel.step(-200);
+    elevator.step(-50);
+  }
+
+  void inputRoutine() {
+    BottomRobotModules::openInputScraper();
+    BottomRobotModules::rotateCarouselLeft();
+    delay(1000);
+    BottomRobotModules::closeInputScraper();
+    delay(900);
+
+  }
 }

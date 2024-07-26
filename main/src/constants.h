@@ -5,18 +5,18 @@
 const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
 
 // wifi settings
-const String ssid = "Raymond";
-const String password = "enphteamtwo";
+const String ssid = "Roberts’s trapphone";
+const String password = "eurostep";
 const uint16_t WIFI_PORT = 23;
 
 const double EPSILON = 0.001;
 
 // navigation motor parameters
 const double WALL_FOLLOW_ANGLE_DEG = 15;
-const double WALL_FOLLOW_SLOW_POWER = 0.4;
-const double WALL_FOLLOW_FAST_POWER = 0.5;
+const double WALL_FOLLOW_SLOW_POWER = 0.3;
+const double WALL_FOLLOW_FAST_POWER = 0.7;
 const int TAPE_DEBOUNCE_DELAY = 300;
-const int WALL_FOLLOW_DELAY = 400;
+const int WALL_FOLLOW_DELAY = 500;
 
 // motors
 const uint8_t FL_MOTOR_PIN_A = 22;

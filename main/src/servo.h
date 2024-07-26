@@ -22,9 +22,12 @@ class Servo {
      * 
      * @param angle between 0 and 180
      */
-    void setAngle(double angle);
+    void setAngle(int angle);
+
+    void setAngleSpeed(double targetAngle, double degPerSecond);
 
   private:
     uint8_t pin;
     uint8_t channel;
+    int angle;
 };

@@ -19,4 +19,5 @@ namespace BottomRobotModules {
   void rotateCarouselRight();
   void rotateCarouselLeft();
   void moveElevator(double distanceMM);
+  void inputRoutine();
 }

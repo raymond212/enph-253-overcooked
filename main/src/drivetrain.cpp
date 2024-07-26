@@ -42,31 +42,45 @@ namespace Drivetrain {
     driveMotors(0, 0, 0, 0);
   }
 
-  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip) {
+  void driveMecanumTime(double theta, double rotation, double power, int timeMS) {
+    driveMecanum(theta, rotation, power);
+    delay(timeMS);
+    stopAll();
+  }
+
+  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime) {
     int count = 0;
     int iter = 0;
     int lastTapeTime = millis();
     int start = millis();
     bool seeTape = false;
+    bool slowedDown = false;
+
+    int angle = 0;
     if (driveDirection == DriveDirection::FORWARD) {
       if (wallLocation == WallLocation::RIGHT) {
-        driveMecanum(-WALL_FOLLOW_ANGLE_DEG, 0, WALL_FOLLOW_SLOW_POWER);
+        angle = -WALL_FOLLOW_ANGLE_DEG;
       } else {
-        driveMecanum(WALL_FOLLOW_ANGLE_DEG, 0, WALL_FOLLOW_SLOW_POWER);
+        angle = WALL_FOLLOW_ANGLE_DEG;
       }
     } else if (driveDirection == DriveDirection::BACKWARD) {
       if (wallLocation == WallLocation::RIGHT) {
-        driveMecanum(-180 + WALL_FOLLOW_ANGLE_DEG, 0, WALL_FOLLOW_SLOW_POWER);
+        angle = -180 + WALL_FOLLOW_ANGLE_DEG;
       } else {
-        driveMecanum(180 - WALL_FOLLOW_ANGLE_DEG, 0, WALL_FOLLOW_SLOW_POWER);
+        angle = 180 - WALL_FOLLOW_ANGLE_DEG;
       }
     }
+    driveMecanum(angle, 0, WALL_FOLLOW_FAST_POWER);
 
     while (count < skip + 1) {
       seeTape = (driveDirection == DriveDirection::FORWARD) ? TapeSensors::backIsTape() : TapeSensors::frontIsTape();
       if (seeTape && millis() - lastTapeTime > TAPE_DEBOUNCE_DELAY && millis() - start > WALL_FOLLOW_DELAY) {
         lastTapeTime = millis();
         count++;
+      }
+      if (!slowedDown && millis() - start > slowDownTime) {
+        driveMecanum(angle, 0, WALL_FOLLOW_SLOW_POWER);
+        slowedDown = true;
       }
       iter++;
     }
@@ -75,14 +89,14 @@ namespace Drivetrain {
 
     // active breaking
     int breakAngle = driveDirection == DriveDirection::FORWARD ? 180 : 0;
-    driveMecanum(breakAngle, 0, 0.6);
+    driveMecanum(breakAngle, 0, 0.5);
     delay(10);
     stopAll();
 
     // drive back into wall
     // int wallAngle = wallLocation == WallLocation::RIGHT ? -90 : 90;
     // driveMecanum(wallAngle, 0, 0.7);
-    // delay(300);
+    // delay(30);
     // stopAll();
   }
 
