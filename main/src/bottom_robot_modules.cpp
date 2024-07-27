@@ -13,17 +13,19 @@ namespace BottomRobotModules {
     carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 1);
     elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 3);
 
-    moveElevator(20);
+    moveElevator(10);
+    closeInputScraper();
+    closeOutputScraper();
+    closePlatePincher();
+    closeTrapdoor();
   }
 
   void closeInputScraper() {
-    // inputScraper.setAngle(17);
-    inputScraper.setAngleSpeed(10, 110);
+    inputScraper.setAngle(17);
   }
 
   void openInputScraper() {
-    // inputScraper.setAngle(137);
-    inputScraper.setAngleSpeed(137, 110);
+    inputScraper.setAngle(137);
   }
 
   void closeTrapdoor() {
@@ -35,11 +37,11 @@ namespace BottomRobotModules {
   }
 
   void openOutputScraper() {
-    outputScraper.setAngle(25);
+    outputScraper.setAngle(18);
   }
 
   void closeOutputScraper() {
-    outputScraper.setAngle(170);
+    outputScraper.setAngle(173);
   }
 
   void openPlatePincher() {
@@ -47,7 +49,7 @@ namespace BottomRobotModules {
   }
 
   void closePlatePincher() {
-    platePincher.setAngle(137);
+    platePincher.setAngle(140);
   }
 
   void moveElevator(double distanceMM) {
@@ -64,12 +66,7 @@ namespace BottomRobotModules {
     elevator.step(-50);
   }
 
-  void inputRoutine() {
-    BottomRobotModules::openInputScraper();
-    BottomRobotModules::rotateCarouselLeft();
-    delay(1000);
-    BottomRobotModules::closeInputScraper();
-    delay(900);
-
+  void tomatoInputDestack() {
+    inputScraper.setAngle(8);
   }
 }
