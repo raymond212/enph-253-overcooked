@@ -8,10 +8,12 @@
 #include <motor.h>
 #include <stepper.h>
 #include <servo.h>
+#include <actions.h>
 
 
 void setup() {
   Serial.begin(9600);
+  Serial.println("initializing");
 
   Drivetrain::setupDrivetrain();
   Network::setupWifi();
@@ -162,105 +164,112 @@ void loop() {
     } else if (s == "e") {
       double distanceMM = wifiWaitAndRead().toDouble();
       BottomRobotModules::moveElevator(distanceMM);
-    } else if (s == "lettuce") {
-      // get lettuce
-      BottomRobotModules::openInputScraper();
-      Drivetrain::driveMecanumTime(90, 0, 0.5, 550);
-      delay(500);
-      BottomRobotModules::closeInputScraper();
-      delay(900);
-      // lettuce 2
-      BottomRobotModules::inputRoutine();
-      // lettuce 3
-      BottomRobotModules::inputRoutine();
+    } else if (s == "salad") {
+      // make salad plate
+      // tomato 1
+      Actions::startTomato1();
+      // tomato 2
+      Actions::inputRoutine();
+      // tomato 3
+      Actions::inputRoutine();
       // tomato 4
-      BottomRobotModules::inputRoutine();
+      Actions::inputRoutine();
 
       // move to lettuce
-      Drivetrain::driveMecanumTime(15, 0, 0.5, 1000);
-      Drivetrain::driveMecanumTime(180, 0, 0.5, 30);
-      delay(500);
-
-
-      Drivetrain::wallToWallSpin(DriveDirection::RIGHT, 377, 765, 0.4, 0.5);
-      Drivetrain::driveMecanumTime(165, 0, 0.3, 300);
-
-      Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 800);
-
-      // get lettuce
-
+      Actions::tomatoToLettuce();
       // lettuce 1
-      BottomRobotModules::openInputScraper();
-      Drivetrain::driveMecanumTime(15, 0, 0.3, 700);
-      BottomRobotModules::closeInputScraper();
-      delay(900);
+      Actions::alignLettuce1();
       // lettuce 2
-      BottomRobotModules::inputRoutine();
+      Actions::inputRoutine();
       // lettuce 3
-      BottomRobotModules::inputRoutine();
+      Actions::inputRoutine();
       // lettuce 4
-      BottomRobotModules::inputRoutine();
-      
-      BottomRobotModules::openInputScraper();
+      Actions::inputRoutine();
+
+      // drive to cooktop
+      Actions::lettuceToCooktop();
       delay(500);
 
-      // leave lettuce
-      Drivetrain::driveMecanumTime(15, 0, 0.5, 1000);
-      // spin across
+      // serve salad 1
+      Actions::cooktopGrabPlate();
+      Actions::plateToServing();
+      Actions::servingRoutine();
+      Actions::servingToCooktop();
+      // serve salad 2
+      Actions::cooktopGrabPlate();
+      Actions::plateToServing();
+      Actions::servingRoutine();
+      Actions::servingToCooktop();
+      // serve salad 3
+      Actions::cooktopGrabPlate();
+      Actions::plateToServing();
+      Actions::servingRoutine();
+      Actions::servingToCooktop();
+      // serve salad 4
+      Actions::cooktopGrabPlate();
+      Actions::plateToServing();
+      Actions::servingRoutine();
+      Drivetrain::driveMecanumTime(-90, 0, 0.4, 1000);
+    } else if (s == "start") {
+      Actions::startTomato1();
+    } else if (s == "input") {
+      Actions::inputRoutine();
+    } else if (s == "lettuce") {
+      Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0);
+      Actions::alignLettuce1();
+    } else if (s == "c2p") {
+      Actions::cooktopGrabPlate();
+    } else if (s == "serve") {
+      Actions::servingRoutine();
+    } else if (s == "WWSR") {
       Drivetrain::wallToWallSpin(DriveDirection::RIGHT, 750, 1400, 0.3, 0.3);
-      // go to cooktop
-      Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 100);
+    } else if (s == "p2s") {
+      Actions::plateToServing();
+    } else if (s == "cooktop") {
+      Actions::lettuceToCooktop();
+    } else if (s == "s2c") {
+      Actions::servingToCooktop();
+    } else if (s == "4salad") {
+      Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0);
+      Actions::alignLettuce1();
+      // lettuce 2
+      Actions::inputRoutine();
+      // lettuce 3
+      Actions::inputRoutine();
+      // lettuce 4
+      Actions::inputRoutine();
 
-      BottomRobotModules::openPlatePincher();
-      delay(200);
-      Drivetrain::driveMecanumTime(15, 0, 0.3, 1300);
-      // Drivetrain::driveMecanumTime(180, 0, 0.5, 30); // break
-      
-      delay(1000);
-      BottomRobotModules::closePlatePincher();
-      delay(1000);
-
-      // go to serve
-      for (int i = 0; i < 4; i++) {
-        Drivetrain::driveMecanumTime(165, 0, 0.5, 1600);
-        Drivetrain::driveMecanumTime(0, 0, 0.5, 30);
-        delay(500);
-
-        Drivetrain::wallToWallSpin(DriveDirection::RIGHT, 750, 1400, 0.3, 0.3);
-
-        // serve
-        
-        BottomRobotModules::moveElevator(69);
-        BottomRobotModules::openOutputScraper();
-        delay(1000);
-        BottomRobotModules::closeOutputScraper();
-        BottomRobotModules::openPlatePincher();
-        delay(1000);
-        BottomRobotModules::openTrapdoor();
-        BottomRobotModules::moveElevator(-69);
-
-        
-        // go back across counter
-        Drivetrain::wallToWallSpin(DriveDirection::RIGHT, 750, 1400, 0.3, 0.3);
-        BottomRobotModules::closeTrapdoor();
-        delay(1000);
-
-        // go to plate
-        Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 100);
-
-        BottomRobotModules::openPlatePincher();
-        delay(200);
-        Drivetrain::driveMecanumTime(15, 0, 0.3, 1400);
-        // Drivetrain::driveMecanumTime(180, 0, 0.5, 30); // break
-        
-        delay(1000);
-        BottomRobotModules::closePlatePincher();
-        delay(1000);
-      }
-      
-
+      // move to cooktop
+      Actions::lettuceToCooktop();
+      delay(500);
+      // serve salad 1
+      Actions::cooktopGrabPlate();
+      Actions::plateToServing();
+      Actions::servingRoutine();
+      Actions::servingToCooktop();
+      // serve salad 2
+      Actions::cooktopGrabPlate();
+      Actions::plateToServing();
+      Actions::servingRoutine();
+      Actions::servingToCooktop();
+      // serve salad 3
+      Actions::cooktopGrabPlate();
+      Actions::plateToServing();
+      Actions::servingRoutine();
+      Actions::servingToCooktop();
+      // serve salad 4
+      Actions::cooktopGrabPlate();
+      Actions::plateToServing();
+      Actions::servingRoutine();
+      Actions::servingToCooktop();
+    } else if (s == "destackI") {
+      BottomRobotModules::tomatoInputDestack();
+    } else if (s == "destack") {
+      BottomRobotModules::rotateCarouselRight();
+      BottomRobotModules::rotateCarouselRight();
+      BottomRobotModules::rotateCarouselRight();
     }
-  }
+  } 
 
   // Drivetrain::wallToW  allSpin(Direction::RIGHT, 377, 765, 0.4, 0.5);
 

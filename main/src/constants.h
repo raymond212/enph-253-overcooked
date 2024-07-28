@@ -13,8 +13,8 @@ const double EPSILON = 0.001;
 
 // navigation motor parameters
 const double WALL_FOLLOW_ANGLE_DEG = 15;
-const double WALL_FOLLOW_SLOW_POWER = 0.3;
-const double WALL_FOLLOW_FAST_POWER = 0.7;
+const double WALL_FOLLOW_SLOW_POWER = 0.35;
+const double WALL_FOLLOW_FAST_POWER = 0.6;
 const int TAPE_DEBOUNCE_DELAY = 300;
 const int WALL_FOLLOW_DELAY = 500;
 
