@@ -74,6 +74,16 @@ const uint8_t CAROUSEL_DIR_PIN = 14;
 const uint8_t ELEVATOR_STEP_PIN = 12;
 const uint8_t ELEVATOR_DIR_PIN = 13;
 
+//top robot modules
+
+const uint8_t TOP_INPUT_SCRAPER_PIN = 8;
+const uint8_t TOP_OUTPUT_SCRAPER_PIN = 9;
+
+const uint8_t SPIRAL_STEP_PIN = 27;
+const uint8_t SPIRAL_DIR_PIN = 14;
+const uint8_t LINEAR_STEP_PIN = 12;
+const uint8_t LINEAR_DIR_PIN = 13;
+
 enum class TapeReading {
   NONE,
   FRONT,
