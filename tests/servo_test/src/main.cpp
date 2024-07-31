@@ -2,8 +2,18 @@
 #include <ESP32Servo.h>
 
 Servo myservo;
-int servoPin = 13;
+int servoPin = 8;
 int curPosition = 0;
+
+String waitAndRead();
+String waitAndRead() {
+  while (Serial.available() == 0) {
+    // wait
+  }
+  String output = Serial.readString();
+  Serial.println("Received: " + output);
+  return output;
+}
 
 void outputTrapdoor();
 void inputScraper();
@@ -18,7 +28,9 @@ void setup() {
 }
 
 void loop() {
-  outputTrapdoor();
+  int angle = waitAndRead().toInt();
+  Serial.println("Moving servo to " + String(angle));
+  myservo.write(angle);
 }
 
 void moveServo(int delayMs, int target) {

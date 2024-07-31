@@ -5,6 +5,8 @@
 const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
 
 // wifi settings
+// const String ssid = "Raymond";
+// const String password = "enphteamtwo";
 const String ssid = "Roberts’s trapphone";
 const String password = "eurostep";
 const uint16_t WIFI_PORT = 23;
@@ -14,7 +16,7 @@ const double EPSILON = 0.001;
 // navigation motor parameters
 const double WALL_FOLLOW_ANGLE_DEG = 15;
 const double WALL_FOLLOW_SLOW_POWER = 0.35;
-const double WALL_FOLLOW_FAST_POWER = 0.6;
+const double WALL_FOLLOW_FAST_POWER = 0.9;
 const int TAPE_DEBOUNCE_DELAY = 300;
 const int WALL_FOLLOW_DELAY = 500;
 
@@ -74,16 +76,22 @@ const uint8_t CAROUSEL_DIR_PIN = 14;
 const uint8_t ELEVATOR_STEP_PIN = 12;
 const uint8_t ELEVATOR_DIR_PIN = 13;
 
-//top robot modules
-
+// top robot modules
 const uint8_t TOP_INPUT_SCRAPER_PIN = 8;
-const uint8_t TOP_OUTPUT_SCRAPER_PIN = 9;
+const uint8_t TOP_OUTPUT_SCRAPER_PIN = 7;
 
 const uint8_t SPIRAL_STEP_PIN = 27;
 const uint8_t SPIRAL_DIR_PIN = 14;
 const uint8_t LINEAR_STEP_PIN = 12;
 const uint8_t LINEAR_DIR_PIN = 13;
 
+// oled display
+const uint8_t OLED_SDA = 10;
+const uint8_t OLED_SCL = 9;
+const int SCREEN_WIDTH = 128;
+const int SCREEN_HEIGHT = 64;
+
+// tape readings
 enum class TapeReading {
   NONE,
   FRONT,

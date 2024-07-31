@@ -9,6 +9,8 @@
 #include <stepper.h>
 #include <servo.h>
 #include <actions.h>
+#include <user_interface.h>
+#include <top_robot_modules.h>
 
 
 void setup() {
@@ -19,6 +21,8 @@ void setup() {
   Network::setupWifi();
   TapeSensors::setupTapeSensors();
   BottomRobotModules::setupBottomRobotModules();
+  TopRobotModules::setupTopRobotModules();
+  UserInterface::setupUserInterface();
   // Navigator::setupNavigator();
 }
 
@@ -31,7 +35,7 @@ int fastTime = 440;
 double slowPower = 0.25;
 double fastPower = 0.5;
 double spinPower = 0.5;
-int wallTime = 1000;
+int wallTime = 500;
 
 String waitAndRead();
 String wifiWaitAndRead();
@@ -53,9 +57,26 @@ String wifiWaitAndRead() {
 }
 
 void loop() {
-  // mecanum drive testing
+  // String s = waitAndRead();
+  // if (s == "oo") {
+  //   BottomRobotModules::openOutputScraper();
+  // } else if (s == "oc") {
+  //   BottomRobotModules::closeOutputScraper();
+  // } else if (s == "po") {
+  //   BottomRobotModules::openPlatePincher();
+  // } else if (s == "pc") {
+  //   BottomRobotModules::closePlatePincher();
+  // } else if (s == "io") {
+  //   BottomRobotModules::openInputScraper();
+  // } else if (s == "ic") {
+  //   BottomRobotModules::closeInputScraper();
+  // } else if (s == "set") {
+  //   BottomRobotModules::setInput(waitAndRead().toDouble());
+  // }
+
   if (Network::wifiInput()) {
     String s = Network::message;
+    UserInterface::displayOLED(s);
     if (s == "F") {
       Drivetrain::driveMecanum(0, 0, power);
       delay(duration);
@@ -262,50 +283,19 @@ void loop() {
       Actions::plateToServing();
       Actions::servingRoutine();
       Actions::servingToCooktop();
-    } else if (s == "destackI") {
+    } else if (s == "dTI") {
       BottomRobotModules::tomatoInputDestack();
+    } else if (s == "dLI") {
+      BottomRobotModules::lettuceInputDestack();
     } else if (s == "destack") {
       BottomRobotModules::rotateCarouselRight();
       BottomRobotModules::rotateCarouselRight();
       BottomRobotModules::rotateCarouselRight();
+    } else if (s == "tRoutine") {
+      TopRobotModules::InputOutputRoutine();
     }
-  } 
-
-  // Drivetrain::wallToW  allSpin(Direction::RIGHT, 377, 765, 0.4, 0.5);
+  }
 
   Network::handleOTA();
   delay(10);
-
-  // top robot modules testing
-  /*
-  String s = waitAndRead();
-  if (s == "input") {
-    int angle = waitAndRead().toInt();
-    inputServo.setAngle(angle);
-  } else if (s == "output") {
-    int angle = waitAndRead().toInt();
-    outputServo.setAngle(angle);
-  } else if (s == "linear") {
-    double revs = waitAndRead().toDouble();
-    outputStepper.step((int)(revs * 200));
-  } else if (s == "carousel") {
-    double revs = waitAndRead().toDouble();
-    carouselStepper.step((int)(revs * 200));
-  } else if (s == "ic") {
-    inputServo.setAngle(107);
-  } else if (s == "io") {
-    inputServo.setAngle(180);
-  } else if (s == "ou") {
-    outputServo.setAngle(180);
-  } else if (s == "od") {
-    outputServo.setAngle(117);
-  } else if (s == "lo") {
-    outputStepper.stepRevs(2.5);
-  } else if (s == "li") {
-    outputStepper.stepRevs(-2.5);
-  } else if (s == "ci") {
-    carouselStepper.stepRevs(0.33);
-  } else if (s == "co") {
-    carouselStepper.stepRevs(-0.33);
-  } */
 }

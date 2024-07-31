@@ -74,7 +74,7 @@ namespace Actions {
     // rotate food
     BottomRobotModules::rotateCarouselLeft();
     // raise food
-    BottomRobotModules::moveElevator(79);
+    BottomRobotModules::moveElevator(96.5);
     // push food to output position
     BottomRobotModules::openOutputScraper();
     delay(1000);
@@ -86,7 +86,7 @@ namespace Actions {
     // drop food
     BottomRobotModules::openTrapdoor();
     // lower other food
-    BottomRobotModules::moveElevator(-79);
+    BottomRobotModules::moveElevator(-96.5);
     // rotate carousel
     BottomRobotModules::closeInputScraper();
   }

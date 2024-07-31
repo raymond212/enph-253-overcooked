@@ -13,7 +13,8 @@ namespace BottomRobotModules {
     carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 1);
     elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 3);
 
-    moveElevator(10);
+    // moveElevator(10);
+    // moveElevator(10);
     closeInputScraper();
     closeOutputScraper();
     closePlatePincher();
@@ -21,11 +22,14 @@ namespace BottomRobotModules {
   }
 
   void closeInputScraper() {
-    inputScraper.setAngle(17);
+    // inputScraper.setAngle(5);
+    inputScraper.setAngleSpeed(3, 90);
+    // inputScraper.setAngle(17);
   }
 
   void openInputScraper() {
     inputScraper.setAngle(137);
+    // inputScraper.setAngle(137);
   }
 
   void closeTrapdoor() {
@@ -37,19 +41,20 @@ namespace BottomRobotModules {
   }
 
   void openOutputScraper() {
-    outputScraper.setAngle(18);
+    // outputScraper.setAngle(20);
+    outputScraper.setAngleSpeed(12, 50);
   }
 
   void closeOutputScraper() {
-    outputScraper.setAngle(173);
+    outputScraper.setAngle(171);
   }
 
   void openPlatePincher() {
-    platePincher.setAngle(125);
+    platePincher.setAngle(122);
   }
 
   void closePlatePincher() {
-    platePincher.setAngle(140);
+    platePincher.setAngle(132);
   }
 
   void moveElevator(double distanceMM) {
@@ -68,5 +73,9 @@ namespace BottomRobotModules {
 
   void tomatoInputDestack() {
     inputScraper.setAngle(8);
+  }
+
+  void lettuceInputDestack() {
+    inputScraper.setAngle(6);
   }
 }

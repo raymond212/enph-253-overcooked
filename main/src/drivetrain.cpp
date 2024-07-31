@@ -89,8 +89,8 @@ namespace Drivetrain {
 
     // active breaking
     int breakAngle = driveDirection == DriveDirection::FORWARD ? 180 : 0;
-    driveMecanum(breakAngle, 0, 0.5);
-    delay(10);
+    driveMecanum(breakAngle, 0, 0.8);
+    delay(50);
     stopAll();
 
     // drive back into wall
