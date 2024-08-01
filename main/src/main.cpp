@@ -4,11 +4,11 @@
 #include <drivetrain.h>
 #include <network.h>
 #include <tape_sensors.h>
+#include <bottom_robot_actions.h>
 #include <bottom_robot_modules.h>
 #include <motor.h>
 #include <stepper.h>
 #include <servo.h>
-#include <actions.h>
 #include <user_interface.h>
 #include <top_robot_modules.h>
 
@@ -23,7 +23,6 @@ void setup() {
   BottomRobotModules::setupBottomRobotModules();
   // TopRobotModules::setupTopRobotModules();
   UserInterface::setupUserInterface();
-  // Navigator::setupNavigator();
 }
 
 int duration = 1000;
@@ -147,7 +146,7 @@ void loop() {
       DriveDirection driveDirection = wifiWaitAndRead() == "R" ? DriveDirection::RIGHT : DriveDirection::LEFT;
       Drivetrain::wallToWallSpin(driveDirection, driveTime, spinTime, power, spinPower);
     } else if (s == "WWSS") {
-      Actions::wallToWallSpinSlow();
+      BottomRobotActions::wallToWallSpinSlow();
     // bottom robot modules
     } else if (s == "bic") {
       BottomRobotModules::closeInputScraper();
@@ -173,58 +172,67 @@ void loop() {
       double distanceMM = wifiWaitAndRead().toDouble();
       BottomRobotModules::moveElevator(distanceMM);
     } else if (s == "serve") {
-      Actions::servingRoutine();
+      BottomRobotActions::servingRoutine();
     } else if (s == "burger") {
       // drive to cutting area, intake bottom bun
       BottomRobotModules::moveElevator(30);
-      Actions::startToCutting();
-      Actions::inputSingle();
+      BottomRobotActions::startToCutting();
+      delay(2000);
+      BottomRobotActions::inputSingle();
+      delay(2000);
       // drive to tomato area, intake tomato
       BottomRobotModules::moveElevator(-10);
-      Actions::cuttingToTomato();
-      Actions::inputSingle();
+      BottomRobotActions::cuttingToTomato();
+      BottomRobotActions::inputSingle();
+      delay(2000);
       // drive to cheese area, intake cheese
       BottomRobotModules::moveElevator(-5);
-      Actions::tomatoToCheese();
-      Actions::inputSingle();
+      BottomRobotActions::tomatoToCheese();
+      BottomRobotActions::inputSingle();
+      delay(2000);
       // drive to cooktop, intake patty
       BottomRobotModules::moveElevator(-10);
-      Actions::cheeseToCooktop();
-      Actions::inputSingle();
+      BottomRobotActions::cheeseToCooktop();
+      delay(2000);
+      BottomRobotActions::inputSingle();
+      delay(2000);
       // drive to lettuce area, intake lettuce
       BottomRobotModules::moveElevator(-5);
-      Actions::cooktopToLettuce();
-      Actions::inputSingle();
+      BottomRobotActions::cooktopToLettuce();
+      BottomRobotActions::inputSingle();
+      delay(2000);
       // drive to cooktop, intake top bun
-      Actions::lettuceToCooktop();
-      Actions::inputSingle();
+      BottomRobotActions::lettuceToCooktop();
+      BottomRobotActions::inputSingle();
+      delay(2000);
       // drive to plates, get plate
-      Actions::cooktopGrabPlate();
+      BottomRobotActions::cooktopGrabPlate();
+      delay(300);
       // drive to serving area, serve burger
-      Actions::plateToServing();
-      Actions::servingRoutine();
+      BottomRobotActions::plateToServing();
+      BottomRobotActions::servingRoutine();
       // drive back to cooktop
-      Actions::servingToCooktop();
+      BottomRobotActions::servingToCooktop();
     } else if (s == "start") {
-      Actions::startToCutting();
+      BottomRobotActions::startToCutting();
     } else if (s == "c2t") {
-      Actions::cuttingToTomato();
+      BottomRobotActions::cuttingToTomato();
     } else if (s == "t2c") {
-      Actions::tomatoToCheese();
+      BottomRobotActions::tomatoToCheese();
     } else if (s == "c2c") {
-      Actions::cheeseToCooktop();
+      BottomRobotActions::cheeseToCooktop();
     } else if (s == "c2l") {
-      Actions::cooktopToLettuce();
+      BottomRobotActions::cooktopToLettuce();
     } else if (s == "l2c") {
-      Actions::lettuceToCooktop();
+      BottomRobotActions::lettuceToCooktop();
     } else if (s == "c2p") {
-      Actions::cooktopGrabPlate();
+      BottomRobotActions::cooktopGrabPlate();
     } else if (s == "p2s") {
-      Actions::plateToServing();
+      BottomRobotActions::plateToServing();
     } else if (s == "s2c") {
-      Actions::servingToCooktop();
+      BottomRobotActions::servingToCooktop();
     } else if (s == "input") {
-      Actions::inputSingle();
+      BottomRobotActions::inputSingle();
     // top robot modules
     } else if (s == "tic") {
       TopRobotModules::closeInputScraper();

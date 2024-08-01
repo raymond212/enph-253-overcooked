@@ -1,6 +1,6 @@
-#include <actions.h>
+#include <bottom_robot_actions.h>
 
-namespace Actions {
+namespace BottomRobotActions {
   void inputSingle() {
     BottomRobotModules::closeInputScraper();
     delay(1500);
@@ -10,7 +10,7 @@ namespace Actions {
   void cooktopGrabPlate() {
     // drive from cooktop to plates
     BottomRobotModules::openPlatePincher();
-    Drivetrain::driveMecanumTime(15, 0, 0.5, 1200);
+    Drivetrain::driveMecanumTime(15, 0, 0.5, 800);
     // grab plate
     delay(300);
     BottomRobotModules::closePlatePincher();
@@ -19,13 +19,12 @@ namespace Actions {
 
   void plateToServing() {
     // drive
-    Drivetrain::driveMecanumTime(165, 0, 0.35, 1500);
+    Drivetrain::driveMecanumTime(165, 0, 0.5, 1100);
     Drivetrain::driveMecanumTime(0, 0, 0.5, 30);
-    delay(300);
     // wall to wall spin
     wallToWallSpinSlow();
     // wall follow
-    Drivetrain::driveMecanumTime(15, 0, 0.35, 1300);
+    Drivetrain::driveMecanumTime(15, 0, 0.5, 800);
     Drivetrain::driveMecanumTime(180, 0, 0.5, 30);
   }
 
@@ -68,6 +67,7 @@ namespace Actions {
   }
 
   void startToCutting() {
+    BottomRobotModules::openInputScraper();
     // drive to wall
     Drivetrain::driveMecanumTime(90, 0, 0.6, 510);
     // wall follow to cutting area: 0FL

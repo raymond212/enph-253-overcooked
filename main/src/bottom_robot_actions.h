@@ -6,7 +6,7 @@
 #include <drivetrain.h>
 #include <bottom_robot_modules.h>
 
-namespace Actions {
+namespace BottomRobotActions {
   void inputSingle();
   void cooktopGrabPlate();
   void plateToServing();

@@ -5,10 +5,10 @@
 const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
 
 // wifi settings
-const String ssid = "Raymond";
-const String password = "enphteamtwo";
-// const String ssid = "Roberts’s trapphone";
-// const String password = "eurostep";
+// const String ssid = "Raymond";
+// const String password = "enphteamtwo";
+const String ssid = "Roberts’s trapphone";
+const String password = "eurostep";
 const uint16_t WIFI_PORT = 23;
 
 const double EPSILON = 0.001;
