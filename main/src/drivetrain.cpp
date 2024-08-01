@@ -87,17 +87,26 @@ namespace Drivetrain {
 
     Network::wifiPrintln("Time: " + String(millis() - start) + " Iter: " + String(iter));
 
-    // active breaking
-    int breakAngle = driveDirection == DriveDirection::FORWARD ? 180 : 0;
-    driveMecanum(breakAngle, 0, 0.8);
-    delay(50);
-    stopAll();
+    // active breaking into wall
+    double readjustAngle = 0;
+    if (driveDirection == DriveDirection::FORWARD) {
+      if (wallLocation == WallLocation::RIGHT) {
+        readjustAngle = -180 + WALL_READJUSTMENT_ANGLE;
+      } else {
+        readjustAngle = -180 - WALL_READJUSTMENT_ANGLE;
+      }
+    } else if (driveDirection == DriveDirection::BACKWARD) {
+      if (wallLocation == WallLocation::RIGHT) {
+        readjustAngle = - WALL_READJUSTMENT_ANGLE;
+      } else {
+        readjustAngle = WALL_READJUSTMENT_ANGLE;
+      }
+    }
 
-    // drive back into wall
-    // int wallAngle = wallLocation == WallLocation::RIGHT ? -90 : 90;
-    // driveMecanum(wallAngle, 0, 0.7);
-    // delay(30);
-    // stopAll();
+    driveMecanum(readjustAngle, 0, WALL_READJUSTMENT_POWER);
+    delay(190);
+
+    stopAll();
   }
 
   void wallToWall(DriveDirection driveDirection, int slowTimeMS, int fastTimeMS, double slowPower, double fastPower) {

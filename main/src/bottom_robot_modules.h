@@ -19,6 +19,4 @@ namespace BottomRobotModules {
   void rotateCarouselRight();
   void rotateCarouselLeft();
   void moveElevator(double distanceMM);
-  void tomatoInputDestack();
-  void lettuceInputDestack();
 }

@@ -21,7 +21,7 @@ void setup() {
   Network::setupWifi();
   TapeSensors::setupTapeSensors();
   BottomRobotModules::setupBottomRobotModules();
-  TopRobotModules::setupTopRobotModules();
+  // TopRobotModules::setupTopRobotModules();
   UserInterface::setupUserInterface();
   // Navigator::setupNavigator();
 }
@@ -57,27 +57,13 @@ String wifiWaitAndRead() {
 }
 
 void loop() {
-  // String s = waitAndRead();
-  // if (s == "oo") {
-  //   BottomRobotModules::openOutputScraper();
-  // } else if (s == "oc") {
-  //   BottomRobotModules::closeOutputScraper();
-  // } else if (s == "po") {
-  //   BottomRobotModules::openPlatePincher();
-  // } else if (s == "pc") {
-  //   BottomRobotModules::closePlatePincher();
-  // } else if (s == "io") {
-  //   BottomRobotModules::openInputScraper();
-  // } else if (s == "ic") {
-  //   BottomRobotModules::closeInputScraper();
-  // } else if (s == "set") {
-  //   BottomRobotModules::setInput(waitAndRead().toDouble());
-  // }
-
   if (Network::wifiInput()) {
     String s = Network::message;
-    UserInterface::displayOLED(s);
-    if (s == "F") {
+    UserInterface::displayOLED(s); // echo
+    if (s == "test") {
+      Network::wifiPrintln("Hello World!");
+    // drive testing
+    } else if (s == "F") {
       Drivetrain::driveMecanum(0, 0, power);
       delay(duration);
       Drivetrain::stopAll();
@@ -138,8 +124,6 @@ void loop() {
       Drivetrain::driveMecanum(0, spinPower, 0);
       delay(duration);
       Drivetrain::stopAll();
-    } else if (s == "test") {
-      Network::wifiPrintln("Hello World!");
     } else if (s == "WW") {
       DriveDirection driveDirection = wifiWaitAndRead() == "R" ? DriveDirection::RIGHT : DriveDirection::LEFT;
       Drivetrain::wallToWall(driveDirection, slowTime, fastTime, slowPower, fastPower);
@@ -162,137 +146,108 @@ void loop() {
     } else if (s == "WWS") {
       DriveDirection driveDirection = wifiWaitAndRead() == "R" ? DriveDirection::RIGHT : DriveDirection::LEFT;
       Drivetrain::wallToWallSpin(driveDirection, driveTime, spinTime, power, spinPower);
-    } else if (s == "ic") {
+    } else if (s == "WWSS") {
+      Actions::wallToWallSpinSlow();
+    // bottom robot modules
+    } else if (s == "bic") {
       BottomRobotModules::closeInputScraper();
-    } else if (s == "io") {
+    } else if (s == "bio") {
       BottomRobotModules::openInputScraper();
-    } else if (s == "tc") {
+    } else if (s == "btc") {
       BottomRobotModules::closeTrapdoor();
-    } else if (s == "to") {
+    } else if (s == "bto") {
       BottomRobotModules::openTrapdoor();
-    } else if (s == "oc") {
+    } else if (s == "boc") {
       BottomRobotModules::closeOutputScraper();
-    } else if (s == "oo") {
+    } else if (s == "boo") {
       BottomRobotModules::openOutputScraper();
-    } else if (s == "po") {
+    } else if (s == "bpo") {
       BottomRobotModules::openPlatePincher();
-    } else if (s == "pc") {
+    } else if (s == "bpc") {
       BottomRobotModules::closePlatePincher();
-    } else if (s == "cl") {
+    } else if (s == "bcl") {
       BottomRobotModules::rotateCarouselLeft();
-    } else if (s == "cr") {
+    } else if (s == "bcr") {
       BottomRobotModules::rotateCarouselRight();
-    } else if (s == "e") {
+    } else if (s == "be") {
       double distanceMM = wifiWaitAndRead().toDouble();
       BottomRobotModules::moveElevator(distanceMM);
-    } else if (s == "salad") {
-      // make salad plate
-      // tomato 1
-      Actions::startTomato1();
-      // tomato 2
-      Actions::inputRoutine();
-      // tomato 3
-      Actions::inputRoutine();
-      // tomato 4
-      Actions::inputRoutine();
-
-      // move to lettuce
-      Actions::tomatoToLettuce();
-      // lettuce 1
-      Actions::alignLettuce1();
-      // lettuce 2
-      Actions::inputRoutine();
-      // lettuce 3
-      Actions::inputRoutine();
-      // lettuce 4
-      Actions::inputRoutine();
-
-      // drive to cooktop
-      Actions::lettuceToCooktop();
-      delay(500);
-
-      // serve salad 1
-      Actions::cooktopGrabPlate();
-      Actions::plateToServing();
-      Actions::servingRoutine();
-      Actions::servingToCooktop();
-      // serve salad 2
-      Actions::cooktopGrabPlate();
-      Actions::plateToServing();
-      Actions::servingRoutine();
-      Actions::servingToCooktop();
-      // serve salad 3
-      Actions::cooktopGrabPlate();
-      Actions::plateToServing();
-      Actions::servingRoutine();
-      Actions::servingToCooktop();
-      // serve salad 4
-      Actions::cooktopGrabPlate();
-      Actions::plateToServing();
-      Actions::servingRoutine();
-      Drivetrain::driveMecanumTime(-90, 0, 0.4, 1000);
-    } else if (s == "start") {
-      Actions::startTomato1();
-    } else if (s == "input") {
-      Actions::inputRoutine();
-    } else if (s == "lettuce") {
-      Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0);
-      Actions::alignLettuce1();
-    } else if (s == "c2p") {
-      Actions::cooktopGrabPlate();
     } else if (s == "serve") {
       Actions::servingRoutine();
-    } else if (s == "WWSR") {
-      Drivetrain::wallToWallSpin(DriveDirection::RIGHT, 750, 1400, 0.3, 0.3);
+    } else if (s == "burger") {
+      // drive to cutting area, intake bottom bun
+      BottomRobotModules::moveElevator(30);
+      Actions::startToCutting();
+      Actions::inputSingle();
+      // drive to tomato area, intake tomato
+      BottomRobotModules::moveElevator(-10);
+      Actions::cuttingToTomato();
+      Actions::inputSingle();
+      // drive to cheese area, intake cheese
+      BottomRobotModules::moveElevator(-5);
+      Actions::tomatoToCheese();
+      Actions::inputSingle();
+      // drive to cooktop, intake patty
+      BottomRobotModules::moveElevator(-10);
+      Actions::cheeseToCooktop();
+      Actions::inputSingle();
+      // drive to lettuce area, intake lettuce
+      BottomRobotModules::moveElevator(-5);
+      Actions::cooktopToLettuce();
+      Actions::inputSingle();
+      // drive to cooktop, intake top bun
+      Actions::lettuceToCooktop();
+      Actions::inputSingle();
+      // drive to plates, get plate
+      Actions::cooktopGrabPlate();
+      // drive to serving area, serve burger
+      Actions::plateToServing();
+      Actions::servingRoutine();
+      // drive back to cooktop
+      Actions::servingToCooktop();
+    } else if (s == "start") {
+      Actions::startToCutting();
+    } else if (s == "c2t") {
+      Actions::cuttingToTomato();
+    } else if (s == "t2c") {
+      Actions::tomatoToCheese();
+    } else if (s == "c2c") {
+      Actions::cheeseToCooktop();
+    } else if (s == "c2l") {
+      Actions::cooktopToLettuce();
+    } else if (s == "l2c") {
+      Actions::lettuceToCooktop();
+    } else if (s == "c2p") {
+      Actions::cooktopGrabPlate();
     } else if (s == "p2s") {
       Actions::plateToServing();
-    } else if (s == "cooktop") {
-      Actions::lettuceToCooktop();
     } else if (s == "s2c") {
       Actions::servingToCooktop();
-    } else if (s == "4salad") {
-      Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0);
-      Actions::alignLettuce1();
-      // lettuce 2
-      Actions::inputRoutine();
-      // lettuce 3
-      Actions::inputRoutine();
-      // lettuce 4
-      Actions::inputRoutine();
-
-      // move to cooktop
-      Actions::lettuceToCooktop();
-      delay(500);
-      // serve salad 1
-      Actions::cooktopGrabPlate();
-      Actions::plateToServing();
-      Actions::servingRoutine();
-      Actions::servingToCooktop();
-      // serve salad 2
-      Actions::cooktopGrabPlate();
-      Actions::plateToServing();
-      Actions::servingRoutine();
-      Actions::servingToCooktop();
-      // serve salad 3
-      Actions::cooktopGrabPlate();
-      Actions::plateToServing();
-      Actions::servingRoutine();
-      Actions::servingToCooktop();
-      // serve salad 4
-      Actions::cooktopGrabPlate();
-      Actions::plateToServing();
-      Actions::servingRoutine();
-      Actions::servingToCooktop();
-    } else if (s == "dTI") {
-      BottomRobotModules::tomatoInputDestack();
-    } else if (s == "dLI") {
-      BottomRobotModules::lettuceInputDestack();
-    } else if (s == "destack") {
-      BottomRobotModules::rotateCarouselRight();
-      BottomRobotModules::rotateCarouselRight();
-      BottomRobotModules::rotateCarouselRight();
-    } else if (s == "tRoutine") {
-      TopRobotModules::InputOutputRoutine();
+    } else if (s == "input") {
+      Actions::inputSingle();
+    // top robot modules
+    } else if (s == "tic") {
+      TopRobotModules::closeInputScraper();
+    } else if (s == "tio") {
+      TopRobotModules::openInputScraper();
+    } else if (s == "ti") {
+      TopRobotModules::setInputScraper(wifiWaitAndRead().toDouble());
+    } else if (s == "tor") {
+      TopRobotModules::raiseOutputScraper();
+    } else if (s == "tol") {
+      TopRobotModules::lowerOutputScraper();
+    } else if (s == "to") {
+      TopRobotModules::setOutputScraper(wifiWaitAndRead().toDouble());
+    } else if (s == "tcl") {
+      TopRobotModules::rotateCarouselLeft();
+    } else if (s == "tcr") {
+      TopRobotModules::rotateCarouselRight();
+    } else if (s == "tc") {
+      TopRobotModules::rotateCarousel(wifiWaitAndRead().toDouble());
+    } else if (s == "tpo") {
+      TopRobotModules::movePusherOut();
+    } else if (s == "tpi") {
+      TopRobotModules::movePusherIn();
     }
   }
 

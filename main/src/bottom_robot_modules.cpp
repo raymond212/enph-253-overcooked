@@ -17,19 +17,17 @@ namespace BottomRobotModules {
     // moveElevator(10);
     closeInputScraper();
     closeOutputScraper();
-    closePlatePincher();
     closeTrapdoor();
+    openPlatePincher();
+    // closePlatePincher();
   }
 
   void closeInputScraper() {
-    // inputScraper.setAngle(5);
-    inputScraper.setAngleSpeed(3, 90);
-    // inputScraper.setAngle(17);
+    inputScraper.setAngle(0);
   }
 
   void openInputScraper() {
-    inputScraper.setAngle(137);
-    // inputScraper.setAngle(137);
+    inputScraper.setAngle(180);
   }
 
   void closeTrapdoor() {
@@ -42,11 +40,11 @@ namespace BottomRobotModules {
 
   void openOutputScraper() {
     // outputScraper.setAngle(20);
-    outputScraper.setAngleSpeed(12, 50);
+    outputScraper.setAngleSpeed(13, 90);
   }
 
   void closeOutputScraper() {
-    outputScraper.setAngle(171);
+    outputScraper.setAngle(167);
   }
 
   void openPlatePincher() {
