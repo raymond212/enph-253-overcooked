@@ -8,15 +8,19 @@
 
 namespace TopRobotModules {
   void setupTopRobotModules();
+  // INPUT
   void closeInputScraper();
+  void closeInputScraperPatty();
   void openInputScraper();
   void setInputScraper(double angle);
-  void rotateCarouselLeft();
-  void rotateCarouselRight();
-  void rotateCarousel(double angle);
+  // OUTPUT
   void raiseOutputScraper();
   void lowerOutputScraper();
   void setOutputScraper(double angle);
-  void movePusherOut();
-  void movePusherIn();
+  // CAROUSEL
+  void rotateCarouselLeft();
+  void rotateCarouselRight();
+  void rotateCarousel(double angle);
+  // PUSHER
+  void movePusher(double revs);
 }

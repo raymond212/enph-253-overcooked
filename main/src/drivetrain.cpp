@@ -128,4 +128,14 @@ namespace Drivetrain {
     delay(driveTimeMS);
     stopAll();
   }
+
+  void wallToWallSpinSlow() {
+    wallToWallSpin(DriveDirection::RIGHT, 490, 1060, 0.6, 0.7);
+  }
+
+  void wallToWallSpinFast() {
+    wallToWallSpinSlow();
+    // Drivetrain::wallToWallSpin(DriveDirection::RIGHT, 300, 760, 1, 1);
+    // need to retune this
+  }
 }

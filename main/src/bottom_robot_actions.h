@@ -7,19 +7,18 @@
 #include <bottom_robot_modules.h>
 
 namespace BottomRobotActions {
+  // ACTIONS
   void inputSingle();
-  void cooktopGrabPlate();
-  void plateToServing();
   void servingRoutine();
-  void servingToCooktop();
-  void wallToWallSpinSlow();
-  void wallToWallSpinFast();
 
-  // bottom robot assembles burger
+  // DRIVING
   void startToCutting();
   void cuttingToTomato();
   void tomatoToCheese();
   void cheeseToCooktop();
   void cooktopToLettuce();
   void lettuceToCooktop();
+  void cooktopGrabPlate();
+  void plateToServing();
+  void servingToCooktop();
 }

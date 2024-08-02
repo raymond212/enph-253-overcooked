@@ -62,4 +62,7 @@ namespace Drivetrain {
    * @param driveDirection the direction to drive in, either LEFT or RIGHT
    */
   void wallToWallSpin(DriveDirection driveDirection, int driveTimeMS, int spinTimeMS, double drivePower, double spinPower);
+
+  void wallToWallSpinSlow();
+  void wallToWallSpinFast();
 }

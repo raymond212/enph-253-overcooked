@@ -10,6 +10,7 @@
 #include <stepper.h>
 #include <servo.h>
 #include <user_interface.h>
+#include <top_robot_actions.h>
 #include <top_robot_modules.h>
 
 
@@ -17,12 +18,12 @@ void setup() {
   Serial.begin(9600);
   Serial.println("initializing");
 
+  UserInterface::setupUserInterface();
   Drivetrain::setupDrivetrain();
   Network::setupWifi();
   TapeSensors::setupTapeSensors();
-  BottomRobotModules::setupBottomRobotModules();
-  // TopRobotModules::setupTopRobotModules();
-  UserInterface::setupUserInterface();
+  // BottomRobotModules::setupBottomRobotModules();
+  TopRobotModules::setupTopRobotModules();
 }
 
 int duration = 1000;
@@ -146,7 +147,7 @@ void loop() {
       DriveDirection driveDirection = wifiWaitAndRead() == "R" ? DriveDirection::RIGHT : DriveDirection::LEFT;
       Drivetrain::wallToWallSpin(driveDirection, driveTime, spinTime, power, spinPower);
     } else if (s == "WWSS") {
-      BottomRobotActions::wallToWallSpinSlow();
+      Drivetrain::wallToWallSpinSlow();
     // bottom robot modules
     } else if (s == "bic") {
       BottomRobotModules::closeInputScraper();
@@ -236,6 +237,8 @@ void loop() {
     // top robot modules
     } else if (s == "tic") {
       TopRobotModules::closeInputScraper();
+    } else if (s == "ticp") {
+      TopRobotModules::closeInputScraperPatty();
     } else if (s == "tio") {
       TopRobotModules::openInputScraper();
     } else if (s == "ti") {
@@ -253,9 +256,13 @@ void loop() {
     } else if (s == "tc") {
       TopRobotModules::rotateCarousel(wifiWaitAndRead().toDouble());
     } else if (s == "tpo") {
-      TopRobotModules::movePusherOut();
+      TopRobotActions::movePusherOut();
     } else if (s == "tpi") {
-      TopRobotModules::movePusherIn();
+      TopRobotActions::movePusherIn();
+    } else if (s == "tp") {
+      TopRobotModules::movePusher(wifiWaitAndRead().toDouble());
+    } else if (s == "tpr") {
+      TopRobotActions::reloadPusherPatty();
     }
   }
 

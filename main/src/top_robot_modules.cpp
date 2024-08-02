@@ -9,11 +9,16 @@ namespace TopRobotModules {
     outputScraper = Servo(OUTPUT_SCRAPER_PIN, OUTPUT_SCRAPER_CHANNEL);
     
     carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 1);
-    pusher = Stepper(PUSHER_STEP_PIN, PUSHER_DIR_PIN, 1);
+    pusher = Stepper(PUSHER_STEP_PIN, PUSHER_DIR_PIN, 2);
   }
 
   void closeInputScraper() {
-    inputScraper.setAngle(155);
+    inputScraper.setAngle(171);
+  }
+
+  void closeInputScraperPatty() {
+    inputScraper.setAngle(120);
+    inputScraper.setAngleSpeed(175, 50);
   }
 
   void openInputScraper() {
@@ -25,11 +30,11 @@ namespace TopRobotModules {
   }
 
   void raiseOutputScraper() {
-    outputScraper.setAngle(177);
+    outputScraper.setAngle(165);
   }
 
   void lowerOutputScraper() {
-    outputScraper.setAngle(117);
+    outputScraper.setAngle(114.8);
   }
 
   void setOutputScraper(double angle) {
@@ -37,22 +42,18 @@ namespace TopRobotModules {
   }
 
   void rotateCarouselLeft(){
-    carousel.stepRevs(1);
+    carousel.stepRevs(-1);
   }
 
   void rotateCarouselRight() {
-    carousel.stepRevs(-1);
+    carousel.stepRevs(1);
   }
 
   void rotateCarousel(double angle) {
     carousel.stepRevs(angle / 360);
   }
 
-  void movePusherOut() {
-    pusher.stepRevs(2.5);
-  }
-
-  void movePusherIn() {
-    pusher.stepRevs(-2.7); // move the pusher in a bit more to home
+  void movePusher(double revs) {
+    pusher.stepRevs(revs);
   }
 }

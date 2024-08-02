@@ -5,10 +5,10 @@
 const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
 
 // wifi settings
-// const String ssid = "Raymond";
-// const String password = "enphteamtwo";
-const String ssid = "Roberts’s trapphone";
-const String password = "eurostep";
+const String ssid = "Raymond";
+const String password = "enphteamtwo";
+// const String ssid = "Roberts’s trapphone";
+// const String password = "eurostep";
 const uint16_t WIFI_PORT = 23;
 
 const double EPSILON = 0.001;
@@ -80,9 +80,8 @@ const uint8_t ELEVATOR_STEP_PIN = 12;
 const uint8_t ELEVATOR_DIR_PIN = 13;
 
 // top robot modules
-
-// same input and output pins, same input and output channels
-// same carousel pins as bottom robot
+// - same input and output pins, same input and output channels
+// - same carousel pins as bottom robot
 const uint8_t PUSHER_STEP_PIN = 12;
 const uint8_t PUSHER_DIR_PIN = 13;
 
@@ -92,31 +91,15 @@ const uint8_t OLED_SCL = 9;
 const int SCREEN_WIDTH = 128;
 const int SCREEN_HEIGHT = 64;
 
-// tape readings
+// stepper motor
+const int STEPS_PER_REVOLUTION = 200;
+
+// drivetrain enums
 enum class TapeReading {
   NONE,
   FRONT,
   BACK,
   BOTH
-};
-
-enum class TurnDirection {
-  LEFT,
-  RIGHT
-};
-
-// stations
-enum class Table {
-  TOP,
-  MIDDLE,
-  BOTTOM
-};
-
-struct Station {
-  double position;
-  Table table;
-
-  Station(double position, Table table) : position(position), table(table) {}
 };
 
 enum class DriveDirection {
@@ -130,19 +113,3 @@ enum class WallLocation {
   RIGHT,
   LEFT
 };
-
-static Station PATTIES(12, Table::TOP);
-static Station BUNS(48, Table::TOP);
-static Station POTATOES(84, Table::TOP);
-
-static Station TOMATOES(6, Table::MIDDLE);
-static Station CUTTING(30, Table::MIDDLE);
-static Station COOKING(72.5, Table::MIDDLE);
-static Station PLATES(90, Table::MIDDLE);
-
-static Station CHEESE(6, Table::BOTTOM);
-static Station SERVING(48, Table::BOTTOM);
-static Station LETTUCE(90, Table::BOTTOM);
-
-// stepper motor
-const int STEPS_PER_REVOLUTION = 200;
