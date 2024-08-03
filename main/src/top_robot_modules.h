@@ -22,5 +22,5 @@ namespace TopRobotModules {
   void rotateCarouselRight();
   void rotateCarousel(double angle);
   // PUSHER
-  void movePusher(double revs);
+  void movePusher(double revs, bool blocking);
 }

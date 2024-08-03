@@ -118,6 +118,10 @@ namespace Drivetrain {
     stopAll();
   }
 
+  void wallToWallSlow(DriveDirection driveDirection) {
+    wallToWall(driveDirection, 600, 450, 0.5, 1);
+  }
+
   void wallToWallSpin(DriveDirection driveDirection, int driveTimeMS, int spinTimeMS, double drivePower, double spinPower) {
     int wallAngle = Utils::directionToAngle(driveDirection);
     driveMecanum(wallAngle, 0, drivePower);

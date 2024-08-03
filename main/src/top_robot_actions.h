@@ -11,7 +11,16 @@ namespace TopRobotActions {
   void movePusherOut();
   void movePusherIn();
   void reloadPusherPatty();
+  void inputRoutine();
+  void transferRoutine();
 
   // DRIVING
   void startToBuns();
+  void bottomBunDriveProcedure();
+  void bunsToCutting();
+  void cuttingToPatties();
+  void pattiesToCooktop();
+  void cooktopToBuns();
+  void bunsToCooktop();
+  void bunsToCooktop();
 }

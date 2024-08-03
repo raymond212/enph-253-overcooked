@@ -4,8 +4,8 @@
 #include <drivetrain.h>
 #include <network.h>
 #include <tape_sensors.h>
-#include <bottom_robot_actions.h>
-#include <bottom_robot_modules.h>
+// #include <bottom_robot_actions.h>
+// #include <bottom_robot_modules.h>
 #include <motor.h>
 #include <stepper.h>
 #include <servo.h>
@@ -149,91 +149,91 @@ void loop() {
     } else if (s == "WWSS") {
       Drivetrain::wallToWallSpinSlow();
     // bottom robot modules
-    } else if (s == "bic") {
-      BottomRobotModules::closeInputScraper();
-    } else if (s == "bio") {
-      BottomRobotModules::openInputScraper();
-    } else if (s == "btc") {
-      BottomRobotModules::closeTrapdoor();
-    } else if (s == "bto") {
-      BottomRobotModules::openTrapdoor();
-    } else if (s == "boc") {
-      BottomRobotModules::closeOutputScraper();
-    } else if (s == "boo") {
-      BottomRobotModules::openOutputScraper();
-    } else if (s == "bpo") {
-      BottomRobotModules::openPlatePincher();
-    } else if (s == "bpc") {
-      BottomRobotModules::closePlatePincher();
-    } else if (s == "bcl") {
-      BottomRobotModules::rotateCarouselLeft();
-    } else if (s == "bcr") {
-      BottomRobotModules::rotateCarouselRight();
-    } else if (s == "be") {
-      double distanceMM = wifiWaitAndRead().toDouble();
-      BottomRobotModules::moveElevator(distanceMM);
-    } else if (s == "serve") {
-      BottomRobotActions::servingRoutine();
-    } else if (s == "burger") {
-      // drive to cutting area, intake bottom bun
-      BottomRobotModules::moveElevator(30);
-      BottomRobotActions::startToCutting();
-      delay(2000);
-      BottomRobotActions::inputSingle();
-      delay(2000);
-      // drive to tomato area, intake tomato
-      BottomRobotModules::moveElevator(-10);
-      BottomRobotActions::cuttingToTomato();
-      BottomRobotActions::inputSingle();
-      delay(2000);
-      // drive to cheese area, intake cheese
-      BottomRobotModules::moveElevator(-5);
-      BottomRobotActions::tomatoToCheese();
-      BottomRobotActions::inputSingle();
-      delay(2000);
-      // drive to cooktop, intake patty
-      BottomRobotModules::moveElevator(-10);
-      BottomRobotActions::cheeseToCooktop();
-      delay(2000);
-      BottomRobotActions::inputSingle();
-      delay(2000);
-      // drive to lettuce area, intake lettuce
-      BottomRobotModules::moveElevator(-5);
-      BottomRobotActions::cooktopToLettuce();
-      BottomRobotActions::inputSingle();
-      delay(2000);
-      // drive to cooktop, intake top bun
-      BottomRobotActions::lettuceToCooktop();
-      BottomRobotActions::inputSingle();
-      delay(2000);
-      // drive to plates, get plate
-      BottomRobotActions::cooktopGrabPlate();
-      delay(300);
-      // drive to serving area, serve burger
-      BottomRobotActions::plateToServing();
-      BottomRobotActions::servingRoutine();
-      // drive back to cooktop
-      BottomRobotActions::servingToCooktop();
-    } else if (s == "start") {
-      BottomRobotActions::startToCutting();
-    } else if (s == "c2t") {
-      BottomRobotActions::cuttingToTomato();
-    } else if (s == "t2c") {
-      BottomRobotActions::tomatoToCheese();
-    } else if (s == "c2c") {
-      BottomRobotActions::cheeseToCooktop();
-    } else if (s == "c2l") {
-      BottomRobotActions::cooktopToLettuce();
-    } else if (s == "l2c") {
-      BottomRobotActions::lettuceToCooktop();
-    } else if (s == "c2p") {
-      BottomRobotActions::cooktopGrabPlate();
-    } else if (s == "p2s") {
-      BottomRobotActions::plateToServing();
-    } else if (s == "s2c") {
-      BottomRobotActions::servingToCooktop();
-    } else if (s == "input") {
-      BottomRobotActions::inputSingle();
+    // } else if (s == "bic") {
+    //   BottomRobotModules::closeInputScraper();
+    // } else if (s == "bio") {
+    //   BottomRobotModules::openInputScraper();
+    // } else if (s == "btc") {
+    //   BottomRobotModules::closeTrapdoor();
+    // } else if (s == "bto") {
+    //   BottomRobotModules::openTrapdoor();
+    // } else if (s == "boc") {
+    //   BottomRobotModules::closeOutputScraper();
+    // } else if (s == "boo") {
+    //   BottomRobotModules::openOutputScraper();
+    // } else if (s == "bpo") {
+    //   BottomRobotModules::openPlatePincher();
+    // } else if (s == "bpc") {
+    //   BottomRobotModules::closePlatePincher();
+    // } else if (s == "bcl") {
+    //   BottomRobotModules::rotateCarouselLeft();
+    // } else if (s == "bcr") {
+    //   BottomRobotModules::rotateCarouselRight();
+    // } else if (s == "be") {
+    //   double distanceMM = wifiWaitAndRead().toDouble();
+    //   BottomRobotModules::moveElevator(distanceMM);
+    // } else if (s == "serve") {
+    //   BottomRobotActions::servingRoutine();
+    // } else if (s == "burger") {
+    //   // drive to cutting area, intake bottom bun
+    //   BottomRobotModules::moveElevator(30);
+    //   BottomRobotActions::startToCutting();
+    //   delay(2000);
+    //   BottomRobotActions::inputSingle();
+    //   delay(2000);
+    //   // drive to tomato area, intake tomato
+    //   BottomRobotModules::moveElevator(-10);
+    //   BottomRobotActions::cuttingToTomato();
+    //   BottomRobotActions::inputSingle();
+    //   delay(2000);
+    //   // drive to cheese area, intake cheese
+    //   BottomRobotModules::moveElevator(-5);
+    //   BottomRobotActions::tomatoToCheese();
+    //   BottomRobotActions::inputSingle();
+    //   delay(2000);
+    //   // drive to cooktop, intake patty
+    //   BottomRobotModules::moveElevator(-10);
+    //   BottomRobotActions::cheeseToCooktop();
+    //   delay(2000);
+    //   BottomRobotActions::inputSingle();
+    //   delay(2000);
+    //   // drive to lettuce area, intake lettuce
+    //   BottomRobotModules::moveElevator(-5);
+    //   BottomRobotActions::cooktopToLettuce();
+    //   BottomRobotActions::inputSingle();
+    //   delay(2000);
+    //   // drive to cooktop, intake top bun
+    //   BottomRobotActions::lettuceToCooktop();
+    //   BottomRobotActions::inputSingle();
+    //   delay(2000);
+    //   // drive to plates, get plate
+    //   BottomRobotActions::cooktopGrabPlate();
+    //   delay(300);
+    //   // drive to serving area, serve burger
+    //   BottomRobotActions::plateToServing();
+    //   BottomRobotActions::servingRoutine();
+    //   // drive back to cooktop
+    //   BottomRobotActions::servingToCooktop();
+    // } else if (s == "start") {
+    //   BottomRobotActions::startToCutting();
+    // } else if (s == "c2t") {
+    //   BottomRobotActions::cuttingToTomato();
+    // } else if (s == "t2c") {
+    //   BottomRobotActions::tomatoToCheese();
+    // } else if (s == "c2c") {
+    //   BottomRobotActions::cheeseToCooktop();
+    // } else if (s == "c2l") {
+    //   BottomRobotActions::cooktopToLettuce();
+    // } else if (s == "l2c") {
+    //   BottomRobotActions::lettuceToCooktop();
+    // } else if (s == "c2p") {
+    //   BottomRobotActions::cooktopGrabPlate();
+    // } else if (s == "p2s") {
+    //   BottomRobotActions::plateToServing();
+    // } else if (s == "s2c") {
+    //   BottomRobotActions::servingToCooktop();
+    // } else if (s == "input") {
+    //   BottomRobotActions::inputSingle();
     // top robot modules
     } else if (s == "tic") {
       TopRobotModules::closeInputScraper();
@@ -260,9 +260,53 @@ void loop() {
     } else if (s == "tpi") {
       TopRobotActions::movePusherIn();
     } else if (s == "tp") {
-      TopRobotModules::movePusher(wifiWaitAndRead().toDouble());
+      TopRobotModules::movePusher(wifiWaitAndRead().toDouble(), false);
     } else if (s == "tpr") {
       TopRobotActions::reloadPusherPatty();
+    // top robot driving
+    } else if (s == "s2b") {
+      TopRobotActions::startToBuns();
+    } else if (s == "bbd") {
+      TopRobotActions::bottomBunDriveProcedure();
+    } else if (s == "b2cu") {
+      TopRobotActions::bunsToCutting();
+    } else if (s == "c2p") {
+      TopRobotActions::cuttingToPatties();
+    } else if (s == "p2c") {
+      TopRobotActions::pattiesToCooktop();
+    } else if (s == "c2b") {
+      TopRobotActions::cooktopToBuns();
+    } else if (s == "b2c") {
+      TopRobotActions::bunsToCooktop();
+    } else if (s == "ingr") {
+      TopRobotActions::startToBuns();
+      TopRobotActions::bottomBunDriveProcedure();
+      // intake one bottom bun
+      TopRobotActions::inputRoutine();
+      // drive to cutting
+      TopRobotActions::bunsToCutting();
+      // serve bun
+      TopRobotActions::transferRoutine();
+      // go to patty
+      TopRobotActions::cuttingToPatties();
+      // intake one patty
+      TopRobotActions::inputRoutine();
+      // go to cooktop
+      TopRobotActions::pattiesToCooktop();
+      // serve patty
+      TopRobotActions::transferRoutine();
+      // go to buns
+      TopRobotActions::cooktopToBuns();
+      // intake one top bun
+      TopRobotActions::inputRoutine();
+      // go to cooktop
+      TopRobotActions::bunsToCooktop();
+      // serve bun
+      TopRobotActions::transferRoutine();
+    } else if (s == "tir") {
+      TopRobotActions::inputRoutine();
+    } else if (s == "tt") {
+      TopRobotActions::transferRoutine();
     }
   }
 

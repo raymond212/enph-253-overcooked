@@ -1,18 +1,15 @@
 #include <bottom_robot_modules.h>
 
 namespace BottomRobotModules {
-  Servo inputScraper, outputScraper, trapdoor, platePincher;
-  Stepper carousel, elevator;
+  Servo inputScraper = Servo(INPUT_SCRAPER_PIN, INPUT_SCRAPER_CHANNEL);
+  Servo outputScraper = Servo(OUTPUT_SCRAPER_PIN, OUTPUT_SCRAPER_CHANNEL);
+  Servo trapdoor = Servo(TRAPDOOR_PIN, TRAPDOOR_CHANNEL);
+  Servo platePincher = Servo(PLATE_PIN, PLATE_CHANNEL);
+
+  Stepper carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 0.75, 2);
+  Stepper elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 3, 3);
 
   void setupBottomRobotModules() {
-    inputScraper = Servo(INPUT_SCRAPER_PIN, INPUT_SCRAPER_CHANNEL);
-    outputScraper = Servo(OUTPUT_SCRAPER_PIN, OUTPUT_SCRAPER_CHANNEL);
-    trapdoor = Servo(TRAPDOOR_PIN, TRAPDOOR_CHANNEL);
-    platePincher = Servo(PLATE_PIN, PLATE_CHANNEL);
-
-    carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 0.75);
-    elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 3);
-
     closeInputScraper();
     closeOutputScraper();
     closeTrapdoor();

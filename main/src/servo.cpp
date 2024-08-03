@@ -1,8 +1,6 @@
 #include <servo.h>
 #include <network.h>
 
-Servo::Servo() {}
-
 Servo::Servo(uint8_t pin, uint8_t channel) : pin(pin), channel(channel) {
   ledcSetup(channel, SERVO_PWM_FREQ_HZ, SERVO_PWM_RESOLUTION);
   ledcAttachPin(pin, channel);

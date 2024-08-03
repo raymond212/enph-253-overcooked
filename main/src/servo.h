@@ -8,11 +8,6 @@
 class Servo {
   public:
     /**
-     * Declare a null servo motor
-     */
-    Servo();
-
-    /**
      * Initialize a servo motor
      */
     Servo(uint8_t pin, uint8_t channel);

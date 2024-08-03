@@ -65,4 +65,5 @@ namespace Drivetrain {
 
   void wallToWallSpinSlow();
   void wallToWallSpinFast();
+  void wallToWallSlow(DriveDirection driveDirection);
 }

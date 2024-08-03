@@ -8,11 +8,6 @@
 class Motor {
   public:
     /**
-     * Declare a null motor
-     */
-    Motor();
-
-    /**
      * Initialize a motor
      */
     Motor(uint8_t motorPinA, uint8_t motorPinB, uint8_t motorChannelA, uint8_t motorChannelB);
