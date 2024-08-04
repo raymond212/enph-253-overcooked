@@ -3,31 +3,21 @@
 #include <esp_now.h>
 #include <esp_wifi.h>
 #include <constants.h>
-#include <message.h>
-
 
 namespace wifiSetup {
 
-    extern uint8_t* broadcastAddress;
-    extern uint8_t* currentAddress;
+    extern uint8_t broadcastAddress[6];
+    extern uint8_t currentAddress[6];
 
-    
 
-    extern bool success;
+    extern bool send;
 
-    void sendMessage(const Message& message);
+    esp_err_t sendMessage(const int& message);
 
     void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status);
 
-    typedef struct struct_message {
-        int opcode;
-    } struct_message;
 
-    extern int outgoing_Opcode;
-
-    extern struct_message incomingReadings;
-
-    extern int incomingOpcode;
+    extern int incomingReadings; 
 
     void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len);
 
@@ -36,5 +26,9 @@ namespace wifiSetup {
     void setupWifi();
 
     extern esp_now_peer_info_t peerInfo;
+
+
+
+    int getCurr_Opcode();
 
 }
