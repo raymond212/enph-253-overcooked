@@ -1,6 +1,13 @@
 #include <wifiSetup.h>
 
 
+#define TCRT_PIN 35
+
+
+
+
+
+
 //Master ID: d4:8a:fc:a8:57:28
 //Slave ID:  d4:8a:fc:a8:4d:8c
 
@@ -72,35 +79,15 @@ void readMacAddress(){
 }
 */
 
-
-
-
 void setup(){
   Serial.begin(9600);
   wifiSetup::setupWifi();
+  //pinMode(TCRT_PIN, INPUT);
 }
  
 void loop(){
 
-    //esp_err_t result = esp_now_send(master_address, 0x00, opcode);
-   /*
-   if (result == ESP_OK) {
-    Serial.println("Sent with success");
-  }
-  else {
-    Serial.println("Error sending the data");
-  }
-
-   */
-  //wifiSetup::readMacAddress();
-
-  //Opcodes::opcodes outgoing_opcode = Opcodes::opcodes::NOP;
-
-  Message message;
-  message.opcode = Opcodes::opcodes::NOP;
-  memset(message.data, 0, sizeof(message.data));
-
-  wifiSetup::readMacAddress();
+  esp_err_t result = wifiSetup::sendMessage(2);
+  delay(600);
   
-  delay(300);
 }
