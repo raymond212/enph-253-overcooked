@@ -1,3 +1,5 @@
+#ifdef ENABLE_BOTTOM_ROBOT
+
 #include <bottom_robot_modules.h>
 
 namespace BottomRobotModules {
@@ -7,7 +9,7 @@ namespace BottomRobotModules {
   Servo platePincher = Servo(PLATE_PIN, PLATE_CHANNEL);
 
   Stepper carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 0.75, 2);
-  Stepper elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 3, 3);
+  Stepper elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 4, 3);
 
   void setupBottomRobotModules() {
     closeInputScraper();
@@ -24,12 +26,16 @@ namespace BottomRobotModules {
     inputScraper.setAngle(180);
   }
 
+  void setInputScraper(double angle) {
+    inputScraper.setAngle(angle);
+  }
+
   void closeOutputScraper() {
     outputScraper.setAngle(165);
   }
 
   void openOutputScraper() {
-    outputScraper.setAngleSpeed(100, 100);
+    outputScraper.setAngleSpeed(50, 180);
     outputScraper.setAngleSpeed(22, 50);
   }
 
@@ -50,16 +56,18 @@ namespace BottomRobotModules {
   }
 
   void rotateCarouselRight() {
-    carousel.step(200);
-    elevator.step(50);
+    elevator.stepRevsBlocking(0.25);
+    carousel.stepRevs(1);
   }
 
   void rotateCarouselLeft() {
-    carousel.step(-200);
-    elevator.step(-50);
+    elevator.stepRevsBlocking(-0.25);
+    carousel.stepRevs(-1);
   }
   
   void moveElevator(double distanceMM) {
     elevator.step((int)(distanceMM / 8 * 200));
   }
 }
+
+#endif

@@ -3,7 +3,9 @@
 namespace UserInterface { 
   Adafruit_SSD1306 display_handler(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
   
-  void setupUserInterface() {  
+  void setupUserInterface() {
+    pinMode(BUTTON_PIN, INPUT);
+
     Wire.begin(OLED_SDA, OLED_SCL);
     display_handler.begin(SSD1306_SWITCHCAPVCC, 0x3C);
     display_handler.clearDisplay();
@@ -18,5 +20,9 @@ namespace UserInterface {
     display_handler.setCursor(0, 0);
     display_handler.println(text);
     display_handler.display();
+  }
+
+  bool isButtonPressed() {
+    return digitalRead(BUTTON_PIN) == HIGH;
   }
 }

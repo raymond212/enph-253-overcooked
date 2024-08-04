@@ -10,4 +10,6 @@ namespace UserInterface {
   void setupUserInterface();
 
   void displayOLED(String text);
+
+  bool isButtonPressed();
 }

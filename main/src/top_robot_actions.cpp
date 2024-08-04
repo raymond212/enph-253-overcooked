@@ -1,3 +1,5 @@
+#ifdef ENABLE_TOP_ROBOT
+
 #include <top_robot_actions.h>
 
 namespace TopRobotActions {
@@ -6,7 +8,7 @@ namespace TopRobotActions {
     TopRobotModules::lowerOutputScraper();
     delay(400);
     TopRobotModules::movePusher(0.8, true);
-    TopRobotModules::setOutputScraper(115.3);
+    TopRobotModules::setOutputScraper(121);
     TopRobotModules::movePusher(1.65, true);
     TopRobotModules::raiseOutputScraper();
   }
@@ -85,3 +87,5 @@ namespace TopRobotActions {
 
 
 }
+
+#endif

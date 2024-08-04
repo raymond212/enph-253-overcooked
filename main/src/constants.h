@@ -85,11 +85,13 @@ const uint8_t ELEVATOR_DIR_PIN = 13;
 const uint8_t PUSHER_STEP_PIN = 12;
 const uint8_t PUSHER_DIR_PIN = 13;
 
-// oled display
+// user interface
 const uint8_t OLED_SDA = 10;
 const uint8_t OLED_SCL = 9;
 const int SCREEN_WIDTH = 128;
 const int SCREEN_HEIGHT = 64;
+
+const int BUTTON_PIN = 35;
 
 // stepper motor
 const int STEPS_PER_REVOLUTION = 200;

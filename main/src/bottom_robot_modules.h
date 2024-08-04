@@ -11,6 +11,7 @@ namespace BottomRobotModules {
   // INPUT
   void closeInputScraper();
   void openInputScraper();
+  void setInputScraper(double angle);
   // OUTPUT
   void closeOutputScraper();
   void openOutputScraper();

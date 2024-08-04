@@ -8,7 +8,7 @@ Stepper::Stepper(uint8_t stepPin, uint8_t dirPin, double rps, int timerNum)
   : stepPin(stepPin), dirPin(dirPin), rps(rps), timerMux(portMUX_INITIALIZER_UNLOCKED), timerNum(timerNum) {
   pinMode(stepPin, OUTPUT);
   pinMode(dirPin, OUTPUT);
-  stepperPulseUS = (int)((1 / (rps * STEPS_PER_REVOLUTION)) * 1000000);
+  stepperPulseUS = (int)((1 / (rps * STEPS_PER_REVOLUTION)) * 1000000 / 2);
 
   instances[timerNum] = this; // Store the instance in the array
 
@@ -37,7 +37,7 @@ void Stepper::step(int numSteps) {
   } else {
     digitalWrite(dirPin, LOW);
   }
-  this->switchesRemaining = abs(numSteps);
+  this->switchesRemaining = abs(numSteps) * 2;
   startTimer();
 }
 

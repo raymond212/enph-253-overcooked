@@ -1,3 +1,5 @@
+#ifdef ENABLE_TOP_ROBOT
+
 #include <top_robot_modules.h>
 
 namespace TopRobotModules {
@@ -34,7 +36,7 @@ namespace TopRobotModules {
   }
 
   void lowerOutputScraper() {
-    outputScraper.setAngle(114.8);
+    outputScraper.setAngle(118);
   }
 
   void setOutputScraper(double angle) {
@@ -61,3 +63,5 @@ namespace TopRobotModules {
     }
   }
 }
+
+#endif
