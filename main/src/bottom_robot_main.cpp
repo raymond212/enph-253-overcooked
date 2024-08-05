@@ -1,8 +1,10 @@
+#ifdef ENABLE_BOTTOM_ROBOT
+
 #include <Arduino.h>
 #include <constants.h>
 
 #include <drivetrain.h>
-#include <hotspot.h>
+// #include <hotspot.h>
 #include <tape_sensors.h>
 #include <bottom_robot_actions.h>
 #include <bottom_robot_modules.h>
@@ -12,7 +14,7 @@
 #include <user_interface.h>
 // #include <top_robot_actions.h>
 // #include <top_robot_modules.h>
-
+#include <network.h>
 
 void setup() {
   Serial.begin(9600);
@@ -20,7 +22,8 @@ void setup() {
 
   UserInterface::setupUserInterface();
   Drivetrain::setupDrivetrain();
-  Hotspot::setupWifi();
+  // Hotspot::setupWifi();
+  Network::setupWifi();
   TapeSensors::setupTapeSensors();
   BottomRobotModules::setupBottomRobotModules();
   // TopRobotModules::setupTopRobotModules();
@@ -58,11 +61,18 @@ String waitAndRead() {
 
 void loop() {
   if (UserInterface::isButtonPressed()) {
+    UserInterface::displayOLED("Waiting for handshake!");
+    Network::waitForHandshake();
+    UserInterface::displayOLED("Handshake established");
+    delay(1000);
+
     UserInterface::displayOLED("BURGER");
     // drive to cutting area, intake bottom bun
     BottomRobotModules::moveElevator(30);
     BottomRobotActions::startToCutting();
-    delay(1200);
+
+    // wait for bottom bun
+    Network::waitForHandshake(); // top robot will send out handshake after it has pushed out the top bun
     BottomRobotActions::inputSingle();
     delay(500);
     // drive to tomato area, intake tomato
@@ -76,7 +86,9 @@ void loop() {
     // drive to cooktop, intake patty
     BottomRobotModules::moveElevator(-10);
     BottomRobotActions::cheeseToCooktop();
-    delay(1200);
+    // wait for patty
+    Network::waitForHandshake();
+    delay(1500);  // wait for top robot to push out patty
     BottomRobotActions::inputSingle();
     // drive to lettuce area, intake lettuce
     BottomRobotModules::moveElevator(-5);
@@ -84,8 +96,9 @@ void loop() {
     BottomRobotActions::inputSingle();
     // drive to cooktop, intake top bun
     BottomRobotActions::lettuceToCooktop();
+    // wait for top bun
+    Network::waitForHandshake(); // wait for top robot to push out top bun
     BottomRobotActions::inputSingle();
-    delay(1000);
     BottomRobotModules::moveElevator(53); // first time elevate burgers
     // drive to plates, get plate
     BottomRobotActions::cooktopGrabPlate();
@@ -336,6 +349,8 @@ void loop() {
   //   }
   // }
 
-  Hotspot::handleOTA();
-  delay(10);
+  // Hotspot::handleOTA();
+  // delay(10);
 }
+
+#endif

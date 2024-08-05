@@ -35,7 +35,7 @@ namespace BottomRobotModules {
   }
 
   void openOutputScraper() {
-    outputScraper.setAngleSpeed(40, 100);
+    outputScraper.setAngleSpeed(60, 75);
     outputScraper.setAngleSpeed(20, 50);
   }
 

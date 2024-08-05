@@ -1,95 +1,103 @@
 #include <network.h>
 
 namespace Network {
-  String message;
-  long lastOTATime;
+  uint8_t broadcastAddress[6];
+  uint8_t currentAddress[6];
 
-  WiFiServer server(WIFI_PORT);
-  WiFiClient remoteClient;
+  bool send;
+  volatile bool handshakeEstablished;
 
-  void setupWifi() {
+  int incomingReadings;
+
+  esp_now_peer_info_t peerInfo;
+  
+  void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
+    if (len == sizeof(incomingReadings)) {
+      memcpy(&incomingReadings, incomingData, sizeof(int));
+
+      Serial.print("Opcode: ");
+      Serial.println(incomingReadings);
+
+      handshakeEstablished = true;
+    } else {
+      Serial.println("Received data size mismatch");
+    }
+  }
+
+  void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
+    Serial.print("\r\nLast Packet Send Status:\t");
+    Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+    send = status == ESP_NOW_SEND_SUCCESS;
+  }
+
+  int getCurr_Opcode() {
+    return incomingReadings;
+  }
+
+  void readMacAddress(){
+    uint8_t baseMac[6];
+    esp_err_t ret = esp_wifi_get_mac(WIFI_IF_STA, baseMac);
+    if (ret == ESP_OK) {
+      memcpy(currentAddress, baseMac, 6);
+      Serial.printf("%02x:%02x:%02x:%02x:%02x:%02x\n",
+        baseMac[0], baseMac[1], baseMac[2],
+        baseMac[3], baseMac[4], baseMac[5]);
+    } else {
+      Serial.println("Failed to read MAC address");
+    }
+  }
+
+  esp_err_t sendMessage(const int& message) {
+    uint8_t data[sizeof(message)];
+    memcpy(data, &message, sizeof(message));        
+
+    esp_err_t result = esp_now_send(broadcastAddress, data, sizeof(data));
+    
+    return result;
+  }
+
+
+  void setupWifi(){
     WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid, password);
-    while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-      delay(1000);
-      Serial.println("Could not connect");
+
+    if (esp_now_init() != ESP_OK) {
+      Serial.println("Error initializing ESP-NOW");
+      return;
+    }
+    esp_now_register_send_cb(OnDataSent);
+    esp_now_register_recv_cb(OnDataRecv);
+    readMacAddress();
+
+    if (memcmp(currentAddress, TOP_ROBOT_MAC_ADDRESS, sizeof(TOP_ROBOT_MAC_ADDRESS)) == 0) {
+      memcpy(broadcastAddress, BOTTOM_ROBOT_MAC_ADDRESS, sizeof(BOTTOM_ROBOT_MAC_ADDRESS));
+    } else {
+      memcpy(broadcastAddress, TOP_ROBOT_MAC_ADDRESS, sizeof(TOP_ROBOT_MAC_ADDRESS));
     }
 
-    server.begin();
-    Serial.println("Server started");
-    Serial.println("IP Address: " + WiFi.localIP().toString());
+    Serial.printf("%02x:%02x:%02x:%02x:%02x:%02x\n",
+      currentAddress[0], currentAddress[1], currentAddress[2],
+      currentAddress[3], currentAddress[4], currentAddress[5]);
 
-    // OTA setup
-    ArduinoOTA
-    .onStart([]() {
-      String type;
-      if (ArduinoOTA.getCommand() == U_FLASH)
-        type = "sketch";
-      else
-        type = "filesystem";
+    Serial.printf("%02x:%02x:%02x:%02x:%02x:%02x\n",
+      broadcastAddress[0], broadcastAddress[1], broadcastAddress[2],
+      broadcastAddress[3], broadcastAddress[4], broadcastAddress[5]);
 
-      Serial.println("Start updating " + type);
-    })
-    .onEnd([]() {
-      Serial.println("\nEnd");
-    })
-    .onProgress([](unsigned int progress, unsigned int total) {
-      Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-    })
-    .onError([](ota_error_t error) {
-      Serial.printf("Error[%u]: ", error);
-      if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-      else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-      else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-      else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-      else if (error == OTA_END_ERROR) Serial.println("End Failed");
-    });
+    memcpy(peerInfo.peer_addr, broadcastAddress, 6);
+    peerInfo.channel = 0;  
+    peerInfo.encrypt = false;
 
-    ArduinoOTA.begin();
-    lastOTATime = millis();
-  }
-
-  void wifiPrintln(String msg) {
-    if (server.hasClient()) {
-      if (remoteClient.connected()) {
-        Serial.println("Connection rejected: already connected");
-        server.available().stop();
-      } else {
-        Serial.println("Connection accepted");
-        remoteClient = server.available();
-      }
-    }
-    if (remoteClient.connected()) {
-      remoteClient.println(msg);
+    if (esp_now_add_peer(&peerInfo) != ESP_OK){
+      Serial.println("Failed to add peer");
+      return;
+    } else {
+      Serial.println("Successfully added peer");
     }
   }
-
-  bool wifiInput() {
-    if (server.hasClient()) {
-      if (remoteClient.connected()) {
-        Serial.println("Connection rejected: already connected");
-        server.available().stop();
-      } else {
-        Serial.println("Connection accepted");
-        remoteClient = server.available();
-      }
-    }
-    if (remoteClient.connected() && remoteClient.available()) {
-      message = remoteClient.readStringUntil('\n');
-      message.trim();
-      if (message.length() > 0) {
-        Serial.println("Received: " + message);
-        wifiPrintln("Received:" + message);
-        return true;
-      }
-    }
-    return false;
-  }
-
-  void handleOTA() {
-    if (millis() - lastOTATime > 1000) {
-      ArduinoOTA.handle();
-      lastOTATime = millis();
+    
+  void waitForHandshake() {
+    handshakeEstablished = false;
+    while (!handshakeEstablished) {
+      sendMessage(0);
     }
   }
 }

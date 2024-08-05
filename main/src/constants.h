@@ -4,6 +4,11 @@
 
 const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
 
+// ESP32Now
+const uint8_t BOTTOM_ROBOT_MAC_ADDRESS[] = {0x64, 0xB7, 0x08, 0x9C, 0x5D, 0x98}; 
+const uint8_t TOP_ROBOT_MAC_ADDRESS[] = {0x64, 0xB7, 0x08, 0x9C, 0x5C, 0x84}; // actual top robot
+// const uint8_t TOP_ROBOT_MAC_ADDRESS[] = {0x64, 0xB7, 0x08, 0x9C, 0x5C, 0xC4};
+
 // wifi settings
 const String ssid = "TELUS4676";
 const String password = "XHDGCtGXb69k";
