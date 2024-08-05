@@ -1,5 +1,4 @@
 #include <servo.h>
-#include <network.h>
 
 Servo::Servo(uint8_t pin, uint8_t channel) : pin(pin), channel(channel) {
   ledcSetup(channel, SERVO_PWM_FREQ_HZ, SERVO_PWM_RESOLUTION);
@@ -15,7 +14,6 @@ void Servo::setAngle(int angle) {
 
 void Servo::setAngleSpeed(double targetAngle, double degPerSecond) {
   while (angle != targetAngle) {
-    Network::wifiPrintln(String(angle));
     if (angle < targetAngle) {
       angle++;
     } else {
@@ -25,5 +23,4 @@ void Servo::setAngleSpeed(double targetAngle, double degPerSecond) {
     delay(1 / degPerSecond * 1000);
   }
   angle = targetAngle;
-  Network::wifiPrintln("Position reached");
 }

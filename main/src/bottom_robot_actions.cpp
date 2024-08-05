@@ -15,11 +15,11 @@ namespace BottomRobotActions {
     BottomRobotModules::openOutputScraper();  // push burger out with the output scraper
     delay(500);
     BottomRobotModules::closeOutputScraper(); // reset output scraper
-    BottomRobotModules::moveElevator(-46.5);  // lower remaining burgers
+    BottomRobotModules::moveElevator(-44);  // lower remaining burgers
     BottomRobotModules::openPlatePincher();   // release plate
-    delay(300);
+    delay(500);
     BottomRobotModules::openTrapdoor();       // drop food
-    delay(1000);
+    delay(2000);
     // BottomRobotModules::rotateCarouselLeft();
   }
 
@@ -58,9 +58,9 @@ namespace BottomRobotActions {
   }
 
   void cooktopGrabPlate() {
-    BottomRobotModules::moveElevator(50);           // elevate burger to ring height
-    BottomRobotModules::setInputScraper(4);         // set input scraper to non conflicting position
+    BottomRobotModules::openInputScraper();         // set input scraper to non conflicting position
     BottomRobotModules::openPlatePincher();         // open plate pincher
+    BottomRobotModules::closeTrapdoor();            // close trapdoor
     Drivetrain::driveMecanumTime(15, 0, 0.5, 800);  // drive forward
     delay(300);
     BottomRobotModules::closePlatePincher(); // grab plate
@@ -72,14 +72,13 @@ namespace BottomRobotActions {
     Drivetrain::driveMecanumTime(165, 0, 0.5, 1100);  // wall follow backward
     Drivetrain::driveMecanumTime(0, 0, 0.5, 30);      // break
     Drivetrain::wallToWallSpinSlow();                 // spin to bottom counter
-    BottomRobotModules::moveElevator(46.5);           // elevate burger to output height
-    Drivetrain::driveMecanumTime(15, 0, 0.5, 800);    // wall follow forward
+    BottomRobotModules::moveElevator(44);           // elevate burger to output height
+    Drivetrain::driveMecanumTime(20, 0, 0.5, 900);    // wall follow forward
     Drivetrain::driveMecanumTime(180, 0, 0.5, 30);    // break
   }
 
   void servingToCooktop() {
     Drivetrain::wallToWallSpinFast();                                           // spin to middle counter
-    BottomRobotModules::closeTrapdoor();
     Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0);  // wall follow 0FL to cooktop
   }
 }

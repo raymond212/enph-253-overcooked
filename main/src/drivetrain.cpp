@@ -85,8 +85,6 @@ namespace Drivetrain {
       iter++;
     }
 
-    Network::wifiPrintln("Time: " + String(millis() - start) + " Iter: " + String(iter));
-
     // active breaking into wall
     double readjustAngle = 0;
     if (driveDirection == DriveDirection::FORWARD) {

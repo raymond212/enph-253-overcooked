@@ -5,7 +5,6 @@
 
 #include <motor.h>
 #include <tape_sensors.h>
-#include <network.h>
 #include <utils.h>
 
 namespace Drivetrain {
