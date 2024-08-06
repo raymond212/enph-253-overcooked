@@ -66,39 +66,40 @@ void loop() {
 
     UserInterface::displayOLED("BURGER");
     // drive to plate area, grab on to plate
-    BottomRobotModules::moveElevator(39);
+    BottomRobotModules::moveElevator(35);
     BottomRobotActions::startToPlate();
-    // drive to cutting area, intake bottom bun
-    BottomRobotActions::plateToCutting();
-    Network::waitForHandshake();
-    BottomRobotActions::inputSingle();
-    // drive to tomato area, intake tomato
-    BottomRobotModules::moveElevator(-15);
-    BottomRobotActions::cuttingToTomato();
-    BottomRobotActions::inputSingle();
-    // drive to cheese area, intake cheese
-    BottomRobotModules::moveElevator(-4);
-    BottomRobotActions::tomatoToCheese();
-    BottomRobotActions::inputSingle();
-    // drive to lettuce area, intake lettuce
-    BottomRobotModules::moveElevator(-4);
-    BottomRobotActions::cheeseToLettuce();
-    BottomRobotActions::inputSingle();
-    // drive to cooktop, intake patty
-    BottomRobotModules::moveElevator(-4);
-    BottomRobotActions::lettuceToCooktop();
-    BottomRobotActions::inputSingle();
-    // drive to cutting area, intake top bun
-    BottomRobotModules::moveElevator(-12);
-    BottomRobotActions::cooktopToCutting();
-    BottomRobotActions::inputSingle();
-    // elevate and serve burgers;
-    BottomRobotModules::moveElevator(96);
-    BottomRobotActions::cuttingToServing();
-    BottomRobotActions::servingRoutine();
-    // drive back to cooktop
-    BottomRobotActions::servingToCooktop();
-    BottomRobotModules::closeTrapdoor();
+    for (int i = 0; i < 3; i++) {
+      // drive to cutting area, intake bottom bun
+      BottomRobotActions::plateToCutting();
+      Network::waitForHandshake();
+      BottomRobotActions::inputSingle();
+      // drive to tomato area, intake tomato
+      BottomRobotModules::moveElevator(-15);
+      BottomRobotActions::cuttingToTomato();
+      BottomRobotActions::inputSingle();
+      // drive to cheese area, intake cheese
+      BottomRobotModules::moveElevator(-4);
+      BottomRobotActions::tomatoToCheese();
+      BottomRobotActions::inputSingle();
+      // drive to lettuce area, intake lettuce
+      BottomRobotModules::moveElevator(-4);
+      BottomRobotActions::cheeseToLettuce();
+      BottomRobotActions::inputSingle();
+      // drive to cooktop, intake patty
+      BottomRobotModules::moveElevator(-4);
+      BottomRobotActions::lettuceToCooktop();
+      BottomRobotActions::inputSingle();
+      // drive to cutting area, intake top bun
+      BottomRobotModules::moveElevator(-8);
+      BottomRobotActions::cooktopToCutting();
+      BottomRobotActions::inputSingle();
+      // elevate and serve burgers;
+      BottomRobotModules::moveElevator(96);
+      BottomRobotActions::cuttingToServing();
+      BottomRobotActions::servingRoutine();
+      // drive back to cooktop
+      BottomRobotActions::servingToPlate();
+    }
   }
 
   // if (Hotspot::wifiInput()) {

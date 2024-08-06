@@ -31,4 +31,5 @@ namespace BottomRobotActions {
   // lettuceToCooktop();
   void cooktopToCutting();
   void cuttingToServing();
+  void servingToPlate();
 }

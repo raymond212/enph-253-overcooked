@@ -60,43 +60,48 @@ void loop() {
   // TOP ROBOT ROUTINE
   if (UserInterface::isButtonPressed()) {
     UserInterface::displayOLED("Waiting for handshake!");
+    TopRobotModules::movePusher(-1, false);
     Network::waitForHandshake();
     UserInterface::displayOLED("Handshake established");
     delay(1000);
 
     UserInterface::displayOLED("INGREDIENTS");
     
+    TopRobotModules::movePusher(1, false);
     TopRobotActions::startToBuns();
-    TopRobotActions::bottomBunDriveProcedure();
-    // intake one bottom bun
-    TopRobotActions::inputRoutine();
-    // drive to cutting
-    TopRobotActions::bunsToCutting();
-    // serve bun
-    TopRobotActions::transferRoutine();
-    // handshake
-    Network::waitForHandshake();
+    for (int i = 0; i < 3; i++) {
+      TopRobotActions::bottomBunDriveProcedure();
+      // intake one bottom bun
+      TopRobotActions::inputRoutine();
+      // drive to cutting
+      TopRobotActions::bunsToCutting();
+      // serve bun
+      TopRobotActions::transferRoutine();
+      // handshake
+      Network::waitForHandshake();
 
-    // go to patty
-    TopRobotActions::cuttingToPatties();
-    // intake one patty
-    TopRobotActions::inputRoutine();
-    // go to cooktop
-    TopRobotActions::pattiesToCooktop();
-    // serve patty
-    TopRobotActions::transferRoutine();
+      // go to patty
+      TopRobotActions::cuttingToPatties();
+      // intake one patty
+      TopRobotActions::inputRoutine();
+      // go to cooktop
+      TopRobotActions::pattiesToCooktop();
+      // serve patty
+      TopRobotActions::transferRoutine();
 
-    // go to buns
-    TopRobotActions::cooktopToBuns();
-    // intake one top bun
-    TopRobotActions::inputRoutine();
-    // go to cooktop
-    TopRobotActions::bunsToCutting();
-    // serve bun
-    TopRobotActions::transferRoutine();
+      // go to buns
+      TopRobotActions::cooktopToBuns();
+      // intake one top bun
+      TopRobotActions::inputRoutine(false); // spin the top bun the other way to avoid jamming
+      // go to cooktop
+      TopRobotActions::bunsToCutting();
+      delay(1200); // wait one second for the top bun to come around
+      // serve bun
+      TopRobotActions::transferRoutine();
 
-    // drive away
-    TopRobotActions::cuttingToPatties();
+      // drive away
+      TopRobotActions::cuttingToBuns();
+    }
   }
   
   // if (Hotspot::wifiInput()) {

@@ -10,7 +10,7 @@ namespace TopRobotModules {
   void setupTopRobotModules();
   // INPUT
   void closeInputScraper();
-  void closeInputScraperPatty();
+  void closeInputScraperFast();
   void openInputScraper();
   void setInputScraper(double angle);
   // OUTPUT

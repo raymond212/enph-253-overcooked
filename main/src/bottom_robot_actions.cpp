@@ -15,10 +15,10 @@ namespace BottomRobotActions {
     BottomRobotModules::openOutputScraper();  // push burger out with the output scraper
     delay(200);
     BottomRobotModules::closeOutputScraper(); // reset output scraper
-    BottomRobotModules::moveElevator(-57);  // lower burger to input height
+    BottomRobotModules::moveElevator(-61);  // lower burger to input height
     BottomRobotModules::openPlatePincher();   // release plate
     BottomRobotModules::openTrapdoor();       // drop food
-    delay(1000);
+    delay(750);
   }
 
   // DRIVING
@@ -86,7 +86,7 @@ namespace BottomRobotActions {
     Drivetrain::driveMecanumTime(45, 0, 1, 800);
     Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 1, 1400, false, false); // wall follow to cooktop
     BottomRobotModules::openPlatePincher();         // open plate pincher
-    Drivetrain::driveMecanumTime(15, 0, 0.5, 500);  // drive forward
+    Drivetrain::driveMecanumTime(15, 0, 0.5, 550);  // drive forward
     delay(100);
     BottomRobotModules::closePlatePincher(); // grab plate
     delay(200);
@@ -107,6 +107,17 @@ namespace BottomRobotActions {
   void cuttingToServing() {
     Drivetrain::wallToWallSpinSlow();
     Drivetrain::driveMecanumTime(165, 0, 0.8, 700);
+  }
+
+  void servingToPlate() {
+    Drivetrain::wallToWallSpinFast();                                           // spin to middle counter
+    BottomRobotModules::closeTrapdoor();
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 400, false, false);  // wall follow 0FL to cooktop
+    BottomRobotModules::openPlatePincher();         // open plate pincher
+    Drivetrain::driveMecanumTime(15, 0, 0.5, 550);  // drive forward
+    delay(100);
+    BottomRobotModules::closePlatePincher(); // grab plate
+    delay(200);
   }
 }
 

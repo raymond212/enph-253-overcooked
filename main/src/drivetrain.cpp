@@ -108,7 +108,7 @@ namespace Drivetrain {
       }
 
       driveMecanum(readjustAngle, 0, WALL_READJUSTMENT_POWER);
-      delay(190);
+      delay(WALL_FOLLOW_BREAKING_TIME);
     }
 
     stopAll();
