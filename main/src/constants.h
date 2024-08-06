@@ -23,14 +23,19 @@ const double EPSILON = 0.001;
 // navigation motor parameters
 const double WALL_FOLLOW_ANGLE_DEG = 20;
 const double WALL_FOLLOW_SLOW_POWER = 0.6;
-const double WALL_FOLLOW_MEDIUM_POWER = 0.5;
+#ifdef ENABLE_BOTTOM_ROBOT
 const double WALL_READJUSTMENT_POWER = 0.7;
 const double WALL_READJUSTMENT_ANGLE = 15;
-const double WALL_FOLLOW_FAST_POWER = 0.8;
+#elif ENABLE_TOP_ROBOT
+const double WALL_READJUSTMENT_POWER = 1;
+const double WALL_READJUSTMENT_ANGLE = 30;
+#endif
+const double WALL_FOLLOW_FAST_POWER = 1;
 const int TAPE_DEBOUNCE_DELAY = 100;
 const int WALL_FOLLOW_DELAY = 500;
 
 // motors
+#ifdef ENABLE_BOTTOM_ROBOT
 const uint8_t FL_MOTOR_PIN_A = 22;
 const uint8_t FL_MOTOR_PIN_B = 19;
 
@@ -42,6 +47,19 @@ const uint8_t BL_MOTOR_PIN_B = 25;
 
 const uint8_t BR_MOTOR_PIN_A = 33;
 const uint8_t BR_MOTOR_PIN_B = 32;
+#elif ENABLE_TOP_ROBOT
+const uint8_t FL_MOTOR_PIN_A = 19;
+const uint8_t FL_MOTOR_PIN_B = 22;
+
+const uint8_t FR_MOTOR_PIN_A = 21;
+const uint8_t FR_MOTOR_PIN_B = 20;
+
+const uint8_t BL_MOTOR_PIN_A = 25;
+const uint8_t BL_MOTOR_PIN_B = 26;
+
+const uint8_t BR_MOTOR_PIN_A = 32;
+const uint8_t BR_MOTOR_PIN_B = 33;
+#endif
 
 const uint8_t FL_MOTOR_CHANNEL_A = 0;
 const uint8_t FL_MOTOR_CHANNEL_B = 1;

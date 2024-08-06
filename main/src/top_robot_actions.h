@@ -21,6 +21,4 @@ namespace TopRobotActions {
   void cuttingToPatties();
   void pattiesToCooktop();
   void cooktopToBuns();
-  void bunsToCooktop();
-  void bunsToCooktop();
 }

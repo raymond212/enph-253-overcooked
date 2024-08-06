@@ -28,8 +28,9 @@ namespace TopRobotActions {
   void inputRoutine() {
     movePusherIn();
     TopRobotModules::closeInputScraper();
-    delay(600);
+    delay(50);
     TopRobotModules::openInputScraper();
+    delay(100);
     TopRobotModules::rotateCarousel(135 * 4);
   }
 
@@ -40,21 +41,21 @@ namespace TopRobotActions {
 
   // DRIVING
   void startToBuns() {
-    Drivetrain::driveMecanumTime(90, 0, 0.6, 510);                              // drive sideways to top counter
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 1, 0, false);  // wall follow 1FL to cutting area
+    Drivetrain::driveMecanumTime(45, 0, 1, 830);
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 500, false, false);  // wall follow 0FL to cutting area
   }
 
   void bottomBunDriveProcedure() {
-    Drivetrain::driveMecanumTime(15, 0, 0.6, 350);
+    Drivetrain::driveMecanumTime(15, 0, 0.6, 50);
     TopRobotModules::openInputScraper();
-    delay(500);
+    delay(400);
     Drivetrain::driveMecanumTime(165, 0, 0.6, 350);
   }
 
   void bunsToCutting() {
     Drivetrain::wallToWallSlow(DriveDirection::RIGHT); // go to middle counter
     Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::RIGHT, 0, 0, false);
-    Drivetrain::driveMecanumTime(-165, 0, 0.5, 200);
+    Drivetrain::driveMecanumTime(-165, 0, 0.5, 225);
   }
 
   void cuttingToPatties() {
@@ -64,19 +65,13 @@ namespace TopRobotActions {
 
   void pattiesToCooktop() {
     Drivetrain::wallToWallSlow(DriveDirection::RIGHT);
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 1, 0, false);
-    Drivetrain::driveMecanumTime(-165, 0, 0.5, 200);
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 1, 1000, false);
+    Drivetrain::driveMecanumTime(-165, 0, 0.5, 240);
   }
 
   void cooktopToBuns() {
     Drivetrain::wallToWallSlow(DriveDirection::LEFT);
     Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, false);
-  }
-
-  void bunsToCooktop() {
-    Drivetrain::wallToWallSlow(DriveDirection::RIGHT);
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 0, 0, false);
-    Drivetrain::driveMecanumTime(-165, 0, 0.5, 200);
   }
 }
 

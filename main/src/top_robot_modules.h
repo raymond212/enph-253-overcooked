@@ -20,7 +20,7 @@ namespace TopRobotModules {
   // CAROUSEL
   void rotateCarouselLeft();
   void rotateCarouselRight();
-  void rotateCarousel(double angle);
+  void rotateCarousel(double angle, double speed = 0.75);
   // PUSHER
   void movePusher(double revs, bool blocking);
 }

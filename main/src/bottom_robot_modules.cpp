@@ -35,7 +35,7 @@ namespace BottomRobotModules {
   }
 
   void openOutputScraper() {
-    outputScraper.setAngleSpeed(60, 75);
+    outputScraper.setAngleSpeed(60, 100);
     outputScraper.setAngleSpeed(20, 50);
   }
 
@@ -48,7 +48,7 @@ namespace BottomRobotModules {
   }
   
   void closePlatePincher() {
-    platePincher.setAngle(132);
+    platePincher.setAngle(135);
   }
 
   void openPlatePincher() {

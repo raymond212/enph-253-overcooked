@@ -46,7 +46,7 @@ namespace Drivetrain {
    * @param wallLocation the location of the wall relative to the robot, either LEFT or RIGHT
    * @param skip the number of tapes to skip before stopping
    */
-  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime, bool startOnTape);
+  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime, bool startOnTape, bool shouldBreak = true);
 
   /**
    * Move from wall to wall

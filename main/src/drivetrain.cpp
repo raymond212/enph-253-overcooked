@@ -48,7 +48,7 @@ namespace Drivetrain {
     stopAll();
   }
 
-  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime, bool startOnTape) {
+  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime, bool startOnTape, bool shouldBreak) {
     int count = 0;
     int iter = 0;
     int lastTapeTime = millis();
@@ -70,7 +70,12 @@ namespace Drivetrain {
         angle = 180 - WALL_FOLLOW_ANGLE_DEG;
       }
     }
-    driveMecanum(angle, 0, WALL_FOLLOW_FAST_POWER);
+
+    if (slowDownTime == 0) {
+      driveMecanum(angle, 0, WALL_FOLLOW_SLOW_POWER);
+    } else {
+      driveMecanum(angle, 0, WALL_FOLLOW_FAST_POWER);
+    }
 
     while (count < skip + 1) {
       seeTape = (driveDirection == DriveDirection::FORWARD) ? TapeSensors::backIsTape() : TapeSensors::frontIsTape();
@@ -86,23 +91,25 @@ namespace Drivetrain {
     }
 
     // active breaking into wall
-    double readjustAngle = 0;
-    if (driveDirection == DriveDirection::FORWARD) {
-      if (wallLocation == WallLocation::RIGHT) {
-        readjustAngle = -180 + WALL_READJUSTMENT_ANGLE;
-      } else {
-        readjustAngle = -180 - WALL_READJUSTMENT_ANGLE;
+    if (shouldBreak) {
+      double readjustAngle = 0;
+      if (driveDirection == DriveDirection::FORWARD) {
+        if (wallLocation == WallLocation::RIGHT) {
+          readjustAngle = -180 + WALL_READJUSTMENT_ANGLE;
+        } else {
+          readjustAngle = 180 - WALL_READJUSTMENT_ANGLE;
+        }
+      } else if (driveDirection == DriveDirection::BACKWARD) {
+        if (wallLocation == WallLocation::RIGHT) {
+          readjustAngle = -WALL_READJUSTMENT_ANGLE;
+        } else {
+          readjustAngle = WALL_READJUSTMENT_ANGLE;
+        }
       }
-    } else if (driveDirection == DriveDirection::BACKWARD) {
-      if (wallLocation == WallLocation::RIGHT) {
-        readjustAngle = - WALL_READJUSTMENT_ANGLE;
-      } else {
-        readjustAngle = WALL_READJUSTMENT_ANGLE;
-      }
-    }
 
-    driveMecanum(readjustAngle, 0, WALL_READJUSTMENT_POWER);
-    delay(190);
+      driveMecanum(readjustAngle, 0, WALL_READJUSTMENT_POWER);
+      delay(190);
+    }
 
     stopAll();
   }
@@ -132,7 +139,7 @@ namespace Drivetrain {
   }
 
   void wallToWallSpinSlow() {
-    wallToWallSpin(DriveDirection::RIGHT, 490, 1060, 0.6, 0.7);
+    wallToWallSpin(DriveDirection::RIGHT, 500, 1060, 0.6, 0.7);
   }
 
   void wallToWallSpinFast() {

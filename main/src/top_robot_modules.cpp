@@ -15,7 +15,7 @@ namespace TopRobotModules {
   }
 
   void closeInputScraper() {
-    inputScraper.setAngle(130);
+    inputScraper.setAngleSpeed(130, 200);
     inputScraper.setAngleSpeed(180, 50);
   }
 
@@ -51,7 +51,8 @@ namespace TopRobotModules {
     carousel.stepRevs(1);
   }
 
-  void rotateCarousel(double angle) {
+  void rotateCarousel(double angle, double speed) {
+    carousel.setSpeed(speed);
     carousel.stepRevs(angle / 360);
   }
 

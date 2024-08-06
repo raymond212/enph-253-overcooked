@@ -83,7 +83,6 @@ void loop() {
     TopRobotActions::inputRoutine();
     // go to cooktop
     TopRobotActions::pattiesToCooktop();
-    delay(500);
     // serve patty
     TopRobotActions::transferRoutine();
 
@@ -92,16 +91,12 @@ void loop() {
     // intake one top bun
     TopRobotActions::inputRoutine();
     // go to cooktop
-    TopRobotActions::bunsToCooktop();
+    TopRobotActions::bunsToCutting();
     // serve bun
     TopRobotActions::transferRoutine();
-    // handshake
-    Network::waitForHandshake();
 
     // drive away
-    Drivetrain::wallToWallSlow(DriveDirection::LEFT);
-    // extend scraper
-    TopRobotActions::movePusherIn();
+    TopRobotActions::cuttingToPatties();
   }
   
   // if (Hotspot::wifiInput()) {
@@ -237,8 +232,8 @@ void loop() {
   //     TopRobotActions::pattiesToCooktop();
   //   } else if (s == "c2b") {
   //     TopRobotActions::cooktopToBuns();
-  //   } else if (s == "b2c") {
-  //     TopRobotActions::bunsToCooktop();
+  //   } else if (s == "c2p") {
+  //     TopRobotActions::cuttingToPatties();
   //   } else if (s == "tir") {
   //     TopRobotActions::inputRoutine();
   //   } else if (s == "tt") {

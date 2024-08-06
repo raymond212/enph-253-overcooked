@@ -6,21 +6,19 @@ namespace BottomRobotActions {
   // ACTIONS
   void inputSingle() {
     BottomRobotModules::closeInputScraper();
-    delay(1500);
+    delay(1400);
     BottomRobotModules::openInputScraper();
   }
 
   void servingRoutine() {
-    delay(900);
+    delay(500);
     BottomRobotModules::openOutputScraper();  // push burger out with the output scraper
-    delay(500);
+    delay(200);
     BottomRobotModules::closeOutputScraper(); // reset output scraper
-    BottomRobotModules::moveElevator(-44);  // lower remaining burgers
+    BottomRobotModules::moveElevator(-57);  // lower burger to input height
     BottomRobotModules::openPlatePincher();   // release plate
-    delay(500);
     BottomRobotModules::openTrapdoor();       // drop food
-    delay(2000);
-    // BottomRobotModules::rotateCarouselLeft();
+    delay(1000);
   }
 
   // DRIVING
@@ -35,13 +33,13 @@ namespace BottomRobotActions {
   }
 
   void tomatoToCheese() {
-    Drivetrain::driveMecanumTime(15, 0, WALL_FOLLOW_MEDIUM_POWER, 500);         // wall follow forward slightly
+    Drivetrain::driveMecanumTime(15, 0, WALL_FOLLOW_SLOW_POWER, 500);         // wall follow forward slightly
     Drivetrain::wallToWallSpinFast();                                           // spin to bottom counter
     Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0, false);  // wall follow 0FL to cheese
   }
 
   void cheeseToCooktop() {
-    Drivetrain::driveMecanumTime(165, 0, WALL_FOLLOW_MEDIUM_POWER, 500);        // wall follow backward slightly
+    Drivetrain::driveMecanumTime(165, 0, WALL_FOLLOW_SLOW_POWER, 500);        // wall follow backward slightly
     Drivetrain::wallToWallSpinFast();                                           // spin to middle counter
     Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 1, 0, false);  // wall follow 1FL to cooktop
   }
@@ -52,7 +50,7 @@ namespace BottomRobotActions {
   }
 
   void lettuceToCooktop() {
-    Drivetrain::driveMecanumTime(15, 0, WALL_FOLLOW_MEDIUM_POWER, 300);         // wall follow forward slightly
+    Drivetrain::driveMecanumTime(15, 0, WALL_FOLLOW_SLOW_POWER, 300);         // wall follow forward slightly
     Drivetrain::wallToWallSpinFast();                                           // spin to middle counter
     Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, false); // wall follow 0BL to cooktop
   }
@@ -80,6 +78,35 @@ namespace BottomRobotActions {
   void servingToCooktop() {
     Drivetrain::wallToWallSpinFast();                                           // spin to middle counter
     Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0, false);  // wall follow 0FL to cooktop
+  }
+
+  // DRIVING SINGLE BURGER V2
+  void startToPlate() {
+    BottomRobotModules::openInputScraper();
+    Drivetrain::driveMecanumTime(45, 0, 1, 800);
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 1, 1400, false, false); // wall follow to cooktop
+    BottomRobotModules::openPlatePincher();         // open plate pincher
+    Drivetrain::driveMecanumTime(15, 0, 0.5, 500);  // drive forward
+    delay(100);
+    BottomRobotModules::closePlatePincher(); // grab plate
+    delay(200);
+  }
+
+  void plateToCutting() {
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 1, 1300, true);
+  }
+
+  void cheeseToLettuce() {
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 2000, true);
+  }
+
+  void cooktopToCutting() {
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 1000, true);
+  }
+
+  void cuttingToServing() {
+    Drivetrain::wallToWallSpinSlow();
+    Drivetrain::driveMecanumTime(165, 0, 0.8, 700);
   }
 }
 
