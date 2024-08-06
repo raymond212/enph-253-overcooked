@@ -86,9 +86,7 @@ void loop() {
     // drive to cooktop, intake patty
     BottomRobotModules::moveElevator(-10);
     BottomRobotActions::cheeseToCooktop();
-    // wait for patty
-    Network::waitForHandshake();
-    delay(1500);  // wait for top robot to push out patty
+    // intake patty
     BottomRobotActions::inputSingle();
     // drive to lettuce area, intake lettuce
     BottomRobotModules::moveElevator(-5);
@@ -190,7 +188,7 @@ void loop() {
   //     int num = s.substring(0, 1).toInt();
   //     DriveDirection driveDirection = s.substring(1, 2) == "F" ? DriveDirection::FORWARD : DriveDirection::BACKWARD;
   //     WallLocation wallLocation = s.substring(2, 3) == "R" ? WallLocation::RIGHT : WallLocation::LEFT;
-  //     Drivetrain::wallFollow(driveDirection, wallLocation, num, wallTime);
+  //     Drivetrain::wallFollow(driveDirection, wallLocation, num, wallTime, true);
   //   } else if (s == "mec") {
   //     double angle = wifiWaitAndRead().toDouble();
   //     Drivetrain::driveMecanum(angle, 0, power);

@@ -48,7 +48,7 @@ namespace Drivetrain {
     stopAll();
   }
 
-  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime) {
+  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime, bool startOnTape) {
     int count = 0;
     int iter = 0;
     int lastTapeTime = millis();
@@ -74,7 +74,7 @@ namespace Drivetrain {
 
     while (count < skip + 1) {
       seeTape = (driveDirection == DriveDirection::FORWARD) ? TapeSensors::backIsTape() : TapeSensors::frontIsTape();
-      if (seeTape && millis() - lastTapeTime > TAPE_DEBOUNCE_DELAY && millis() - start > WALL_FOLLOW_DELAY) {
+      if (seeTape && millis() - lastTapeTime > TAPE_DEBOUNCE_DELAY && (!startOnTape || (millis() - start > WALL_FOLLOW_DELAY))) {
         lastTapeTime = millis();
         count++;
       }
@@ -117,7 +117,7 @@ namespace Drivetrain {
   }
 
   void wallToWallSlow(DriveDirection driveDirection) {
-    wallToWall(driveDirection, 600, 450, 0.5, 1);
+    wallToWall(driveDirection, 600, 300, 0.5, 1);
   }
 
   void wallToWallSpin(DriveDirection driveDirection, int driveTimeMS, int spinTimeMS, double drivePower, double spinPower) {

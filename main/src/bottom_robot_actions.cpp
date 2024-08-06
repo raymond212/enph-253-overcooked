@@ -27,34 +27,34 @@ namespace BottomRobotActions {
   void startToCutting() {
     BottomRobotModules::openInputScraper();                                     // open input scraper to prevent conflict
     Drivetrain::driveMecanumTime(90, 0, 0.6, 510);                              // drive sideways to middle counter
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0);  // wall follow 0FL to cutting
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0, true);  // wall follow 0FL to cutting
   }
 
   void cuttingToTomato() {
-    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0); // wall follow 0BL to tomato
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, true); // wall follow 0BL to tomato
   }
 
   void tomatoToCheese() {
     Drivetrain::driveMecanumTime(15, 0, WALL_FOLLOW_MEDIUM_POWER, 500);         // wall follow forward slightly
     Drivetrain::wallToWallSpinFast();                                           // spin to bottom counter
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0);  // wall follow 0FL to cheese
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0, false);  // wall follow 0FL to cheese
   }
 
   void cheeseToCooktop() {
     Drivetrain::driveMecanumTime(165, 0, WALL_FOLLOW_MEDIUM_POWER, 500);        // wall follow backward slightly
     Drivetrain::wallToWallSpinFast();                                           // spin to middle counter
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 1, 0);  // wall follow 1FL to cooktop
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 1, 0, false);  // wall follow 1FL to cooktop
   }
 
   void cooktopToLettuce() {
     Drivetrain::wallToWallSpinFast();                                           // spin to bottom counter
-    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0); // wall follow 1BL to lettuce
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, false); // wall follow 1BL to lettuce
   }
 
   void lettuceToCooktop() {
     Drivetrain::driveMecanumTime(15, 0, WALL_FOLLOW_MEDIUM_POWER, 300);         // wall follow forward slightly
     Drivetrain::wallToWallSpinFast();                                           // spin to middle counter
-    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0); // wall follow 0BL to cooktop
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, false); // wall follow 0BL to cooktop
   }
 
   void cooktopGrabPlate() {
@@ -79,7 +79,7 @@ namespace BottomRobotActions {
 
   void servingToCooktop() {
     Drivetrain::wallToWallSpinFast();                                           // spin to middle counter
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0);  // wall follow 0FL to cooktop
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0, false);  // wall follow 0FL to cooktop
   }
 }
 

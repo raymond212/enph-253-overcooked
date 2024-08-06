@@ -16,7 +16,7 @@ namespace TopRobotModules {
 
   void closeInputScraper() {
     inputScraper.setAngle(130);
-    inputScraper.setAngleSpeed(175, 50);
+    inputScraper.setAngleSpeed(180, 50);
   }
 
   void closeInputScraperPatty() {
@@ -24,7 +24,7 @@ namespace TopRobotModules {
   }
 
   void openInputScraper() {
-    inputScraper.setAngle(0);
+    inputScraper.setAngle(100);
   }
 
   void setInputScraper(double angle) {

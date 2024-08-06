@@ -7,16 +7,13 @@ namespace TopRobotActions {
   void movePusherOut() {
     TopRobotModules::lowerOutputScraper();
     delay(400);
-    TopRobotModules::movePusher(0.83, true);
-    TopRobotModules::setOutputScraper(121);
-    TopRobotModules::movePusher(1.65, true);
-    TopRobotModules::raiseOutputScraper();
+    TopRobotModules::movePusher(2.57, true);
+    TopRobotModules::setOutputScraper(125);
   }
 
   void movePusherIn() {
-    TopRobotModules::movePusher(-0.38, true);
     TopRobotModules::raiseOutputScraper();
-    TopRobotModules::movePusher(-2.1, true);
+    TopRobotModules::movePusher(-2.75, false);
   }
 
   void reloadPusherPatty() {
@@ -31,57 +28,54 @@ namespace TopRobotActions {
   void inputRoutine() {
     movePusherIn();
     TopRobotModules::closeInputScraper();
-    delay(800);
+    delay(600);
     TopRobotModules::openInputScraper();
-    delay(800);
     TopRobotModules::rotateCarousel(135 * 4);
   }
 
   void transferRoutine() {
     movePusherOut();
-    TopRobotModules::setOutputScraper(125);
     TopRobotModules::rotateCarousel(45 * 4);
   }
 
   // DRIVING
   void startToBuns() {
     Drivetrain::driveMecanumTime(90, 0, 0.6, 510);                              // drive sideways to top counter
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 1, 0);  // wall follow 1FL to cutting area
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 1, 0, false);  // wall follow 1FL to cutting area
   }
 
   void bottomBunDriveProcedure() {
     Drivetrain::driveMecanumTime(15, 0, 0.6, 350);
-    delay(100);
     TopRobotModules::openInputScraper();
-    delay(1000);
+    delay(500);
     Drivetrain::driveMecanumTime(165, 0, 0.6, 350);
   }
 
   void bunsToCutting() {
     Drivetrain::wallToWallSlow(DriveDirection::RIGHT); // go to middle counter
-    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::RIGHT, 0, 0);
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::RIGHT, 0, 0, false);
     Drivetrain::driveMecanumTime(-165, 0, 0.5, 200);
   }
 
   void cuttingToPatties() {
     Drivetrain::wallToWallSlow(DriveDirection::LEFT); // go to top counter
-    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0);
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, false);
   }
 
   void pattiesToCooktop() {
     Drivetrain::wallToWallSlow(DriveDirection::RIGHT);
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 1, 0);
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 1, 0, false);
     Drivetrain::driveMecanumTime(-165, 0, 0.5, 200);
   }
 
   void cooktopToBuns() {
     Drivetrain::wallToWallSlow(DriveDirection::LEFT);
-    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0);
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, false);
   }
 
   void bunsToCooktop() {
     Drivetrain::wallToWallSlow(DriveDirection::RIGHT);
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 0, 0);
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 0, 0, false);
     Drivetrain::driveMecanumTime(-165, 0, 0.5, 200);
   }
 }

@@ -28,7 +28,7 @@ const double WALL_READJUSTMENT_POWER = 0.7;
 const double WALL_READJUSTMENT_ANGLE = 15;
 const double WALL_FOLLOW_FAST_POWER = 0.8;
 const int TAPE_DEBOUNCE_DELAY = 100;
-const int WALL_FOLLOW_DELAY = 300;
+const int WALL_FOLLOW_DELAY = 500;
 
 // motors
 const uint8_t FL_MOTOR_PIN_A = 22;
