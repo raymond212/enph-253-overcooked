@@ -7,7 +7,7 @@ namespace TopRobotActions {
   void movePusherOut() {
     TopRobotModules::lowerOutputScraper();
     delay(400);
-    TopRobotModules::movePusher(2.57, true);
+    TopRobotModules::movePusher(2.54, true);
     TopRobotModules::setOutputScraper(125);
   }
 
@@ -25,9 +25,18 @@ namespace TopRobotActions {
     TopRobotModules::movePusher(0.8, true);
   }
 
-  void inputRoutine(bool carouselSpinLeft) {
+  void inputPatty() {
     movePusherIn();
-    TopRobotModules::closeInputScraper();
+    TopRobotModules::closeInputScraperPatty();
+    delay(200);
+    TopRobotModules::openInputScraper();
+    delay(200);
+    TopRobotModules::rotateCarousel(135 * 4);
+  }
+
+  void inputBun(bool carouselSpinLeft) {
+    movePusherIn();
+    TopRobotModules::closeInputScraperBun();
     delay(200);
     TopRobotModules::openInputScraper();
     delay(200);
@@ -65,8 +74,9 @@ namespace TopRobotActions {
 
   void pattiesToCooktop() {
     Drivetrain::wallToWallSlow(DriveDirection::RIGHT);
-    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 1, 1000, false);
-    Drivetrain::driveMecanumTime(-165, 0, 0.5, 240);
+    Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 1, 1200, false);
+    delay(500);
+    Drivetrain::driveMecanumTime(-165, 0, 0.5, 350);
   }
 
   void cooktopToBuns() {
@@ -78,6 +88,10 @@ namespace TopRobotActions {
     TopRobotModules::closeInputScraperFast();
     Drivetrain::wallToWallSlow(DriveDirection::LEFT); // go to top counter
     Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::LEFT, 0, 0, false, false);
+  }
+
+  void resetToStart() {
+    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, true);
   }
 }
 

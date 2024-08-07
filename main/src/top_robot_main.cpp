@@ -72,7 +72,7 @@ void loop() {
     for (int i = 0; i < 3; i++) {
       TopRobotActions::bottomBunDriveProcedure();
       // intake one bottom bun
-      TopRobotActions::inputRoutine();
+      TopRobotActions::inputBun();
       // drive to cutting
       TopRobotActions::bunsToCutting();
       // serve bun
@@ -83,7 +83,7 @@ void loop() {
       // go to patty
       TopRobotActions::cuttingToPatties();
       // intake one patty
-      TopRobotActions::inputRoutine();
+      TopRobotActions::inputPatty();
       // go to cooktop
       TopRobotActions::pattiesToCooktop();
       // serve patty
@@ -92,18 +92,52 @@ void loop() {
       // go to buns
       TopRobotActions::cooktopToBuns();
       // intake one top bun
-      TopRobotActions::inputRoutine(false); // spin the top bun the other way to avoid jamming
+      TopRobotActions::inputBun(false); // spin the top bun the other way to avoid jamming
       // go to cooktop
       TopRobotActions::bunsToCutting();
-      delay(1200); // wait one second for the top bun to come around
+      delay(1000); // wait one second for the top bun to come around
       // serve bun
       TopRobotActions::transferRoutine();
 
       // drive away
       TopRobotActions::cuttingToBuns();
     }
+
+    TopRobotActions::resetToStart();
   }
   
+    // String s = waitAndRead();
+    // if (s == "tic") {
+    //   TopRobotModules::closeInputScraperFast();
+    // } else if (s == "ticp") {
+    //   TopRobotModules::closeInputScraperPatty();
+    // } else if (s == "tio") {
+    //   TopRobotModules::openInputScraper();
+    // } else if (s == "ti") {
+    //   TopRobotModules::setInputScraper(waitAndRead().toDouble());
+    // } else if (s == "tor") {
+    //   TopRobotModules::raiseOutputScraper();
+    // } else if (s == "tol") {
+    //   TopRobotModules::lowerOutputScraper();
+    // } else if (s == "to") {
+    //   TopRobotModules::setOutputScraper(waitAndRead().toDouble());
+    // } else if (s == "tcl") {
+    //   TopRobotModules::rotateCarouselLeft();
+    // } else if (s == "tcr") {
+    //   TopRobotModules::rotateCarouselRight();
+    // } else if (s == "tc") {
+    //   TopRobotModules::rotateCarousel(waitAndRead().toDouble());
+    // } else if (s == "tpo") {
+    //   TopRobotActions::movePusherOut();
+    // } else if (s == "tpi") {
+    //   TopRobotActions::movePusherIn();
+    // } else if (s == "tp") {
+    //   TopRobotModules::movePusher(waitAndRead().toDouble(), false);
+    // } else if (s == "tpr") {
+    //   TopRobotActions::reloadPusherPatty();
+    // }
+
+
   // if (Hotspot::wifiInput()) {
   //   String s = Hotspot::message;
   //   UserInterface::displayOLED(s); // echo

@@ -10,13 +10,18 @@ namespace TopRobotModules {
   Stepper pusher = Stepper(PUSHER_STEP_PIN, PUSHER_DIR_PIN, 2, 1);
 
   void setupTopRobotModules() {
-    closeInputScraper();
+    closeInputScraperFast();
     raiseOutputScraper();
   }
 
-  void closeInputScraper() {
+  void closeInputScraperPatty() {
     inputScraper.setAngleSpeed(130, 200);
     inputScraper.setAngleSpeed(180, 50);
+  }
+
+  void closeInputScraperBun() {
+    inputScraper.setAngleSpeed(130, 200);
+    inputScraper.setAngleSpeed(178, 50);
   }
 
   void closeInputScraperFast() {
@@ -36,7 +41,8 @@ namespace TopRobotModules {
   }
 
   void lowerOutputScraper() {
-    outputScraper.setAngle(117);
+    // outputScraper.setAngle(117);
+    outputScraper.setAngle(115);
   }
 
   void setOutputScraper(double angle) {

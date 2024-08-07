@@ -11,7 +11,8 @@ namespace TopRobotActions {
   void movePusherOut();
   void movePusherIn();
   void reloadPusherPatty();
-  void inputRoutine(bool carouselSpinLeft = true);
+  void inputPatty();
+  void inputBun(bool carouselSpinLeft = true);
   void transferRoutine();
 
   // DRIVING
@@ -22,4 +23,5 @@ namespace TopRobotActions {
   void pattiesToCooktop();
   void cooktopToBuns();
   void cuttingToBuns();
+  void resetToStart();
 }

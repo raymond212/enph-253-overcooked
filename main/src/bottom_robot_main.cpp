@@ -59,19 +59,23 @@ String waitAndRead() {
 
 void loop() {
   if (UserInterface::isButtonPressed()) {
+    #ifdef ENABLE_HANDSHAKE
     UserInterface::displayOLED("Waiting for handshake!");
     Network::waitForHandshake();
     UserInterface::displayOLED("Handshake established");
     delay(1000);
+    #endif
 
     UserInterface::displayOLED("BURGER");
     // drive to plate area, grab on to plate
-    BottomRobotModules::moveElevator(35);
+    BottomRobotModules::moveElevator(30);
     BottomRobotActions::startToPlate();
     for (int i = 0; i < 3; i++) {
       // drive to cutting area, intake bottom bun
       BottomRobotActions::plateToCutting();
+      #ifdef ENABLE_HANDSHAKE
       Network::waitForHandshake();
+      #endif
       BottomRobotActions::inputSingle();
       // drive to tomato area, intake tomato
       BottomRobotModules::moveElevator(-15);
@@ -90,7 +94,7 @@ void loop() {
       BottomRobotActions::lettuceToCooktop();
       BottomRobotActions::inputSingle();
       // drive to cutting area, intake top bun
-      BottomRobotModules::moveElevator(-8);
+      BottomRobotModules::moveElevator(-3);
       BottomRobotActions::cooktopToCutting();
       BottomRobotActions::inputSingle();
       // elevate and serve burgers;
