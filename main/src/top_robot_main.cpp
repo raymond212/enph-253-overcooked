@@ -59,17 +59,23 @@ String waitAndRead() {
 void loop() {
   // TOP ROBOT ROUTINE
   if (UserInterface::isButtonPressed()) {
+    int numBurgers = 3;
+
+    #ifdef ENABLE_HANDSHAKE
     UserInterface::displayOLED("Waiting for handshake!");
-    TopRobotModules::movePusher(-1, false);
     Network::waitForHandshake();
     UserInterface::displayOLED("Handshake established");
     delay(1000);
+    TopRobotModules::movePusher(-1, false);
+    #endif
 
     UserInterface::displayOLED("INGREDIENTS");
     
+    #ifdef ENABLE_HANDSHAKE
     TopRobotModules::movePusher(1, false);
+    #endif
     TopRobotActions::startToBuns();
-    for (int i = 0; i < 3; i++) {
+    for (int i = 1; i <= numBurgers; i++) {
       TopRobotActions::bottomBunDriveProcedure();
       // intake one bottom bun
       TopRobotActions::inputBun();
@@ -78,7 +84,11 @@ void loop() {
       // serve bun
       TopRobotActions::transferRoutine();
       // handshake
-      Network::waitForHandshake();
+      #ifdef ENABLE_HANDSHAKE
+      if (i != numBurgers) {
+        Network::waitForHandshake();
+      }
+      #endif
 
       // go to patty
       TopRobotActions::cuttingToPatties();

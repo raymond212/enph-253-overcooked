@@ -66,15 +66,19 @@ void loop() {
     delay(1000);
     #endif
 
+    int numBurgers = 3;
+
     UserInterface::displayOLED("BURGER");
     // drive to plate area, grab on to plate
     BottomRobotModules::moveElevator(30);
     BottomRobotActions::startToPlate();
-    for (int i = 0; i < 3; i++) {
+    for (int i = 1; i <= numBurgers; i++) {
       // drive to cutting area, intake bottom bun
       BottomRobotActions::plateToCutting();
       #ifdef ENABLE_HANDSHAKE
-      Network::waitForHandshake();
+      if (i != numBurgers) {
+        Network::waitForHandshake();
+      }
       #endif
       BottomRobotActions::inputSingle();
       // drive to tomato area, intake tomato
@@ -102,8 +106,11 @@ void loop() {
       BottomRobotActions::cuttingToServing();
       BottomRobotActions::servingRoutine();
       // drive back to cooktop
-      BottomRobotActions::servingToPlate();
+      if (i != numBurgers) {
+        BottomRobotActions::servingToPlate();
+      }
     }
+    BottomRobotActions::servingToPlate();
   }
 
   // if (Hotspot::wifiInput()) {

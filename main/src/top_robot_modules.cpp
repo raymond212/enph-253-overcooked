@@ -15,12 +15,12 @@ namespace TopRobotModules {
   }
 
   void closeInputScraperPatty() {
-    inputScraper.setAngleSpeed(130, 200);
+    inputScraper.setAngleSpeed(130, 100);
     inputScraper.setAngleSpeed(180, 50);
   }
 
   void closeInputScraperBun() {
-    inputScraper.setAngleSpeed(130, 200);
+    inputScraper.setAngleSpeed(130, 100);
     inputScraper.setAngleSpeed(178, 50);
   }
 
