@@ -66,7 +66,7 @@ void loop() {
     delay(1000);
     #endif
 
-    int numBurgers = 3;
+    int numBurgers = 4;
 
     UserInterface::displayOLED("BURGER");
     // drive to plate area, grab on to plate
@@ -76,7 +76,7 @@ void loop() {
       // drive to cutting area, intake bottom bun
       BottomRobotActions::plateToCutting();
       #ifdef ENABLE_HANDSHAKE
-      if (i != numBurgers) {
+      if (i == 1) {
         Network::waitForHandshake();
       }
       #endif
@@ -100,11 +100,14 @@ void loop() {
       // drive to cutting area, intake top bun
       BottomRobotModules::moveElevator(-3);
       BottomRobotActions::cooktopToCutting();
+      #ifdef ENABLE_HANDSHAKE
+      Network::waitForHandshake();
+      #endif
       BottomRobotActions::inputSingle();
       // elevate and serve burgers;
       BottomRobotModules::moveElevator(96);
       BottomRobotActions::cuttingToServing();
-      BottomRobotActions::servingRoutine();
+      // BottomRobotActions::servingRoutine();
       // drive back to cooktop
       if (i != numBurgers) {
         BottomRobotActions::servingToPlate();
@@ -208,6 +211,8 @@ void loop() {
   //     Drivetrain::wallToWallSpin(driveDirection, driveTime, spinTime, power, spinPower);
   //   } else if (s == "WWSS") {
   //     Drivetrain::wallToWallSpinSlow();
+  //   }
+  // }
   //   // bottom robot modules
   //   } else if (s == "bic") {
   //     BottomRobotModules::closeInputScraper();

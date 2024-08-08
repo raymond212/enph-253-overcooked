@@ -42,7 +42,7 @@ namespace TopRobotModules {
 
   void lowerOutputScraper() {
     // outputScraper.setAngle(117);
-    outputScraper.setAngle(115);
+    outputScraper.setAngle(117);
   }
 
   void setOutputScraper(double angle) {

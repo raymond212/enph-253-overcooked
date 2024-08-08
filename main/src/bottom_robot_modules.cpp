@@ -8,8 +8,8 @@ namespace BottomRobotModules {
   Servo trapdoor = Servo(TRAPDOOR_PIN, TRAPDOOR_CHANNEL);
   Servo platePincher = Servo(PLATE_PIN, PLATE_CHANNEL);
 
-  Stepper carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 0.75, 2);
-  Stepper elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 4, 3);
+  Stepper carousel = Stepper(CAROUSEL_STEP_PIN, CAROUSEL_DIR_PIN, 0.75, 0);
+  Stepper elevator = Stepper(ELEVATOR_STEP_PIN, ELEVATOR_DIR_PIN, 4.8, 1);
 
   void setupBottomRobotModules() {
     closeInputScraper();
@@ -35,8 +35,9 @@ namespace BottomRobotModules {
   }
 
   void openOutputScraper() {
-    outputScraper.setAngleSpeed(50, 175);
-    outputScraper.setAngleSpeed(20, 75);
+    outputScraper.setAngle(20);
+    // outputScraper.setAngleSpeed(50, 175);
+    // outputScraper.setAngleSpeed(20, 75);
   }
 
   void closeTrapdoor() {

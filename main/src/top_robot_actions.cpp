@@ -62,9 +62,10 @@ namespace TopRobotActions {
   }
 
   void bunsToCutting() {
-    Drivetrain::wallToWallSlow(DriveDirection::RIGHT); // go to middle counter
+    Drivetrain::wallToWallSlow(DriveDirection::RIGHT); // go to middle couunter
     Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::RIGHT, 0, 0, false);
-    Drivetrain::driveMecanumTime(-165, 0, 0.5, 200);
+    delay(200);
+    Drivetrain::driveMecanumTime(-165, 0, 0.5, 120);
   }
 
   void cuttingToPatties() {
@@ -75,7 +76,7 @@ namespace TopRobotActions {
   void pattiesToCooktop() {
     Drivetrain::wallToWallSlow(DriveDirection::RIGHT);
     Drivetrain::wallFollow(DriveDirection::FORWARD, WallLocation::RIGHT, 1, 1200, false);
-    delay(500);
+    delay(200);
     Drivetrain::driveMecanumTime(-165, 0, 0.5, 275);
   }
 

@@ -10,10 +10,10 @@ const uint8_t TOP_ROBOT_MAC_ADDRESS[] = {0x64, 0xB7, 0x08, 0x9C, 0x5C, 0x84}; //
 // const uint8_t TOP_ROBOT_MAC_ADDRESS[] = {0x64, 0xB7, 0x08, 0x9C, 0x5C, 0xC4};
 
 // wifi settings
-const String ssid = "TELUS4676";
-const String password = "XHDGCtGXb69k";
-// const String ssid = "Raymond";
-// const String password = "enphteamtwo";
+// const String ssid = "TELUS4676";
+// const String password = "XHDGCtGXb69k";
+const String ssid = "Raymond";
+const String password = "enphteamtwo";
 // const String ssid = "Roberts’s trapphone";
 // const String password = "eurostep";
 const uint16_t WIFI_PORT = 23;
@@ -30,7 +30,7 @@ const double WALL_FOLLOW_BREAKING_TIME = 190;
 #elif ENABLE_TOP_ROBOT
 const double WALL_READJUSTMENT_POWER = 1;
 const double WALL_READJUSTMENT_ANGLE = 45;
-const int WALL_FOLLOW_BREAKING_TIME = 240;
+const int WALL_FOLLOW_BREAKING_TIME = 200;
 #endif
 const double WALL_FOLLOW_FAST_POWER = 1;
 const int TAPE_DEBOUNCE_DELAY = 100;
