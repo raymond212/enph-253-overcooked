@@ -31,7 +31,7 @@ namespace BottomRobotModules {
   }
 
   void closeOutputScraper() {
-    outputScraper.setAngle(165);
+    outputScraper.setAngle(169);
   }
 
   void openOutputScraper() {
@@ -45,7 +45,7 @@ namespace BottomRobotModules {
   }
 
   void openTrapdoor() {
-    trapdoor.setAngle(55);
+    trapdoor.setAngle(40);
   }
   
   void closePlatePincher() {

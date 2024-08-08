@@ -63,7 +63,7 @@ void loop() {
     UserInterface::displayOLED("Waiting for handshake!");
     Network::waitForHandshake();
     UserInterface::displayOLED("Handshake established");
-    delay(1000);
+    delay(200);
     #endif
 
     int numBurgers = 4;

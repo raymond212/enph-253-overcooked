@@ -12,7 +12,12 @@ namespace UserInterface {
     display_handler.setTextSize(2);
     display_handler.setTextColor(SSD1306_WHITE);
 
-    displayOLED("OLED initialized");
+    #ifdef LEFT_FIELD
+    String s = "Left";
+    #else
+    String s = "Right";
+    #endif
+    displayOLED("OLED" + s);
   }
 
   void displayOLED(String text) {
