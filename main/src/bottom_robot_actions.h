@@ -11,25 +11,15 @@ namespace BottomRobotActions {
   void inputSingle();
   void servingRoutine();
 
-  // DRIVING SINGLE BURGER V1
-  void startToCutting();
-  void cuttingToTomato();
-  void tomatoToCheese();
-  void cheeseToCooktop();
-  void cooktopToLettuce();
-  void lettuceToCooktop();
-  void cooktopGrabPlate();
-  void plateToServing();
-  void servingToCooktop();
-
-  // DRIVING SINGLE BURGER V2
+  // DRIVING
   void startToPlate();
   void plateToCutting();
-  // cuttingToTomato();
-  // tomatoToCheese();
+  void cuttingToTomato();
+  void tomatoToCheese();
   void cheeseToLettuce();
-  // lettuceToCooktop();
+  void lettuceToCooktop();
   void cooktopToCutting();
   void cuttingToServing();
+  void servingToCooktop();
   void servingToPlate();
 }

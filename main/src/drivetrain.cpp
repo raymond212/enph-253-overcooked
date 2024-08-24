@@ -1,9 +1,5 @@
 #include <drivetrain.h>
 
-#ifdef ENABLE_BOTTOM_ROBOT
-#include <bottom_robot_modules.h>
-#endif
-
 namespace Drivetrain {
   Motor FLMotor = Motor(FL_MOTOR_PIN_A, FL_MOTOR_PIN_B, FL_MOTOR_CHANNEL_A, FL_MOTOR_CHANNEL_B);
   Motor FRMotor = Motor(FR_MOTOR_PIN_A, FR_MOTOR_PIN_B, FR_MOTOR_CHANNEL_A, FR_MOTOR_CHANNEL_B);
@@ -38,12 +34,7 @@ namespace Drivetrain {
       BLPower /= maxPower;
       BRPower /= maxPower;
     }
-    Serial.println(String(FLPower) + " " + String(FRPower) + " " + String(BLPower) + " " + String(BRPower));
     driveMotors(FLPower, FRPower, BLPower, BRPower);
-  }
-
-  void stopAll() {
-    driveMotors(0, 0, 0, 0);
   }
 
   void driveMecanumTime(double theta, double rotation, double power, int timeMS) {
@@ -52,9 +43,12 @@ namespace Drivetrain {
     stopAll();
   }
 
-  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime, bool startOnTape, bool shouldBreak, bool bottomCloseInput) {
+  void stopAll() {
+    driveMotors(0, 0, 0, 0);
+  }
+
+  void wallFollow(DriveDirection driveDirection, WallLocation wallLocation, int skip, int slowDownTime, bool startOnTape, bool shouldBreak) {
     int count = 0;
-    int iter = 0;
     int lastTapeTime = millis();
     int start = millis();
     bool seeTape = false;
@@ -91,14 +85,7 @@ namespace Drivetrain {
         driveMecanum(angle, 0, WALL_FOLLOW_SLOW_POWER);
         slowedDown = true;
       }
-      iter++;
     }
-
-    #ifdef ENABLE_BOTTOM_ROBOT
-    if (bottomCloseInput) {
-      BottomRobotModules::closeInputScraper();
-    }
-    #endif
 
     // active breaking into wall
     if (shouldBreak) {
@@ -153,9 +140,6 @@ namespace Drivetrain {
   }
 
   void wallToWallSpinFast() {
-    // wallToWallSpinSlow();
-    // Drivetrain::wallToWallSpin(DriveDirection::RIGHT, 350, 880, 1, 1);
-    Drivetrain::wallToWallSpin(DriveDirection::RIGHT, 360, 880, 1, 1);
-    // need to retune this
+    wallToWallSpin(DriveDirection::RIGHT, 360, 880, 1, 1);
   }
 }

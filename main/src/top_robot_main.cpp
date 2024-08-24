@@ -57,7 +57,7 @@ String waitAndRead() {
 // }
 
 void loop() {
-  // TOP ROBOT ROUTINE
+  // TOP ROBOT COMPETITION ROUTINE
   if (UserInterface::isButtonPressed()) {
     int numBurgers = 4;
 

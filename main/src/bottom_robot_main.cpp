@@ -38,7 +38,6 @@ double spinPower = 0.5;
 int wallTime = 500;
 bool onTape = false;
 
-
 String waitAndRead();
 String waitAndRead() {
   while (Serial.available() == 0) {
@@ -58,6 +57,7 @@ String waitAndRead() {
 // }
 
 void loop() {
+  // BOTTOM ROBOT COMPETITION ROUTINE
   if (UserInterface::isButtonPressed()) {
     #ifdef ENABLE_HANDSHAKE
     UserInterface::displayOLED("Waiting for handshake!");
@@ -283,51 +283,3 @@ void loop() {
 }
 
 #endif
-
-// if (UserInterface::isButtonPressed()) {
-  //   UserInterface::displayOLED("Waiting for handshake!");
-  //   Network::waitForHandshake();
-  //   UserInterface::displayOLED("Handshake established");
-  //   delay(1000);
-
-  //   UserInterface::displayOLED("BURGER");
-  //   // drive to cutting area, intake bottom bun
-  //   BottomRobotModules::moveElevator(30);
-  //   BottomRobotActions::startToCutting();
-
-  //   // wait for bottom bun
-  //   Network::waitForHandshake(); // top robot will send out handshake after it has pushed out the top bun
-  //   BottomRobotActions::inputSingle();
-  //   delay(500);
-  //   // drive to tomato area, intake tomato
-  //   BottomRobotModules::moveElevator(-10);
-  //   BottomRobotActions::cuttingToTomato();
-  //   BottomRobotActions::inputSingle();
-  //   // drive to cheese area, intake cheese
-  //   BottomRobotModules::moveElevator(-5);
-  //   BottomRobotActions::tomatoToCheese();
-  //   BottomRobotActions::inputSingle();
-  //   // drive to cooktop, intake patty
-  //   BottomRobotModules::moveElevator(-10);
-  //   BottomRobotActions::cheeseToCooktop();
-  //   // intake patty
-  //   BottomRobotActions::inputSingle();
-  //   // drive to lettuce area, intake lettuce
-  //   BottomRobotModules::moveElevator(-5);
-  //   BottomRobotActions::cooktopToLettuce();
-  //   BottomRobotActions::inputSingle();
-  //   // drive to cooktop, intake top bun
-  //   BottomRobotActions::lettuceToCooktop();
-  //   // wait for top bun
-  //   Network::waitForHandshake(); // wait for top robot to push out top bun
-  //   BottomRobotActions::inputSingle();
-  //   BottomRobotModules::moveElevator(53); // first time elevate burgers
-  //   // drive to plates, get plate
-  //   BottomRobotActions::cooktopGrabPlate();
-  //   // drive to serving area, serve burger
-  //   BottomRobotActions::plateToServing();
-  //   BottomRobotActions::servingRoutine();
-  //   // drive back to cooktop
-  //   BottomRobotActions::servingToCooktop();
-  //   BottomRobotModules::closeTrapdoor();
-  // }

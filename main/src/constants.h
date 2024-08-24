@@ -2,14 +2,11 @@
 
 #include <Arduino.h>
 
-const int ROBOT_ID = 0; // 0 for top robot, 1 for bottom robot 
-
-// ESP32Now
+// ESP32NOW
 const uint8_t BOTTOM_ROBOT_MAC_ADDRESS[] = {0x64, 0xB7, 0x08, 0x9C, 0x5D, 0x98}; 
-const uint8_t TOP_ROBOT_MAC_ADDRESS[] = {0x64, 0xB7, 0x08, 0x9C, 0x5C, 0x84}; // actual top robot
-// const uint8_t TOP_ROBOT_MAC_ADDRESS[] = {0x64, 0xB7, 0x08, 0x9C, 0x5C, 0xC4};
+const uint8_t TOP_ROBOT_MAC_ADDRESS[] = {0x64, 0xB7, 0x08, 0x9C, 0x5C, 0x84};
 
-// wifi settings
+// Wifi settings
 // const String ssid = "TELUS4676";
 // const String password = "XHDGCtGXb69k";
 const String ssid = "Raymond";
@@ -17,8 +14,6 @@ const String password = "enphteamtwo";
 // const String ssid = "Roberts’s trapphone";
 // const String password = "eurostep";
 const uint16_t WIFI_PORT = 23;
-
-const double EPSILON = 0.001;
 
 // navigation motor parameters
 const double WALL_FOLLOW_ANGLE_DEG = 20;
@@ -73,7 +68,7 @@ const uint8_t BR_MOTOR_CHANNEL_A = 6;
 const uint8_t BR_MOTOR_CHANNEL_B = 7;
 
 const int MOTOR_PWM_FREQ_HZ = 250;
-const int MOTOR_PWM_RESOLUTION = 8; // 2^8 = 256
+const int MOTOR_PWM_RESOLUTION = 8;
 
 // tape sensors
 const uint8_t TAPE_SENSOR_F = 36;
@@ -123,7 +118,7 @@ const int BUTTON_PIN = 35;
 // stepper motor
 const int STEPS_PER_REVOLUTION = 200;
 
-// drivetrain enums
+// navigation enums
 enum class TapeReading {
   NONE,
   FRONT,

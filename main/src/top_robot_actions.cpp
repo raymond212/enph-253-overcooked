@@ -98,11 +98,6 @@ namespace TopRobotActions {
   void resetToStart() {
     Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, true);
   }
-
-  void bunToPatty() {
-    TopRobotModules::openInputScraper();
-    Drivetrain::wallFollow(DriveDirection::BACKWARD, WallLocation::LEFT, 0, 0, true);
-  }
 }
 
 #endif

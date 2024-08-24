@@ -2,10 +2,8 @@
 
 namespace TapeSensors {
   void setupTapeSensors() {
-
     pinMode(TAPE_SENSOR_F, INPUT);
     pinMode(TAPE_SENSOR_B, INPUT);
-   
   }
 
   TapeReading readTape() {

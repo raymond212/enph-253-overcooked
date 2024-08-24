@@ -11,10 +11,7 @@ namespace Hotspot {
   extern long lastOTATime;
 
   void setupWifi();
-
   void wifiPrintln(String msg);
-  
   bool wifiInput();
-
   void handleOTA();
 }

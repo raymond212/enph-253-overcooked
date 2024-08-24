@@ -24,7 +24,4 @@ namespace TopRobotActions {
   void cooktopToBuns();
   void cuttingToBuns();
   void resetToStart();
-
-  // last burger
-  void bunToPatty();
 }
